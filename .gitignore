@@ -6,3 +6,5 @@ uploads/*
 
 data/*
 !data/.gitkeep
+!public/
+!src/
