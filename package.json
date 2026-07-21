@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": ""
+    "dev": "ts-node-dev --respawn src/server.ts"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
