@@ -1,4 +1,4 @@
-export class usuario {
+export class user {
     private _id: number;
     private _nome: string;
     private _email: string;
@@ -53,10 +53,12 @@ export class usuario {
         if (!dados.senha || dados.senha.length < 6) {
             erros.push("Senha obrigatória e deve conter no mínimo 6 caractéres")
         }
+
+        return erros
     }
 
-    static fromJSON(json: any): usuario {
-        return new usuario(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto)
+    static fromJSON(json: any): user {
+        return new user(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto)
     }
 
     toJSON(): object {
