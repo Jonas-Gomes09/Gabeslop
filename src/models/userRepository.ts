@@ -9,7 +9,7 @@ export class userRepository {
         this.usersFile = usersFile
         this.directory = directory
     }
-
+    // Carregar usuários (SERVIDOR)
     private async loadUsers(): Promise<user[]> {
         try {
             const content = await readFile(this.usersFile, "utf-8");
@@ -22,6 +22,7 @@ export class userRepository {
         }
     }
 
+    // Salvar os usuários (SERVIDOR)
     private async saveUsers(users: user[]): Promise<void> {
         try {
             const json = users.map(u=> u.toJSON());
@@ -31,6 +32,7 @@ export class userRepository {
         }
     }
 
+    // Adicionar usuário (LOGIN DO CLIENTE)
     async addUser(nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null): Promise<user> {
         const erros = user.validar({nome, email, senha})
 
@@ -44,6 +46,7 @@ export class userRepository {
         return newUser
     }
 
+    // Remover usuário (NAS INFORMAÇÕES DA CONTA DO CLIENTE)
     async removeUser(id: number): Promise<Boolean> {
         const users = await this.loadUsers()
         const userIndex = users.findIndex(i => i.id === id)
@@ -53,5 +56,28 @@ export class userRepository {
 
         users.splice(id, 1)
         return true
+    }
+
+    // Listar todos (PAINEL DE MODERADOR)
+    async listAll(searchTerm?: string): Promise<user[]> {
+        let users = await this.loadUsers()
+        if (searchTerm && searchTerm.trim()) {
+            const lowercase = searchTerm.toLowerCase()
+            users = users.filter(u => u.nome.toLowerCase().includes(lowercase))
+        }
+        return users
+    }
+
+    // Procurar por ID (PAINEL DE MODERADOR / INFORMAÇÕES DA CONTA DO CLIENTE)
+    async userInfo(id: number): Promise<user | undefined> {
+        const users = await this.loadUsers()
+        const filter = users.find(u => u.id === id)
+        
+        if(!filter) {
+            console.log(`userRepository userInfo(${id}) | Usuário não encontrado`)
+            return undefined
+        }
+
+        return filter
     }
 }
