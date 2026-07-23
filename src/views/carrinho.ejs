@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background:#f4f4f4;
+            margin:0;
+            padding:40px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .carrinho{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.15);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th,td{
+            padding:15px;
+            text-align:center;
+            border-bottom:1px solid #ddd;
+        }
+
+        img{
+            width:90px;
+        }
+
+        input[type=number]{
+            width:60px;
+            padding:5px;
+        }
+
+        .acoes{
+            display:flex;
+            justify-content:space-between;
+            margin-top:30px;
+        }
+
+        .btn{
+            padding:10px 20px;
+            border:none;
+            cursor:pointer;
+            border-radius:5px;
+            color:white;
+            text-decoration:none;
+        }
+
+        .voltar{
+            background:#3498db;
+        }
+
+        .limpar{
+            background:#e74c3c;
+        }
+
+        .finalizar{
+            background:#2ecc71;
+        }
+
+        .vazio{
+            text-align:center;
+            font-size:20px;
+            margin:40px;
+        }
+
+        .total{
+            text-align:right;
+            font-size:24px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="carrinho">
+
+<h1>🛒 Carrinho de Compras</h1>
+
+<% if(itens.length === 0){ %>
+
+    <div class="vazio">
+        Seu carrinho está vazio.
+    </div>
+
+<% } else { %>
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Imagem</th>
+    <th>Produto</th>
+    <th>Preço</th>
+    <th>Quantidade</th>
+    <th>Subtotal</th>
+    <th>Remover</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<% itens.forEach(item => { %>
+
+<tr>
+
+<td>
+
+<% if(item.imagem){ %>
+
+<img src="<%= item.imagem %>" alt="<%= item.nome %>">
+
+<% } %>
+
+</td>
+
+<td>
+
+<%= item.nome %>
+
+</td>
+
+<td>
+
+R$ <%= item.preco.toFixed(2) %>
+
+</td>
+
+<td>
+
+<form action="/carrinho/atualizar/<%= item.produtoId %>" method="POST">
+
+<input
+type="number"
+name="quantidade"
+value="<%= item.quantidade %>"
+min="1"
+>
+
+<button type="submit">
+Atualizar
+</button>
+
+</form>
+
+</td>
+
+<td>
+
+R$ <%= (item.preco * item.quantidade).toFixed(2) %>
+
+</td>
+
+<td>
+
+<form action="/carrinho/remover/<%= item.produtoId %>" method="POST">
+
+<button type="submit">
+🗑️
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+<div class="total">
+
+<strong>
+
+Total:
+
+R$ <%= total.toFixed(2) %>
+
+</strong>
+
+</div>
+
+<div class="acoes">
+
+<a href="/" class="btn voltar">
+
+Continuar Comprando
+
+</a>
+
+<form action="/carrinho/limpar" method="POST">
+
+<button class="btn limpar">
+
+Limpar Carrinho
+
+</button>
+
+</form>
+
+<button class="btn finalizar">
+
+Finalizar Compra
+
+</button>
+
+</div>
+
+<% } %>
+
+</div>
+
+<script src="/js/cart.js"></script>
+
+</body>
+</html>

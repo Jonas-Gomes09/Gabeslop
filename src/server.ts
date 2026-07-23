@@ -1,6 +1,6 @@
 import app from "./app";
 
-const PORT = 3001;
+const PORT = 6766;
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
