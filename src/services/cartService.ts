@@ -1,77 +1,92 @@
-// src/services/cartService.ts
+import { Carrinho, ItemCarrinho } from "../entities/carrinho";
 
-interface CartItem {
-    idGame: number;
-    nome: string;
-    preco: number;
-    quantidade: number;
-  }
-  
-  // Carrinho em memória (para fins pedagógicos)
-  let carrinho: CartItem[] = [];
-  
-  /**
-   * Retorna todos os itens do carrinho.
-   */
-  export function listarCarrinho(): CartItem[] {
-    return carrinho;
-  }
-  
-  /**
-   * Adiciona um item ao carrinho.
-   * Se o item já existir, incrementa sua quantidade.
-   */
-  export function adicionarAoCarrinho(item: CartItem): CartItem[] {
-    const itemExistente = carrinho.find(
-      (produto) => produto.idGame === item.idGame
-    );
-  
-    if (itemExistente) {
-      itemExistente.quantidade += item.quantidade;
-    } else {
-      carrinho.push(item);
+class CartService {
+
+    obterCarrinho(session: any): Carrinho {
+        if (!session.carrinho) {
+            session.carrinho = new Carrinho();
+        }
+
+        return session.carrinho;
     }
-  
-    return carrinho;
-  }
-  
-  /**
-   * Remove um item do carrinho.
-   */
-  export function removerDoCarrinho(idGame: number): CartItem[] {
-    carrinho = carrinho.filter((item) => item.idGame !== idGame);
-    return carrinho;
-  }
-  
-  /**
-   * Atualiza a quantidade de um item.
-   */
-  export function atualizarQuantidade(
-    idGame: number,
-    quantidade: number
-  ): CartItem[] {
-    const item = carrinho.find((produto) => produto.idGame === idGame);
-  
-    if (item) {
-      item.quantidade = quantidade;
+
+    adicionarProduto(
+        session: any,
+        produto: {
+            id: number;
+            nome: string;
+            preco: number;
+            imagem?: string;
+        },
+        quantidade: number = 1
+    ): Carrinho {
+
+        const carrinho = this.obterCarrinho(session);
+
+        const item: ItemCarrinho = {
+            produtoId: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            imagem: produto.imagem,
+            quantidade
+        };
+
+        carrinho.adicionarItem(item);
+
+        return carrinho;
     }
-  
-    return carrinho;
-  }
-  
-  /**
-   * Remove todos os itens do carrinho.
-   */
-  export function limparCarrinho(): void {
-    carrinho = [];
-  }
-  
-  /**
-   * Calcula o valor total do carrinho.
-   */
-  export function calcularTotal(): number {
-    return carrinho.reduce(
-      (total, item) => total + item.preco * item.quantidade,
-      0
-    );
-  }
+
+    removerProduto(
+        session: any,
+        produtoId: number
+    ): Carrinho {
+
+        const carrinho = this.obterCarrinho(session);
+
+        carrinho.removerItem(produtoId);
+
+        return carrinho;
+    }
+
+    atualizarQuantidade(
+        session: any,
+        produtoId: number,
+        quantidade: number
+    ): Carrinho {
+
+        const carrinho = this.obterCarrinho(session);
+
+        carrinho.atualizarQuantidade(
+            produtoId,
+            quantidade
+        );
+
+        return carrinho;
+    }
+
+    limparCarrinho(session: any): Carrinho {
+
+        const carrinho = this.obterCarrinho(session);
+
+        carrinho.limparCarrinho();
+
+        return carrinho;
+    }
+
+    listarItens(session: any): ItemCarrinho[] {
+
+        return this.obterCarrinho(session).itens;
+    }
+
+    calcularTotal(session: any): number {
+
+        return this.obterCarrinho(session).calcularTotal();
+    }
+
+    quantidadeItens(session: any): number {
+
+        return this.obterCarrinho(session).quantidadeItens();
+    }
+}
+
+export default new CartService();
