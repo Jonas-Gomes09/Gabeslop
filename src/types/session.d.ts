@@ -6,6 +6,7 @@ declare module "express-session" {
       id: number;
       nome: string;
       admin: boolean;
+      flash: string | null;
     };
   }
 }

@@ -37,7 +37,7 @@ export class userRepository {
         const erros = Usuario.validar({ titulo, usuario, nota})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
-        
+        dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
         const users = await this.loadUsers()
         const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
         const newUser = new Usuario(nextID, titulo, usuario, nota, dataCriacao, totalCompras = 0, foto)
@@ -79,5 +79,37 @@ export class userRepository {
         }
 
         return filter
+    }
+
+    // Atualizar nome de usuário (INFORMAÇÕES DA CONTA DO CLIENTE)
+    async updateUserName(id: number, nome: string): Promise<user["nome"]> {
+        const users = await this.loadUsers()
+        const filter = users.find(u => u.id === id)
+        
+        if(!filter) {
+            throw new Error(`userRepository updateUserName(${id}) | Usuário não encontrado`)
+        }
+
+        const erros = await user.validar({nome: nome})
+
+        if (erros.length > 0) {
+            throw new Error(erros.join(", "))
+        }
+
+        filter.nome = nome.trim()
+        return filter.nome
+    }
+
+    // Atualizar o total de compras após uma compra (SERVIDOR)
+    async updateUserTotalCompras(id: number): Promise<user["totalCompras"]> {
+        const users = await this.loadUsers()
+        const filter = users.find(u => u.id === id)
+        
+        if(!filter) {
+            throw new Error(`userRepository updateUserTotalCompras(${id}) | Usuário não encontrado`)
+        }
+
+        filter.totalCompras += 1
+        return filter.totalCompras
     }
 }
