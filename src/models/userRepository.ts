@@ -1,13 +1,16 @@
 import {user} from "../entities/user"
 import { readFile, writeFile, mkdir } from "fs/promises"
+import bcrypt from "bcrypt"
 
 export class userRepository {
     private usersFile: string;
-    private directory: string
+    private directory: string;
+    private saltRounds: number;
 
-    constructor(usersFile: string = "data/users.json", directory: string = "data") {
+    constructor(usersFile: string = "data/users.json", directory: string = "data", saltRounds = 10) {
         this.usersFile = usersFile
         this.directory = directory
+        this.saltRounds = saltRounds
     }
     // Carregar usuários (SERVIDOR)
     private async loadUsers(): Promise<user[]> {
@@ -32,17 +35,41 @@ export class userRepository {
         }
     }
 
-    // Adicionar usuário (LOGIN DO CLIENTE)
-    async addUser(nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null): Promise<user> {
+    // Adicionar usuário (CADASTRO DO CLIENTE)
+    async cadastro(nome: string, email: string, senha: string, foto: string | null = null): Promise<user> {
         const erros = user.validar({nome, email, senha})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
-        dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
+        const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
+
         const users = await this.loadUsers()
         const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
-        const newUser = new user(nextID, nome, email, senha, dataCriacao, totalCompras = 0, foto)
+        const senhaEncriptada = bcrypt.hash(senha, this.saltRounds)
+
+
+        const newUser = new user(nextID, nome, email, senha, dataCriacao, 0, foto)
         users.push(newUser)
         await this.saveUsers(users)
+        return newUser
+    }
+
+    // Logar no usuário (CADASTRO DO CLIENTE)
+    async login(email: string, senha: string): Promise<user> {
+
+        if(erros.length > 0) throw new Error(erros.join(", "))
+        const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
+
+        const users = await this.loadUsers()
+        const foundUser = await users.find(u => u.email === email.trim())
+
+        if (!foundUser) {
+            throw new Error("")
+        }
+
+        const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
+        const senhaDecriptada = bcrypt.compare(senha, foundUser?.senha)
+
+        if (!await senhaDecriptada)
         return newUser
     }
 

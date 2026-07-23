@@ -10,3 +10,12 @@ export async function StartPage(req: Request, res: Response) {
         return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
     }
 }
+
+export async function addUser(req: Request, res: Response) {
+    try {
+        const {nome, email, senha} = req.body
+
+    } catch {
+
+    }
+}

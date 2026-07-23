@@ -3,18 +3,20 @@ import session from "express-session";
 
 const app = express();
 
-app.use(
-  session({
-    secret: "segredo",
+app.use(session({
+    secret: "segredo-senac-2026-rafavicnajonasmarvin",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        maxAge: 30 * 60 * 1000,
+        httpOnly: true,
+        secure: false
+    }
   })
 );
 
 import { pageRoutes } from "./routes/pageRoutes";
 import path from "path";
-
-const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
