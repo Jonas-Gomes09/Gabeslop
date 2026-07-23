@@ -1,5 +1,6 @@
 import express from "express";
 import { pageRoutes } from "./routes/pageRoutes";
+import path from "path";
 
 const app = express();
 
