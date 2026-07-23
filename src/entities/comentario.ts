@@ -27,6 +27,7 @@ export class Usuario {
         usuario?: string;
         dataCriacao?: string;
         nota?: number;
+        foto?: string;
     }): string[] {
 
         const erros: string[] = [];

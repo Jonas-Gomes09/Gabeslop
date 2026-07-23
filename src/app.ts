@@ -1,8 +1,12 @@
 import express from "express";
+import session from "express-session";
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-export default app;
+app.use(
+  session({
+    secret: "segredo",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
