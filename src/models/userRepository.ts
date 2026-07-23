@@ -80,4 +80,23 @@ export class userRepository {
 
         return filter
     }
+
+    async updateUsername(id: number, nome: string): Promise<user["nome"] | null> {
+        const users = await this.loadUsers()
+        const filter = users.find(u => u.id === id)
+        
+        if(!filter) {
+            throw new Error(`userRepository userInfo(${id}) | Usuário não encontrado`)
+            return null
+        }
+
+        const erros = await user.validar({nome: nome})
+
+        if (erros.length > 0) {
+            throw new Error(erros.join(", "))
+        }
+
+        filter.nome = nome.trim()
+        return filter.nome
+    }
 }
