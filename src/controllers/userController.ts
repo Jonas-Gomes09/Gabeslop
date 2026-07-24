@@ -7,7 +7,9 @@ const repo = new userRepository()
 
 export async function StartPage(req: Request, res: Response) {
     try {
-        return res.render("index")
+        return res.render("index", {flash: null}
+
+        )
         flash: null
     } catch {
         return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
@@ -15,19 +17,18 @@ export async function StartPage(req: Request, res: Response) {
 }
 export async function LoginPage(req: Request, res: Response) {
     try {
-        return res.render("login")
-        flash: null
+        return res.render("login", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "userController LoginPage(req, res) | Falha ao carregar o index.html"})
     }
 }
 
-export async function addUser(req: Request, res: Response) {
+export async function CreateUser(req: Request, res: Response) {
     try {
-        const {nome, email, senha, foto} = req.body
+        const {nome, email, senha} = req.body
 
         if (!nome || nome.trim() === "") {
-            flash: "Insira um nome de usuário."
+            req.session.flash = "Insira um nome de usuário."
             res.redirect("/registro");
         }
         if (!email || email.includes("@")) {
@@ -37,9 +38,10 @@ export async function addUser(req: Request, res: Response) {
         if (!senha || senha.length < 6) {
             flash: "Senha deve conter ao menos 6 caracteres.";
         }
+        const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
         repo.cadastro(nome, email, senha, foto)
     } catch {
-
+        return res.status(500).json({success: false, message: "userController CreateUser(req, res) | Falha ao criar o usuário"})
     }
 }
