@@ -1,9 +1,27 @@
-import * as userController from "../controllers/userController"
-import { Router, Request, Response } from "express"
-import { upload } from "../middlewares/upload"
+import { Router, Request, Response } from "express";
 
-export const pageRoutes = Router()
+export const pageRoutes = Router();
 
-// ROTAS GET
-pageRoutes.get("/", userController.StartPage)
-pageRoutes.get("/login", userController.LoginPage)
+pageRoutes.get("/", (req: Request, res: Response) => {
+    res.render("index");
+});
+
+pageRoutes.get("/login", (req: Request, res: Response) => {
+    res.render("login");
+});
+
+pageRoutes.get("/cadastro", (req: Request, res: Response) => {
+    res.render("cadastro");
+});
+
+pageRoutes.get("/perfil", (req: Request, res: Response) => {
+    res.render("perfil");
+});
+
+pageRoutes.get("/games", (req: Request, res: Response) => {
+    res.render("games");
+});
+
+pageRoutes.get("/carrinho", (req: Request, res: Response) => {
+    res.render("carrinho");
+});
