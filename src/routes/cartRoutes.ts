@@ -1,16 +1,31 @@
-import { Router } from "express";
-import * as cartController from "../controllers/cartController";
+import { Router, Request, Response } from "express";
 
-const router = Router();
+export const cartRoutes = Router();
 
-router.get("/", cartController.listarCarrinho);
+// EXIBIR CARRINHO
+cartRoutes.get("/", (req: Request, res: Response) => {
+    res.render("carrinho");
+});
 
-router.post("/", cartController.adicionarAoCarrinho);
+// ADICIONAR GAME AO CARRINHO
+cartRoutes.post("/adicionar/:id", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true,
+        game: req.params.id
+    });
+});
 
-router.put("/:id", cartController.atualizarQuantidade);
+// REMOVER GAME DO CARRINHO
+cartRoutes.delete("/remover/:id", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true
+    });
+});
 
-router.delete("/:id", cartController.removerDoCarrinho);
-
-router.delete("/", cartController.limparCarrinho);
-
-export default router;
+// FINALIZAR COMPRA
+cartRoutes.post("/finalizar", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true,
+        mensagem: "Compra finalizada."
+    });
+});
