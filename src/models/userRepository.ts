@@ -44,33 +44,30 @@ export class userRepository {
 
         const users = await this.loadUsers()
         const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
-        const senhaEncriptada = bcrypt.hash(senha, this.saltRounds)
+        const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
 
 
-        const newUser = new user(nextID, nome, email, senha, dataCriacao, 0, foto)
+        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto)
         users.push(newUser)
         await this.saveUsers(users)
         return newUser
     }
 
     // Logar no usuário (CADASTRO DO CLIENTE)
-    async login(email: string, senha: string): Promise<user> {
-
-        if(erros.length > 0) throw new Error(erros.join(", "))
-        const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
-
+    async login(email: string, senha: string): Promise<user | null> {
         const users = await this.loadUsers()
         const foundUser = await users.find(u => u.email === email.trim())
 
         if (!foundUser) {
-            throw new Error("")
+            throw new Error(`userRepository login(email, senha) | Usuário com email ${email.trim()} não encontrado`)
         }
 
-        const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
-        const senhaDecriptada = bcrypt.compare(senha, foundUser?.senha)
+        const senhaDecriptada = await bcrypt.compare(senha, foundUser?.senha)
 
-        if (!await senhaDecriptada)
-        return newUser
+        if (!senhaDecriptada) {
+            return null
+        }
+        return foundUser
     }
 
     // Remover usuário (NAS INFORMAÇÕES DA CONTA DO CLIENTE)
