@@ -2,11 +2,9 @@ import "express-session";
 
 declare module "express-session" {
   interface SessionData {
-    usuario?: {
-      id: number;
-      nome: string;
-      admin: boolean;
-      flash: string | null;
-    };
+    userId: number;
+    userName: string;
+    admin: boolean;
+    flash: string | null;
   }
 }

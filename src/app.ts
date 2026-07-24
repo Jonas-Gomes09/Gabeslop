@@ -1,5 +1,7 @@
 import express from "express";
 import session from "express-session";
+import { pageRoutes } from "./routes/pageRoutes";
+import { logger } from "./middlewares/logger";
 
 const app = express();
 
@@ -15,9 +17,8 @@ app.use(session({
   })
 );
 
-import { pageRoutes } from "./routes/pageRoutes";
-import path from "path";
 
+app.use(logger)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
