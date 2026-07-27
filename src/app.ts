@@ -19,17 +19,14 @@ app.use(session({
 }));
 
 app.use(logger);
-
+app.use(pageRoutes)
+app.use(apiRoutes)
+app.use(cartRoutes)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
-
-// Rotas
-app.use("/", pageRoutes);
-app.use("/api", apiRoutes);
-app.use("/carrinho", cartRoutes);
 
 export default app;
