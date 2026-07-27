@@ -7,10 +7,7 @@ const repo = new userRepository()
 
 export async function StartPage(req: Request, res: Response) {
     try {
-        return res.render("index", {flash: null}
-
-        )
-        flash: null
+        return res.render("index", {flash: null})
     } catch {
         return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
     }
@@ -29,14 +26,12 @@ export async function CreateUser(req: Request, res: Response) {
 
         if (!nome || nome.trim() === "") {
             req.session.flash = "Insira um nome de usuário."
-            res.redirect("/registro");
         }
         if (!email || email.includes("@")) {
-            flash: "Insira um email válido."
-            res.redirect("/registro");
+            req.session.flash = "Insira um email válido."
         }
         if (!senha || senha.length < 6) {
-            flash: "Senha deve conter ao menos 6 caracteres.";
+            req.session.flash = "Senha deve conter ao menos 6 caracteres.";
         }
         const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
