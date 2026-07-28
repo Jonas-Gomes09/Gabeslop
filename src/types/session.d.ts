@@ -7,6 +7,7 @@ declare module "express-session" {
     admin: boolean;
     flash: string | null;
     email: string;
+    carrinho: [];
   }
 }
 

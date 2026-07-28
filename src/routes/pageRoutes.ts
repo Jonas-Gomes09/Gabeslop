@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
+import path from "path";
 
 export const pageRoutes = Router();
 
 pageRoutes.get("/", (req: Request, res: Response) => {
-    res.render("index");
+    res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 pageRoutes.get("/login", (req: Request, res: Response) => {
@@ -18,8 +19,8 @@ pageRoutes.get("/perfil", (req: Request, res: Response) => {
     res.render("perfil");
 });
 
-pageRoutes.get("/games", (req: Request, res: Response) => {
-    res.render("games");
+pageRoutes.get("/store", (req: Request, res: Response) => {
+    res.render("store");
 });
 
 pageRoutes.get("/carrinho", (req: Request, res: Response) => {
