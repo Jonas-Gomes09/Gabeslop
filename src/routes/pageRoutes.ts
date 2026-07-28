@@ -4,11 +4,11 @@ import path from "path";
 export const pageRoutes = Router();
 
 pageRoutes.get("/", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.render("telainicial");
 });
 
 pageRoutes.get("/login", (req: Request, res: Response) => {
-    res.render("login");
+    res.render("login", {flash: undefined});
 });
 
 pageRoutes.get("/cadastro", (req: Request, res: Response) => {
