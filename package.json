@@ -33,7 +33,6 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
-    "@types/bootstrap": "^5.2.11",
-    "bootstrap": "^5.3.8"
+    "@types/bootstrap": "^5.2.11"
   }
 }
