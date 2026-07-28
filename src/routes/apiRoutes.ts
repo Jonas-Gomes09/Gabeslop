@@ -1,30 +1,16 @@
 import { Router, Request, Response } from "express";
+import * as userController from "../controllers/userController"
 
 export const apiRoutes = Router();
 
 // LOGIN
-apiRoutes.post("/login", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true,
-        mensagem: "Login realizado com sucesso."
-    });
-});
+apiRoutes.post("/login", userController.CreateUser);
 
 // CADASTRO
-apiRoutes.post("/cadastro", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true,
-        mensagem: "Usuário cadastrado."
-    });
-});
+apiRoutes.post("/registro", userController.CreateUser);
 
 // LOGOUT
-apiRoutes.post("/logout", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true,
-        mensagem: "Logout realizado."
-    });
-});
+apiRoutes.post("/logout", userController.CreateUser);
 
 // LISTAR GAMES
 apiRoutes.get("/games", (req: Request, res: Response) => {

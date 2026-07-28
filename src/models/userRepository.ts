@@ -45,9 +45,9 @@ export class userRepository {
         const users = await this.loadUsers()
         const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
+        const permission = "client"
 
-
-        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto)
+        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission)
         users.push(newUser)
         await this.saveUsers(users)
         return newUser

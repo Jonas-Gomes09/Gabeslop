@@ -7,7 +7,7 @@ const repo = new userRepository()
 
 export async function StartPage(req: Request, res: Response) {
     try {
-        return res.render("index", {flash: null})
+        return res.render("telainicial", {flash: null})
     } catch {
         return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
     }
@@ -19,6 +19,14 @@ export async function LoginPage(req: Request, res: Response) {
         return res.status(500).json({success: false, message: "userController LoginPage(req, res) | Falha ao carregar o index.html"})
     }
 }
+export async function registerPage(req: Request, res: Response) {
+    try {
+        return res.render("registro", {flash: null})
+    } catch {
+        return res.status(500).json({success: false, message: "userController LoginPage(req, res) | Falha ao carregar o index.html"})
+    }
+}
+
 
 export async function CreateUser(req: Request, res: Response) {
     try {
