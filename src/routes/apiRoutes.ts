@@ -58,3 +58,26 @@ apiRoutes.delete("/games/:id", (req: Request, res: Response) => {
         sucesso: true
     });
 });
+
+// ADICIONAR GAME AO CARRINHO
+apiRoutes.post("/adicionar/:id", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true,
+        game: req.params.id
+    });
+});
+
+// REMOVER GAME DO CARRINHO
+apiRoutes.delete("/remover/:id", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true
+    });
+});
+
+// FINALIZAR COMPRA
+apiRoutes.post("/finalizar", (req: Request, res: Response) => {
+    res.json({
+        sucesso: true,
+        mensagem: "Compra finalizada."
+    });
+});
