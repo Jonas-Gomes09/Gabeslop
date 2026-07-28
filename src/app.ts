@@ -2,8 +2,8 @@ import express from "express";
 import session from "express-session";
 import { pageRoutes } from "./routes/pageRoutes";
 import { apiRoutes } from "./routes/apiRoutes";
-import { cartRoutes } from "./routes/cartRoutes";
 import { logger } from "./middlewares/logger";
+import path from "path"
 
 const app = express();
 
@@ -18,15 +18,16 @@ app.use(session({
     }
 }));
 
-app.use(logger);
-app.use(pageRoutes)
-app.use(apiRoutes)
-app.use(cartRoutes)
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.set("view engine", "ejs");
-app.set("views", "./src/views");
+app.use(logger);
+
+app.use(pageRoutes)
+app.use(apiRoutes)
 
 export default app;
