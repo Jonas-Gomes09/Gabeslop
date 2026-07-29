@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express"
 import { userRepository } from "../models/userRepository"
-import { user } from "../entities/user"
 // IMPORTAR SESSION
 
 const repo = new userRepository()
@@ -62,8 +61,14 @@ export async function LoginUser(req: Request, res: Response) {
         req.session.userId = user.id
         req.session.userName = user.nome
         req.session.email = user.email
+        req.session.carrinho = user.carrinho
 
-        res.redirect("/carrinho")
+        if (req.session.admin = true) {
+            res.redirect("/admin/startpage")
+        } else {
+            res.redirect("/carrinho")
+        }
+        
     } catch {
         return res.status(500).json({success: false, message: "POST userController LoginUser(req, res) | Falha ao criar o usuário"})
     }

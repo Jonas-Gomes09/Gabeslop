@@ -1,8 +1,9 @@
 import { Carrinho, ItemCarrinho } from "../entities/carrinho";
 
+
 export class CartRepository {
 
-    private obterCarrinho(session: any): Carrinho {
+    obterCarrinho(session: any): Carrinho {
         if (!session.carrinho || session.carrinho.length < 1) {
             session.carrinho = new Carrinho();
         }
@@ -86,5 +87,9 @@ export class CartRepository {
     quantidadeItens(session: any): number {
 
         return this.obterCarrinho(session).quantidadeItens();
+    }
+
+    salvarCarrinho(session: any) {
+        
     }
 }

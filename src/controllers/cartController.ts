@@ -3,18 +3,25 @@ import { CartRepository } from "../models/cartRepository";
 
 const repo = new CartRepository()
 
+export async function sessionCarrinho(req: Request, res: Response) {
+    try {
+        req.session.carrinho = await repo.obterCarrinho(req.session)
+        return req.session.carrinho
+    } catch {
+        res.status(500).json({success: false, message: "GET cartController sessionCarrinho | Falha ao obter o carrinho"})
+    }
+}
+
 export async function listarCarrinho(req: Request, res: Response) {
     try {
         const carrinho = repo.listarItens(req.session.carrinho)
-    res.status(200).json({
-        mensagem: "Listando os itens do carrinho"
-    });
+    res.status(200).json({success: false, content: carrinho});
     } catch {
         res.status(500).json({success: false, message: "GET cartController listarCarrinho(req, res) | Falha ao carregar o carrinho.ejs"})
     }
 };
 
-export async function adicionarAoCarrinho (req: Request, res: Response) {
+export async function adicionarAoCarrinho(req: Request, res: Response) {
     const item = req.body;
 
     res.status(201).json({
@@ -42,6 +49,7 @@ export const atualizarQuantidade = (req: Request, res: Response): void => {
 };
 
 export const limparCarrinho = (req: Request, res: Response): void => {
+    req.session.carrinho = []
     res.status(200).json({
         mensagem: "Carrinho esvaziado"
     });

@@ -46,8 +46,10 @@ export class userRepository {
         const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
         const permission = "client"
+        const carrinho: [] = []
+        
 
-        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission)
+        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission, carrinho)
         users.push(newUser)
         await this.saveUsers(users)
         return newUser

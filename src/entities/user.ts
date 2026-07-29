@@ -7,8 +7,9 @@ export class user {
     private _totalCompras: number;
     private _foto: string | null;
     private _perms: string; // permissões
+    private _carrinho: [];
 
-    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null, perms: string) {
+    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null, perms: string, carrinho: []) {
         this._id = id;
         this._nome = nome;
         this._email = email;
@@ -17,6 +18,7 @@ export class user {
         this._totalCompras = totalCompras;
         this._foto = foto
         this._perms = perms
+        this._carrinho = carrinho
     }
 
     get id(): number {return this._id}
@@ -27,6 +29,7 @@ export class user {
     get totalCompras(): number {return this._totalCompras}
     get foto(): string | null {return this._foto}
     get perms(): string | null {return this._perms}
+    get carrinho(): [] {return this._carrinho}
 
     set nome(valor: string) {
         if (!valor) {throw new Error("Título obrigatório")};
@@ -47,6 +50,9 @@ export class user {
     set perms(valor: string) {
         this.perms = valor
     }
+    set carrinho(valor: []) {
+        this.carrinho = valor
+    }
 
     static validar(dados: {nome?: string, email?: string, senha?: string}) {
         const erros = []
@@ -64,7 +70,7 @@ export class user {
     }
 
     static fromJSON(json: any): user {
-        return new user(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto, json.perms)
+        return new user(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto, json.perms, json.carrinho)
     }
 
     toJSON(): object {
@@ -76,7 +82,8 @@ export class user {
             dataCriacao: this._dataCriacao,
             totalCompras: this._totalCompras,
             foto: this._foto,
-            perms: this._perms
+            perms: this._perms,
+            carrinho: this._carrinho
           };
     }
 }
