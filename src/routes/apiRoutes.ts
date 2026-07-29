@@ -1,38 +1,33 @@
 import { Router, Request, Response } from "express";
-import * as userController from "../controllers/userController"
+import * as userController from "../controllers/clientController"
 
 export const apiRoutes = Router();
 
 // LOGIN
-apiRoutes.post("/login", userController.CreateUser);
+apiRoutes.post("/api/login", userController.CreateUser);
 
 // CADASTRO
-apiRoutes.post("/registro", userController.CreateUser);
+apiRoutes.post("/api/registro", userController.CreateUser);
 
 // LOGOUT
-apiRoutes.post("/logout", userController.CreateUser);
-
-// LISTAR GAMES
-apiRoutes.get("/games", (req: Request, res: Response) => {
-    res.json([]);
-});
+apiRoutes.post("/api/logout", userController.CreateUser);
 
 // BUSCAR GAME POR ID
-apiRoutes.get("/games/:id", (req: Request, res: Response) => {
+apiRoutes.get("/store/:id", (req: Request, res: Response) => {
     res.json({
         id: req.params.id
     });
 });
 
 // ADICIONAR GAME
-apiRoutes.post("/games", (req: Request, res: Response) => {
+apiRoutes.post("/api/store", (req: Request, res: Response) => {
     res.json({
         sucesso: true
     });
 });
 
 // ATUALIZAR GAME
-apiRoutes.put("/games/:id", (req: Request, res: Response) => {
+apiRoutes.put("/api/store/:id", (req: Request, res: Response) => {
     res.json({
         sucesso: true
     });

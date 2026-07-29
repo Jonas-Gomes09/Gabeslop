@@ -16,14 +16,14 @@ export async function LoginPage(req: Request, res: Response) {
     try {
         return res.render("login", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "userController LoginPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "GET userController LoginPage(req, res) | Falha ao carregar o index.html"})
     }
 }
-export async function registerPage(req: Request, res: Response) {
+export async function RegisterPage(req: Request, res: Response) {
     try {
         return res.render("registro", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "userController LoginPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o index.html"})
     }
 }
 
@@ -45,6 +45,26 @@ export async function CreateUser(req: Request, res: Response) {
 
         repo.cadastro(nome, email, senha, foto)
     } catch {
-        return res.status(500).json({success: false, message: "userController CreateUser(req, res) | Falha ao criar o usuário"})
+        return res.status(500).json({success: false, message: "POST userController CreateUser(req, res) | Falha ao criar o usuário"})
+    }
+}
+
+export async function LoginUser(req: Request, res: Response) {
+    try {
+        const {email, senha} = req.body
+        const user = await repo.login(email, senha)
+        if (!user || user === null) {
+            req.session.flash = "Usuário ou senha incorretos"
+            return res.redirect("/login")
+        }
+
+        if (user.perms === "client") {req.session.admin = false} else {req.session.admin = true}
+        req.session.userId = user.id
+        req.session.userName = user.nome
+        req.session.email = user.email
+
+        res.redirect("/carrinho")
+    } catch {
+        return res.status(500).json({success: false, message: "POST userController LoginUser(req, res) | Falha ao criar o usuário"})
     }
 }

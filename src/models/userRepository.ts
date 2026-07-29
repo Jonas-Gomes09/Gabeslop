@@ -59,7 +59,7 @@ export class userRepository {
         const foundUser = await users.find(u => u.email === email.trim())
 
         if (!foundUser) {
-            throw new Error(`userRepository login(email, senha) | Usuário com email ${email.trim()} não encontrado`)
+            return null
         }
 
         const senhaDecriptada = await bcrypt.compare(senha, foundUser?.senha)

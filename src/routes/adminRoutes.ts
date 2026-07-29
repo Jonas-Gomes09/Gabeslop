@@ -1,0 +1,1 @@
+// Adicionar páginas de ADMIN, que precisam que o perms do user seja "admin"

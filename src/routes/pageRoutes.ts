@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import path from "path";
-import * as userController from "../controllers/userController"
+import * as userController from "../controllers/clientController"
 
 export const pageRoutes = Router();
 
@@ -8,7 +8,7 @@ pageRoutes.get("/", userController.StartPage);
 
 pageRoutes.get("/login", userController.LoginPage);
 
-pageRoutes.get("/registro", userController.registerPage);
+pageRoutes.get("/registro", userController.RegisterPage);
 
 pageRoutes.get("/perfil", (req: Request, res: Response) => {
     res.render("perfil");

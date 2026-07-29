@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 export function auth(req: Request, res: Response, next: NextFunction) {
-    if (!req.session.usuario) {
+    if (!req.session.userId) {
         return res.status(401).send("Faça login.");
     }
 

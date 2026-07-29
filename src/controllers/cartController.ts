@@ -4,13 +4,17 @@ import { CartRepository } from "../models/cartRepository";
 const repo = new CartRepository()
 
 export async function listarCarrinho(req: Request, res: Response) {
-    const carrinho = repo.listarItens(req.session.carrinho)
+    try {
+        const carrinho = repo.listarItens(req.session.carrinho)
     res.status(200).json({
         mensagem: "Listando os itens do carrinho"
     });
+    } catch {
+        res.status(500).json({success: false, message: "GET cartController listarCarrinho(req, res) | Falha ao carregar o carrinho.ejs"})
+    }
 };
 
-export const adicionarAoCarrinho = (req: Request, res: Response): void => {
+export async function adicionarAoCarrinho (req: Request, res: Response) {
     const item = req.body;
 
     res.status(201).json({
