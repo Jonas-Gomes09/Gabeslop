@@ -1,6 +1,21 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Registro</title><link rel="stylesheet" href="/css/registro.css"></head>
 <body><div class="container" style="margin-top:60px">
-  <div class="center"><h2> Minhas Tarefas</h2><p>Crie sua conta</p></div>
+    <div class="container">
+      <header class="navbar" id="nav">
+        <a href="" class="nav-logo" aria-label="Página Inicial GabeSlop">
+            <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/telainicial">Inicio</a></li>
+                <li><a href="">Promoções</a></li>
+                <li><a href="">Lançamentos</a></li>
+<li><a href="/login">Entrar</a></li>
+            </ul>
+        </nav>
+    </header>
+      <h2>Crie sua conta Para continuar</h2>
+    </div>
   <% if (flash) { %><div class="flash"><%= flash %></div><% } %>
   <div class="card"><h2> Criar Conta</h2>
     <form method="POST" action="/registro">

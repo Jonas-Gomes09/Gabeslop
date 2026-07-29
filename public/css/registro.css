@@ -22,6 +22,7 @@
     100% { background-color: #0a0a0a; }
 } 
 
+/* --- CORPO DA PÁGINA (CENTRALIZADO) --- */
 body { 
     background-color: var(--bg-dark);
     color: var(--text-light);
@@ -29,6 +30,12 @@ body {
     min-height: 100vh;
     animation: luzesColoridas 12s infinite ease-in-out; 
     overflow-x: hidden;
+
+    /* AQUI ESTÁ O SEGREDO PARA CENTRALIZAR O CARD NA TELA */
+    display: flex;
+    justify-content: center; /* Centraliza na horizontal */
+    align-items: center;     /* Centraliza na vertical */
+    padding-top: 80px;        /* Espaço para a navbar não cobrir o card */
 } 
 
 /* --- NAVBAR --- */
@@ -52,7 +59,7 @@ body {
 }
 
 .nav-logo img {
-    max-height: 40px;
+    max-height: 100px;
     display: block;
 }
 
@@ -76,18 +83,9 @@ body {
     color: var(--primary-color);
 }
 
-/* Fundo da página */
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0f172a;
-    color: #fff;
-}
-
-/* Card */
+/* --- CARD --- */
 .card {
     width: 400px;
-    margin: 0 auto;
     padding: 35px;
     background: #1e293b;
     border-radius: 15px;
@@ -98,23 +96,22 @@ body {
     text-align: center;
     margin-bottom: 25px;
     color: #fff;
+    font-family: var(--font-heading); /* Opcional: usa a fonte de título das variáveis */
 }
 
-/* Grupo de formulário */
+/* --- FORMULÁRIO --- */
 .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
 
-/* Labels */
 .form-group label {
     margin-bottom: 8px;
     font-weight: bold;
     color: #cbd5e1;
 }
 
-/* Campos */
 .form-group input {
     padding: 14px 16px;
     border: 2px solid #334155;
@@ -126,24 +123,22 @@ body {
     outline: none;
 }
 
-/* Placeholder */
 .form-group input::placeholder {
     color: #94a3b8;
 }
 
-/* Efeito ao clicar */
 .form-group input:focus {
     border-color: #ffb46e;
     box-shadow: 0 0 10px rgba(255, 89, 0, 0.4);
 }
 
-/* Botão */
+/* --- BOTÃO E LINKS --- */
 .btn {
     width: 100%;
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: #ff6a00;
+    background: var(--primary-color);
     color: white;
     font-size: 17px;
     font-weight: bold;
@@ -152,11 +147,10 @@ body {
 }
 
 .btn:hover {
-    background: rgba(255, 87, 34, 0.6);
+    background: var(--primary-hover);
     transform: translateY(-2px);
 }
 
-/* Link */
 .link {
     text-align: center;
     margin-top: 20px;
