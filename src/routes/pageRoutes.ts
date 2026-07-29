@@ -1,23 +1,23 @@
 import { Router, Request, Response } from "express";
-import path from "path";
-import * as userController from "../controllers/clientController"
+import * as clientController from "../controllers/clientController"
+import { auth } from "../middlewares/auth";
 
 export const pageRoutes = Router();
 
-pageRoutes.get("/", userController.StartPage);
+pageRoutes.get("/", clientController.StartPage);
 
-pageRoutes.get("/login", userController.LoginPage);
+pageRoutes.get("/login", clientController.LoginPage);
 
-pageRoutes.get("/registro", userController.RegisterPage);
+pageRoutes.get("/registro", clientController.RegisterPage);
 
-pageRoutes.get("/perfil", (req: Request, res: Response) => {
+pageRoutes.get("/perfil", auth, (req: Request, res: Response) => {
     res.render("perfil");
 });
 
-pageRoutes.get("/store", (req: Request, res: Response) => {
+pageRoutes.get("/store", auth, (req: Request, res: Response) => {
     res.render("store");
 });
 
-pageRoutes.get("/carrinho", (req: Request, res: Response) => {
+pageRoutes.get("/carrinho", auth, (req: Request, res: Response) => {
     res.render("carrinho");
 });

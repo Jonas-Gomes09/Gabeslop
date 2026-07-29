@@ -1,16 +1,13 @@
 import { Router, Request, Response } from "express";
-import * as userController from "../controllers/clientController"
+import * as clientController from "../controllers/clientController"
 
 export const apiRoutes = Router();
 
 // LOGIN
-apiRoutes.post("/api/login", userController.CreateUser);
+apiRoutes.post("/api/login", clientController.LoginUser);
 
 // CADASTRO
-apiRoutes.post("/api/registro", userController.CreateUser);
-
-// LOGOUT
-apiRoutes.post("/api/logout", userController.CreateUser);
+apiRoutes.post("/api/registro", clientController.CreateUser);
 
 // BUSCAR GAME POR ID
 apiRoutes.get("/store/:id", (req: Request, res: Response) => {

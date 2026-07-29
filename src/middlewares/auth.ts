@@ -7,3 +7,11 @@ export function auth(req: Request, res: Response, next: NextFunction) {
 
     next();
 }
+
+export function admin(req: Request, res: Response, next: NextFunction) {
+    if (req.session.admin = false) {
+        res.status(403).json({message: "Acesso proibido"});
+        return res.redirect("/")
+    }
+    next();
+}
