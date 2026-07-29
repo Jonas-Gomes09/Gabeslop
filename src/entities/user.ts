@@ -5,9 +5,10 @@ export class user {
     private _senha: string;
     private _dataCriacao: string;
     private _totalCompras: number;
-    private _foto: string | null
+    private _foto: string | null;
+    private _perms: string; // permissões
 
-    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null) {
+    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null, perms: string) {
         this._id = id;
         this._nome = nome;
         this._email = email;
@@ -15,6 +16,7 @@ export class user {
         this._dataCriacao = dataCriacao;
         this._totalCompras = totalCompras;
         this._foto = foto
+        this._perms = perms
     }
 
     get id(): number {return this._id}
@@ -24,6 +26,7 @@ export class user {
     get dataCriacao(): string {return this._dataCriacao}
     get totalCompras(): number {return this._totalCompras}
     get foto(): string | null {return this._foto}
+    get perms(): string | null {return this._perms}
 
     set nome(valor: string) {
         if (!valor) {throw new Error("Título obrigatório")};
@@ -40,6 +43,9 @@ export class user {
 
     set foto(valor: string | null) {
         this.foto = valor
+    }
+    set perms(valor: string) {
+        this.perms = valor
     }
 
     static validar(dados: {nome?: string, email?: string, senha?: string}) {
@@ -58,7 +64,7 @@ export class user {
     }
 
     static fromJSON(json: any): user {
-        return new user(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto)
+        return new user(json.id, json.nome, json.email, json.senha, json.dataCriacao, json.totalCompras, json.foto, json.perms)
     }
 
     toJSON(): object {
@@ -69,7 +75,8 @@ export class user {
             senha: this._senha,
             dataCriacao: this._dataCriacao,
             totalCompras: this._totalCompras,
-            foto: this._foto
+            foto: this._foto,
+            perms: this._perms
           };
     }
 }

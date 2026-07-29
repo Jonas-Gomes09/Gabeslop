@@ -1,25 +1,21 @@
 import { Router, Request, Response } from "express";
+import path from "path";
+import * as userController from "../controllers/userController"
 
 export const pageRoutes = Router();
 
-pageRoutes.get("/", (req: Request, res: Response) => {
-    res.render("index");
-});
+pageRoutes.get("/", userController.StartPage);
 
-pageRoutes.get("/login", (req: Request, res: Response) => {
-    res.render("login");
-});
+pageRoutes.get("/login", userController.LoginPage);
 
-pageRoutes.get("/cadastro", (req: Request, res: Response) => {
-    res.render("cadastro");
-});
+pageRoutes.get("/registro", userController.registerPage);
 
 pageRoutes.get("/perfil", (req: Request, res: Response) => {
     res.render("perfil");
 });
 
-pageRoutes.get("/games", (req: Request, res: Response) => {
-    res.render("games");
+pageRoutes.get("/store", (req: Request, res: Response) => {
+    res.render("store");
 });
 
 pageRoutes.get("/carrinho", (req: Request, res: Response) => {

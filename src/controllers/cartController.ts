@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
+import { CartRepository } from "../models/cartRepository";
 
-export const listarCarrinho = (req: Request, res: Response): void => {
+const repo = new CartRepository()
+
+export async function listarCarrinho(req: Request, res: Response) {
+    const carrinho = repo.listarItens(req.session.carrinho)
     res.status(200).json({
         mensagem: "Listando os itens do carrinho"
     });
