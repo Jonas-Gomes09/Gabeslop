@@ -43,6 +43,7 @@ export async function CreateUser(req: Request, res: Response) {
         const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
         repo.cadastro(nome, email, senha, foto)
+        res.redirect("/login")
     } catch {
         return res.status(500).json({success: false, message: "POST userController CreateUser(req, res) | Falha ao criar o usuário"})
     }

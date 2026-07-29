@@ -43,7 +43,7 @@ export class userRepository {
         const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
 
         const users = await this.loadUsers()
-        const nextID = (users.length > 0 ? users[users.length - 1].id : 0) + 1;
+        const nextID = users.length++;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
         const permission = "client"
         const carrinho: [] = []
