@@ -18,6 +18,7 @@ export class userRepository {
         try {
             const content = await readFile(this.usersFile, "utf-8");
             const parsedContent = JSON.parse(content)
+            console.log("Usuários carregados")
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
             .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms, u.carrinho));
@@ -34,6 +35,7 @@ export class userRepository {
             await mkdir(this.directory, {recursive: true})
             const json = users.map(u=> u.toJSON());
             await writeFile(this.usersFile, JSON.stringify(json, null, 2))
+            console.log("Usuários salvos")
         } catch(e) {
             console.error("userRepository saveUsers:", e)
         }
@@ -79,7 +81,6 @@ export class userRepository {
         if (!senhaDecriptada) {
             return null
         }
-        console.log("login executado")
         return foundUser
     }
 
