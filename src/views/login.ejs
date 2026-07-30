@@ -23,13 +23,14 @@
         </nav>
     </header>
 
-
-    <div class="container" style="margin-top: 60px">
-
-        <div class="center">
-            <h2>GabeSlop</h2>
-            <p>Iniciar sessão</p>
+    <div class="card-shopping">
+        <img src="img/GSbg2.png" alt="foto da loja">
+        <div class="texto-sobreposto">
+          <h2>Você sabia?</h2>
+          <p>Que nossa loja é 20 anos liderança de venda de jogos e acessórios no Ceará</p>
         </div>
+      </div>
+    <div class="container" style="margin-top: 60px">
 
         <% if (flash) { %>
             <div class="flash">
@@ -61,9 +62,9 @@
                         required
                     >
                 </div>
-                <button type="button" onclick="window.location.href='/carrinho'">
+                <button type="button" class="btn" onclick="window.location.href='/carrinho'">
                     Entrar
-                </button>
+                  </button>
             </form>
 
             <div class="link">
