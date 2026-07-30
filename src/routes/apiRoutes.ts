@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import * as clientController from "../controllers/clientController"
+import { upload } from "../middlewares/upload";
 
 export const apiRoutes = Router();
 
@@ -7,7 +8,7 @@ export const apiRoutes = Router();
 apiRoutes.post("/api/login", clientController.LoginUser);
 
 // CADASTRO
-apiRoutes.post("/api/registro", clientController.CreateUser);
+apiRoutes.post("/api/registro", upload.single("foto"), clientController.CreateUser);
 
 // BUSCAR GAME POR ID
 apiRoutes.get("/store/:id", (req: Request, res: Response) => {
@@ -17,14 +18,14 @@ apiRoutes.get("/store/:id", (req: Request, res: Response) => {
 });
 
 // ADICIONAR GAME
-apiRoutes.post("/api/store", (req: Request, res: Response) => {
+apiRoutes.post("/api/store", upload.single("foto"), (req: Request, res: Response) => {
     res.json({
         sucesso: true
     });
 });
 
 // ATUALIZAR GAME
-apiRoutes.put("/api/store/:id", (req: Request, res: Response) => {
+apiRoutes.put("/api/store/:id", upload.single("foto"), (req: Request, res: Response) => {
     res.json({
         sucesso: true
     });

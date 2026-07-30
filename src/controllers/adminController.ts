@@ -1,0 +1,48 @@
+import {productRepository} from "../models/produtoRepository";
+import { Request, Response } from "express";
+
+const repo = new productRepository();
+
+
+// POST /api/store
+export async function CreateProduct(req: Request, res: Response) {
+    try {
+        const titulo = req.body.titulo;
+        const estoque = Number(req.body.estoque);
+        const foto = req.file ? req.file.filename : null;
+
+        const newProduct = await repo.criar(titulo, estoque, foto);
+        if (newProduct) {
+            res.status(201).json({
+                success: true,
+                produto: newProduct
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                mensagem: "Falha ao criar o produto."
+            });
+        }
+    } catch(e) {
+        console.log("Falha ao criar produto:", e)
+        res.status(500).json({
+            success: false,
+            mensagem: "adminController CreateProduct() | Erro interno do servidor."
+        });
+    }
+}
+
+
+// PUT /api/store/:id
+export async function UpdateEstoque(req: Request, res: Response) {
+    try {
+        const id = Number(req.params.id);
+        const estoque = Number(req.body.estoque); 
+    } catch(e) {
+            console.log("Falha ao atualizar estoque:", e)
+            res.status(500).json({
+                success: false,
+                mensagem: "adminController UpdateEstoque() | Erro interno do servidor."
+            });
+        }
+}

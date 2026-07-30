@@ -1,7 +1,7 @@
 import { Game } from "../entities/produto"
 import { readFile, writeFile, mkdir } from "fs/promises"
 
-export class gameRepository {
+export class productRepository {
     private gamesFile: string;
     private directory: string;
     private saltRounds: number;
@@ -40,8 +40,8 @@ export class gameRepository {
     }
 
     // Adicionar produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
-    async criar(titulo: string, vendas: number, estoque: number, disponibilidade: boolean, foto: string | null = null): Promise<Game> {
-        const erros = Game.validar({titulo, vendas})
+    async criar(titulo: string, estoque: number, foto: string | null = null): Promise<Game> {
+        const erros = Game.validar({titulo})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
         const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
@@ -54,11 +54,11 @@ export class gameRepository {
         throw new Error("Produto já está na loja.");
     }
     
-        disponibilidade = estoque > 0
+        const disponibilidade = estoque > 0
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, vendas, estoque, disponibilidade, foto)
+        const newUser = new Game(nextID, titulo, 0, estoque, disponibilidade, foto)
         games.push(newUser)
         await this.saveProducts(games)
         return newUser
