@@ -43,9 +43,7 @@ export class Game {
     }
 
     set disponivel(valor: boolean) {
-        if(this._estoque === 0) {
-            this._disponivel = false
-        } else { this._disponivel = true }
+        this._disponivel = valor
     }
 
     static validar(dados: {

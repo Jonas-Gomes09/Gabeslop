@@ -135,6 +135,7 @@ export class userRepository {
         }
 
         filter.nome = nome.trim()
+        await this.saveUsers(users)
         return filter.nome
     }
 
@@ -148,6 +149,7 @@ export class userRepository {
         }
 
         filter.totalCompras += 1
+        await this.saveUsers(users)
         return filter.totalCompras
     }
 }

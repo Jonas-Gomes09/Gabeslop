@@ -11,137 +11,127 @@ export class gameRepository {
         this.directory = directory
         this.saltRounds = saltRounds
     }
-    // Carregar usuários (SERVIDOR)
-    private async loadGames(): Promise<Game[]> {
+    // Carregar produtos (SERVIDOR)
+    private async loadProducts(): Promise<Game[]> {
         try {
             const content = await readFile(this.gamesFile, "utf-8");
             const parsedContent = JSON.parse(content)
-            console.log("Usuários carregados")
+            console.log("Produtos carregados")
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
             .map((g: any) => new Game(g.id, g.titulo, g.vendas, g.estoque, g.disponivel, g.foto));
         } catch {
             console.error("produtoRepository loadGames() | Não há nenhum produto presente.")
-            await this.saveGames([]);
+            await this.saveProducts([]);
             return []
         }
     }
 
-    // Salvar os usuários (SERVIDOR)
-    private async saveGames(users: Game[]): Promise<void> {
+    // Salvar os produtos (SERVIDOR)
+    private async saveProducts(products: Game[]): Promise<void> {
         try {
             await mkdir(this.directory, {recursive: true})
-            const json = users.map(u=> u.toJSON());
+            const json = products.map(p=> p.toJSON());
             await writeFile(this.gamesFile, JSON.stringify(json, null, 2))
-            console.log("Usuários salvos")
+            console.log("Produtos salvos")
         } catch(e) {
-            console.error("produtoRepository saveGames:", e)
+            console.error("produtoRepository saveProducts:", e)
         }
     }
 
-    // Adicionar usuário (CADASTRO DO CLIENTE)
-    async cadastro(titulo: string, vendas: number, foto: string | null = null): Promise<Game> {
+    // Adicionar produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
+    async criar(titulo: string, vendas: number, estoque: number, disponibilidade: boolean, foto: string | null = null): Promise<Game> {
         const erros = Game.validar({titulo, vendas})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
         const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
         
-        const games = await this.loadGames()
+        const games = await this.loadProducts()
 
-        const produtoExiste = games.some(g => g.titulo.toLowerCase() === titulo.toLowerCase());
+        // Verificação de existência do produto
+        const produtoExiste = games.some(g => g.titulo.trim().toLowerCase() === titulo.trim().toLowerCase());
     if (produtoExiste) {
-        throw new Error("Email já está cadastrado.");
+        throw new Error("Produto já está na loja.");
     }
+    
+        disponibilidade = estoque > 0
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, vendas, estoque, foto)
+        const newUser = new Game(nextID, titulo, vendas, estoque, disponibilidade, foto)
         games.push(newUser)
-        await this.saveGames(games)
+        await this.saveProducts(games)
         return newUser
     }
 
-    // Logar no usuário (CADASTRO DO CLIENTE)
-    async login(email: string, senha: string): Promise<user | null> {
-        const users = await this.loadUsers()
-        const foundUser = await users.find(u => u.email === email.trim())
-
-        if (!foundUser) {
-            return null
-        }
-
-        const senhaDecriptada = await bcrypt.compare(senha, foundUser?.senha)
-
-        if (!senhaDecriptada) {
-            return null
-        }
-        return foundUser
-    }
-
-    // Remover usuário (NAS INFORMAÇÕES DA CONTA DO CLIENTE)
-    async removeUser(id: number): Promise<Boolean> {
-        const users = await this.loadUsers()
-        const userIndex = users.findIndex(i => i.id === id)
-        if (userIndex === -1) {
+    // Remover produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
+    async removerProduto(id: number): Promise<Boolean> {
+        const products = await this.loadProducts()
+        const productIndex = products.findIndex(p => p.id === id)
+        if (productIndex === -1) {
             return false
         }
 
-        users.splice(id, 1)
+        products.splice(productIndex, 1)
+        await this.saveProducts(products)
         return true
     }
 
     // Listar todos (PAINEL DE MODERADOR)
-    async listAll(searchTerm?: string): Promise<user[]> {
-        let users = await this.loadUsers()
+    async listAll(searchTerm?: string): Promise<Game[]> {
+        let products = await this.loadProducts()
         if (searchTerm && searchTerm.trim()) {
             const lowercase = searchTerm.toLowerCase()
-            users = users.filter(u => u.nome.toLowerCase().includes(lowercase))
+            products = products.filter(p => p.titulo.toLowerCase().includes(lowercase))
         }
-        return users
+        return products
     }
 
-    // Procurar por ID (PAINEL DE MODERADOR / INFORMAÇÕES DA CONTA DO CLIENTE)
-    async userInfo(id: number): Promise<user | undefined> {
-        const users = await this.loadUsers()
-        const filter = users.find(u => u.id === id)
+    // Procurar por ID (PAINEL DE MODERADOR / LOJA)
+    async produtoInfo(id: number): Promise<Game | undefined> {
+        const products = await this.loadProducts()
+        const filter = products.find(p => p.id === id)
         
         if(!filter) {
-            console.log(`userRepository userInfo(${id}) | Usuário não encontrado`)
+            console.log(`produtoRepository produtoInfo(${id}) | Produto não encontrado`)
             return undefined
         }
 
         return filter
     }
 
-    // Atualizar nome de usuário (INFORMAÇÕES DA CONTA DO CLIENTE)
-    async updateUserName(id: number, nome: string): Promise<user["nome"]> {
-        const users = await this.loadUsers()
-        const filter = users.find(u => u.id === id)
+    // Compra de produto (CLIENTE, APÓS COMPRA)
+    async compra(id: number): Promise<Game | null> {
+        const products = await this.loadProducts()
+        const filter = products.find(p => p.id === id)
+        if (!filter) {
+            return null
+        }
+        if (filter.estoque <= 0) {
+            return null
+        }
+        filter.estoque -= 1
+        filter.vendas += 1
         
-        if(!filter) {
-            throw new Error(`userRepository updateUserName(${id}) | Usuário não encontrado`)
+        if (filter.estoque <= 0) {
+            filter.disponivel = false
         }
-
-        const erros = await user.validar({nome: nome})
-
-        if (erros.length > 0) {
-            throw new Error(erros.join(", "))
-        }
-
-        filter.nome = nome.trim()
-        return filter.nome
+        await this.saveProducts(products)
+        return filter
     }
 
-    // Atualizar o total de compras após uma compra (SERVIDOR)
-    async updateUserTotalCompras(id: number): Promise<user["totalCompras"]> {
-        const users = await this.loadUsers()
-        const filter = users.find(u => u.id === id)
+
+    // Atualizar estoque (PAINEL DE MODERADOR)
+    async atualizarEstoque(id: number, estoque: number): Promise<Game["estoque"]> {
+        const products = await this.loadProducts()
+        const filter = products.find(p => p.id === id)
         
         if(!filter) {
-            throw new Error(`userRepository updateUserTotalCompras(${id}) | Usuário não encontrado`)
+            throw new Error(`produtoRepository atualizarEstoque(${id}) | Produto não encontrado`)
         }
 
-        filter.totalCompras += 1
-        return filter.totalCompras
+        filter.estoque = estoque
+        await this.saveProducts(products)
+        return filter.estoque
     }
 }
