@@ -64,7 +64,7 @@ export async function LoginUser(req: Request, res: Response) {
         req.session.email = user.email
         req.session.carrinho = user.carrinho
 
-        if (req.session.admin = true) {
+        if (req.session.admin === true) {
             res.redirect("/admin/startpage")
         } else {
             res.redirect("/carrinho")
