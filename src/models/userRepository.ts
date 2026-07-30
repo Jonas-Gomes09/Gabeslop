@@ -1,6 +1,7 @@
 import {user} from "../entities/user"
 import { readFile, writeFile, mkdir } from "fs/promises"
 import bcrypt from "bcrypt"
+import { Carrinho } from "../entities/carrinho";
 
 export class userRepository {
     private usersFile: string;
@@ -17,9 +18,11 @@ export class userRepository {
         try {
             const content = await readFile(this.usersFile, "utf-8");
             const parsedContent = JSON.parse(content)
-            return parsedContent.map((d: any) => {user.fromJSON(d)})
+            return parsedContent
+            .filter((item: any) => item !== null && item !== undefined)
+            .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms, u.carrinho));
         } catch {
-            console.log("userRepository loadFiles() | Não há nenhum usuário cadastrado no banco de dados.")
+            console.error("userRepository loadFiles() | Não há nenhum usuário cadastrado no banco de dados.")
             await this.saveUsers([]);
             return []
         }
@@ -28,10 +31,11 @@ export class userRepository {
     // Salvar os usuários (SERVIDOR)
     private async saveUsers(users: user[]): Promise<void> {
         try {
+            await mkdir(this.directory, {recursive: true})
             const json = users.map(u=> u.toJSON());
             await writeFile(this.usersFile, JSON.stringify(json, null, 2))
-        } catch {
-            mkdir(this.directory, {recursive: true})
+        } catch(e) {
+            console.error("userRepository saveUsers:", e)
         }
     }
 
@@ -41,12 +45,18 @@ export class userRepository {
 
         if(erros.length > 0) throw new Error(erros.join(", "))
         const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
-
+        
         const users = await this.loadUsers()
-        const nextID = users.length++;
+
+        const emailExiste = users.some(u => u.email.toLowerCase() === email.toLowerCase());
+    if (emailExiste) {
+        throw new Error("Email já está cadastrado.");
+    }
+
+        const nextID = users.length + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
         const permission = "client"
-        const carrinho: [] = []
+        const carrinho: Carrinho[] = []
         
 
         const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission, carrinho)
@@ -69,6 +79,7 @@ export class userRepository {
         if (!senhaDecriptada) {
             return null
         }
+        console.log("login executado")
         return foundUser
     }
 

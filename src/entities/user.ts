@@ -1,3 +1,5 @@
+import { Carrinho } from "./carrinho";
+
 export class user {
     private _id: number;
     private _nome: string;
@@ -7,9 +9,9 @@ export class user {
     private _totalCompras: number;
     private _foto: string | null;
     private _perms: string; // permissões
-    private _carrinho: [];
+    private _carrinho: Carrinho[];
 
-    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null, perms: string, carrinho: []) {
+    constructor(id: number, nome: string, email: string, senha: string, dataCriacao: string, totalCompras: number, foto: string | null = null, perms: string, carrinho: Carrinho[]) {
         this._id = id;
         this._nome = nome;
         this._email = email;
@@ -23,35 +25,35 @@ export class user {
 
     get id(): number {return this._id}
     get nome(): string {return this._nome}
-    get email(): string {return this.email}
+    get email(): string {return this._email}
     get senha(): string {return this._senha}
     get dataCriacao(): string {return this._dataCriacao}
     get totalCompras(): number {return this._totalCompras}
     get foto(): string | null {return this._foto}
     get perms(): string | null {return this._perms}
-    get carrinho(): [] {return this._carrinho}
+    get carrinho(): Carrinho[] {return this._carrinho}
 
     set nome(valor: string) {
         if (!valor) {throw new Error("Título obrigatório")};
-        this.nome = valor.trim()
+        this._nome = valor.trim()
     }
 
     set dataCriacao(valor: string) {
-        this.nome = valor
+        this._nome = valor
     }
 
     set totalCompras(valor: number) {
-        this.totalCompras = valor
+        this._totalCompras = valor
     }
 
     set foto(valor: string | null) {
-        this.foto = valor
+        this._foto = valor
     }
     set perms(valor: string) {
-        this.perms = valor
+        this._perms = valor
     }
-    set carrinho(valor: []) {
-        this.carrinho = valor
+    set carrinho(valor: Carrinho[]) {
+        this._carrinho = valor
     }
 
     static validar(dados: {nome?: string, email?: string, senha?: string}) {
