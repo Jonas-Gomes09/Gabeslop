@@ -9,9 +9,10 @@ export async function CreateProduct(req: Request, res: Response) {
     try {
         const titulo = req.body.titulo;
         const estoque = Number(req.body.estoque);
+        const categoria = req.body.categoria;
         const foto = req.file ? req.file.filename : null;
 
-        const newProduct = await repo.criar(titulo, estoque, foto);
+        const newProduct = await repo.criar(titulo, estoque, categoria, foto);
         if (newProduct) {
             res.status(201).json({
                 success: true,

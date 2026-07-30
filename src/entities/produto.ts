@@ -4,6 +4,7 @@ export class Game {
     _vendas: number;
     _estoque: number;
     _disponivel: boolean;
+    _categoria: string;
     _foto: string | null;
 
     constructor(
@@ -12,6 +13,7 @@ export class Game {
         vendas: number,
         estoque: number,
         disponivel: boolean,
+        categoria: string,
         foto: string | null = null
     ) {
         this._id = id;
@@ -19,6 +21,7 @@ export class Game {
         this._vendas = vendas;
         this._estoque = estoque;
         this._disponivel = disponivel;
+        this._categoria = categoria;
         this._foto = foto;
     }
 
@@ -27,6 +30,7 @@ export class Game {
     get vendas(): number {return this._vendas}
     get estoque(): number {return this._estoque}
     get disponivel(): boolean {return this._disponivel}
+    get categoria(): string {return this._categoria}
     get foto(): string | null {return this._foto}
 
     set titulo(valor: string) {
@@ -46,19 +50,28 @@ export class Game {
         this._disponivel = valor
     }
 
+    set categoria(valor: string) {
+        this._categoria = valor
+    }
+
     static validar(dados: {
         titulo?: string;
         vendas?: number;
+        categoria?: string;
     }): string[] {
 
         const erros: string[] = [];
 
         if (!dados.titulo || dados.titulo.trim() === "") {
-            erros.push("Título obrigatório.");
+            erros.push("Título obrigatório");
         }
 
         if (dados.vendas === undefined || dados.vendas < 0) {
-            erros.push("Número de vendas inválido.");
+            erros.push("Número de vendas inválido");
+        }
+
+        if (!dados.categoria || dados.categoria.trim() === "") {
+            erros.push("O produto deve estar em uma categoria");
         }
 
         return erros;
@@ -71,6 +84,7 @@ export class Game {
             json.vendas,
             json.estoque,
             json.disponivel,
+            json.categoria,
             json.foto
         );
     }
@@ -82,6 +96,7 @@ export class Game {
             vendas: this._vendas,
             estoque: this._estoque,
             disponivel: this._disponivel,
+            categoria: this._categoria,
             foto: this._foto
         };
     }

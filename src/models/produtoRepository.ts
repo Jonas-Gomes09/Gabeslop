@@ -19,7 +19,7 @@ export class productRepository {
             console.log("Produtos carregados")
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
-            .map((g: any) => new Game(g.id, g.titulo, g.vendas, g.estoque, g.disponivel, g.foto));
+            .map((g: any) => new Game(g.id, g.titulo, g.vendas, g.estoque, g.disponivel, g.categoria, g.foto));
         } catch {
             console.error("produtoRepository loadGames() | Não há nenhum produto presente.")
             await this.saveProducts([]);
@@ -40,11 +40,10 @@ export class productRepository {
     }
 
     // Adicionar produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
-    async criar(titulo: string, estoque: number, foto: string | null = null): Promise<Game> {
-        const erros = Game.validar({titulo})
+    async criar(titulo: string, estoque: number, categoria: string, foto: string | null = null): Promise<Game> {
+        const erros = Game.validar({titulo, categoria})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
-        const dataCriacao = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
         
         const games = await this.loadProducts()
 
@@ -58,13 +57,13 @@ export class productRepository {
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, 0, estoque, disponibilidade, foto)
+        const newUser = new Game(nextID, titulo, 0, estoque, disponibilidade, categoria, foto)
         games.push(newUser)
         await this.saveProducts(games)
         return newUser
     }
 
-    // Remover produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
+    // Remover produto (VIA PAINEL DE MODERADOR)
     async removerProduto(id: number): Promise<Boolean> {
         const products = await this.loadProducts()
         const productIndex = products.findIndex(p => p.id === id)
