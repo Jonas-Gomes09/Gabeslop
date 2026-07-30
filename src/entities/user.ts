@@ -39,7 +39,7 @@ export class user {
     }
 
     set dataCriacao(valor: string) {
-        this._nome = valor
+        this._dataCriacao = valor
     }
 
     set totalCompras(valor: number) {

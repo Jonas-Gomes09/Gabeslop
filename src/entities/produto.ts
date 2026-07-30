@@ -1,35 +1,56 @@
 export class Game {
-    id: number;
-    titulo: string;
-    vendas: number;
-    avaliacao: number;
-    estoque: number;
-    disponivel: boolean;
-    foto: string | null;
+    _id: number;
+    _titulo: string;
+    _vendas: number;
+    _estoque: number;
+    _disponivel: boolean;
+    _foto: string | null;
 
     constructor(
         id: number,
         titulo: string,
         vendas: number,
-        avaliacao: number,
         estoque: number,
         disponivel: boolean,
         foto: string | null = null
     ) {
-        this.id = id;
-        this.titulo = titulo;
-        this.vendas = vendas;
-        this.avaliacao = avaliacao;
-        this.estoque = estoque;
-        this.disponivel = disponivel;
-        this.foto = foto;
+        this._id = id;
+        this._titulo = titulo;
+        this._vendas = vendas;
+        this._estoque = estoque;
+        this._disponivel = disponivel;
+        this._foto = foto;
+    }
+
+    get id(): number {return this._id}
+    get titulo(): string {return this._titulo}
+    get vendas(): number {return this._vendas}
+    get estoque(): number {return this._estoque}
+    get disponivel(): boolean {return this._disponivel}
+    get foto(): string | null {return this._foto}
+
+    set titulo(valor: string) {
+        if (!valor) {throw new Error("Título obrigatório")};
+        this._titulo = valor.trim()
+    }
+
+    set vendas(valor: number) {
+        this._vendas = valor
+    }
+
+    set estoque(valor: number) {
+        this._estoque = valor
+    }
+
+    set disponivel(valor: boolean) {
+        if(this._estoque === 0) {
+            this._disponivel = false
+        } else { this._disponivel = true }
     }
 
     static validar(dados: {
         titulo?: string;
         vendas?: number;
-        avaliacao?: number;
-        estoque?: number;
     }): string[] {
 
         const erros: string[] = [];
@@ -42,18 +63,6 @@ export class Game {
             erros.push("Número de vendas inválido.");
         }
 
-        if (
-            dados.avaliacao === undefined ||
-            dados.avaliacao < 0 ||
-            dados.avaliacao > 10
-        ) {
-            erros.push("A avaliação deve estar entre 0 e 10.");
-        }
-
-        if (dados.estoque === undefined || dados.estoque < 0) {
-            erros.push("Estoque inválido.");
-        }
-
         return erros;
     }
 
@@ -62,7 +71,6 @@ export class Game {
             json.id,
             json.titulo,
             json.vendas,
-            json.avaliacao,
             json.estoque,
             json.disponivel,
             json.foto
@@ -71,13 +79,12 @@ export class Game {
 
     toJSON(): object {
         return {
-            id: this.id,
-            titulo: this.titulo,
-            vendas: this.vendas,
-            avaliacao: this.avaliacao,
-            estoque: this.estoque,
-            disponivel: this.disponivel,
-            foto: this.foto
+            id: this._id,
+            titulo: this._titulo,
+            vendas: this._vendas,
+            estoque: this._estoque,
+            disponivel: this._disponivel,
+            foto: this._foto
         };
     }
 }
