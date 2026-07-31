@@ -15,7 +15,7 @@ export async function sessionCarrinho(req: Request, res: Response) {
 export async function listarCarrinho(req: Request, res: Response) {
     try {
         const carrinho = repo.listarItens(req.session.carrinho)
-    res.status(200).json({success: false, content: carrinho});
+        res.render("carrinho", {itens: carrinho})
     } catch {
         res.status(500).json({success: false, message: "GET cartController listarCarrinho(req, res) | Falha ao carregar o carrinho.ejs"})
     }
