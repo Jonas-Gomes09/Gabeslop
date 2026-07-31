@@ -150,15 +150,15 @@ body {
 }
 
 .rows-container {
-    margin-top: 0px; /* Mudado de -50px para 0px para desgrudar do banner */
+    margin-top: 0;
+    padding-bottom: 50px;
     position: relative;
     z-index: 10;
-    padding-bottom: 50px;
 }
 
 .row {
-    margin-left: 4%;
-    margin-bottom: 40px;
+    width: 92%;
+    margin: 0 auto 40px;
 }
 
 .row-title {
@@ -169,36 +169,38 @@ body {
 
 .row-posters {
     display: flex;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    padding: 20px 0;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
+    padding: 20px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    /* Esconde a barra de rolagem */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Esconde a barra de rolagem padrão para fins estéticos */
 .row-posters::-webkit-scrollbar {
     display: none;
 }
-.row-posters {
-    -ms-overflow-style: none;  /* IE e Edge */
-    scrollbar-width: none;     /* Firefox */
-}
 
 .poster {
-    max-height: 500px;
-    object-fit: contain;
-    transition: transform 450ms;
+    width: 330px;
+    height: 550px;
+    flex-shrink: 0;
+    object-fit: cover;
     border-radius: 4px;
     cursor: pointer;
+    transition: transform 450ms;
 }
 
 .poster:hover {
     transform: scale(1.08);
-}      
+}
 
-/* Posters Verticais (Estilo "Originais Netflix") */
 .poster-large {
-    max-height: 500px;
+    height: 600px;
 }
 
 .poster-large:hover {
@@ -232,27 +234,42 @@ body {
 }
 
 .carousel {
-  position: relative;
-  overflow: hidden;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
 }
+
+.carousel h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .carousel-track {
-  display: flex;
-  transition: transform 0.4s ease-in-out;
+    display: flex;
+    transition: transform 0.4s ease-in-out;
 }
+
 .carousel-item {
-  min-width: 100%;
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .carousel-item img {
-.imagem-horizontal {
-
+    width: 90%;
+    max-width: 2400px;
+    height: 550px;
     display: block;
-    width: 50%; /* Defina uma largura */
-    margin: 0 auto;
-    max-width: 1200px; 
-    height: auto;
-    display: block; 
-
+    object-fit: contain;
 }
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 .btn {
   position: absolute;
