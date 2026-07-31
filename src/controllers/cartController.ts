@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CartRepository } from "../models/cartRepository";
+import { user } from "../entities/user";
 
 const repo = new CartRepository()
 
@@ -15,7 +16,8 @@ export async function sessionCarrinho(req: Request, res: Response) {
 export async function listarCarrinho(req: Request, res: Response) {
     try {
         const carrinho = repo.listarItens(req.session.carrinho)
-    res.status(200).json({success: false, content: carrinho});
+        const username = req.session.userName
+        res.render("carrinho", {itens: carrinho, nome: username})
     } catch {
         res.status(500).json({success: false, message: "GET cartController listarCarrinho(req, res) | Falha ao carregar o carrinho.ejs"})
     }

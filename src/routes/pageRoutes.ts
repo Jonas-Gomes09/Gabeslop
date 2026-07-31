@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
-import * as clientController from "../controllers/clientController";
+import * as clientController from "../controllers/clientController"
+import * as cartController from "../controllers/cartController"
 import { admin, auth } from "../middlewares/auth";
 
 export const pageRoutes = Router();
@@ -14,13 +15,10 @@ pageRoutes.get("/perfil", auth, (req: Request, res: Response) => {
   res.render("perfil");
 });
 
-pageRoutes.get("/store", auth, (req: Request, res: Response) => {
-  res.render("store");
-});
+pageRoutes.get("/store", auth, clientController.StorePage);
 
-pageRoutes.get("/carrinho", auth, (req: Request, res: Response) => {
-  res.render("carrinho");
-});
+pageRoutes.get("/carrinho", auth, cartController.listarCarrinho);
+
 
 // ROTAS ADMIN
 pageRoutes.get("/admin", admin, (req: Request, res: Response) => {
