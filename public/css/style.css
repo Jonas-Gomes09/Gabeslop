@@ -244,17 +244,54 @@ body {
 }
 .carousel-item img {
 .imagem-horizontal {
-    width: 100%;
+
+    display: block;
+    width: 50%; /* Defina uma largura */
+    margin: 0 auto;
     max-width: 1200px; 
     height: auto;
     display: block; 
-    margin: 0 auto; 
+
 }
 }
 .btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  
+
+  width: 45px;
+  height: 45px;
+  border-radius: 50%; 
+  
+  background-color: rgba(255, 255, 255, 0.85); 
+  color: #333; 
+  border: none;
+  
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Interação */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10; 
 }
-#prev { left: 10px; }
-#next { right: 10px; }
+
+.btn:hover {
+  background-color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Efeito ao clicar (Active) */
+.btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+#prev { left: 15px; }
+#next { right: 15px; }
