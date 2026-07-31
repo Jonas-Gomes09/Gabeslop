@@ -230,3 +230,31 @@ body {
     align-items: center;
     gap: 15px;
 }
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+.carousel-item {
+  min-width: 100%;
+}
+.carousel-item img {
+.imagem-horizontal {
+    width: 100%;
+    max-width: 1200px; 
+    height: auto;
+    display: block; 
+    margin: 0 auto; 
+}
+}
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#prev { left: 10px; }
+#next { right: 10px; }

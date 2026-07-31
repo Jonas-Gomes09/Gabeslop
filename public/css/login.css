@@ -135,7 +135,7 @@ body {
 }
 
 /* --- BOTÃO E LINKS --- */
-.btn {
+.button {
     width: 100%;
     padding: 14px;
     border: none;
@@ -148,7 +148,7 @@ body {
     transition: 0.3s;
 }
 
-.btn:hover {
+.button:hover {
     background: rgba(255, 87, 34, 0.6);
     transform: translateY(-2px);
 }
@@ -170,7 +170,7 @@ body {
     position: fixed;
     top: 0px;           /* Colada no topo */
     left: 0px;          /* Colada na esquerda */
-    width: 67vw;        /* Ocupa 35% da largura da tela */
+    width: 59vw;        /* Ocupa 35% da largura da tela */
     height: 100vh;      /* Ocupa 100% da altura da tela */
     z-index: 1;         /* Garante a camada onde ela vai ficar */
   }
@@ -198,31 +198,3 @@ body {
     
     pointer-events: none;
   }
-.card-shopping::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  
-  /* Transição da esquerda (transparente) para a direita (preto) */
-  background: linear-gradient(
-    to right, 
-    rgba(0, 0, 0, 0) 60%, 
-    rgba(0, 0, 0, 1) 100%
-  );
-  
-  pointer-events: none;
-}
-.texto-sobreposto {
-    position: absolute;
-    
-    /* Posição na tela (ajuste como preferir) */
-    bottom: 20px; /* 20px de distância do fundo */
-    left: 20px;   /* 20px de distância da esquerda */
-    
-    color: #ffffff; /* Cor da letra (branca para destacar) */
-    z-index: 2;     /* Garante que o texto fique na frente */
-  }
-  
