@@ -8,7 +8,26 @@
     <link rel="stylesheet" href="/css/carrinho.css">
 </head>
 
-<body>
+<header class="navbar" id="nav">
+    <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
+      <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
+    </a>
+    
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Início</a></li>
+        <li><a href="/promocoes">Promoções</a></li>
+        <li><a href="/lancamentos">Lançamentos</a></li>
+  
+        <% if (typeof nome !== 'undefined' && nome) { %>
+          <li class="user-info">
+            <span class="user">👤 <%= nome %></span>
+            <a href="/logout" style="color: #E74C3C;">Sair</a>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+  </header>
 
 <div class="carrinho">
 

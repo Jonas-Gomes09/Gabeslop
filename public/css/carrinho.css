@@ -1,0 +1,78 @@
+/* --- VARIÁVEIS E RESET --- */
+:root {
+    --primary-color: #ff5722;
+    --primary-hover: #e64a19;
+    --brand-red: #E50914;
+    --bg-dark: #0a0a0a;
+    --text-light: #ffffff;
+    --font-heading: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- EFEITO DE LUZ DE FUNDO (SUAVE) --- */
+@keyframes luzesColoridas { 
+    0% { background-color: #0a0a0a; } 
+    50% { background-color: #1a0f12; } 
+    100% { background-color: #0a0a0a; }
+} 
+
+body { 
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    animation: luzesColoridas 12s infinite ease-in-out; 
+    overflow-x: hidden;
+} 
+
+
+/* --- NAVBAR --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(10px); /* Efeito de vidro fosco */
+    z-index: 1000;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.navbar.black {
+    background-color: #111111;
+    padding: 10px 5%;
+}
+
+.nav-logo img {
+    max-height: 100px;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
