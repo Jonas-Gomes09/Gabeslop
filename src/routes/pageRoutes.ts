@@ -19,9 +19,7 @@ pageRoutes.get("/perfil", auth, (req: Request, res: Response) => {
     res.render("perfil");
 });
 
-pageRoutes.get("/store", auth, (req: Request, res: Response) => {
-    res.render("store");
-});
+pageRoutes.get("/store", auth, clientController.StorePage);
 
 pageRoutes.get("/carrinho", auth, cartController.listarCarrinho);
 

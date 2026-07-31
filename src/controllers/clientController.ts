@@ -1,32 +1,56 @@
 import express, { Request, Response } from "express"
 import { userRepository } from "../models/userRepository"
+import { productRepository } from "../models/produtoRepository"
 // IMPORTAR SESSION
 
-const repo = new userRepository()
+const userRepo = new userRepository()
+const productRepo = new productRepository()
 
+
+// GET /
 export async function StartPage(req: Request, res: Response) {
     try {
         return res.render("telainicial", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o telainicial.ejs"})
     }
 }
+
+
+// GET /login
 export async function LoginPage(req: Request, res: Response) {
     try {
         return res.render("login", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "GET userController LoginPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "GET userController LoginPage(req, res) | Falha ao carregar o login.ejs"})
     }
 }
+
+
+// GET /registro
 export async function RegisterPage(req: Request, res: Response) {
     try {
         return res.render("registro", {flash: null})
     } catch {
-        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o index.html"})
+        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o registro.ejs"})
     }
 }
 
 
+// GET /store
+export async function StorePage(req: Request, res: Response) {
+    try {
+        const q = typeof req.query.q === "string" ? req.query.q : "";
+
+        const content = await productRepo.listAll(q)
+        return res.render("store", {itens: content})
+    } catch {
+        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o loja.ejs"})
+    }
+}
+
+
+// POST /api/registro
 export async function CreateUser(req: Request, res: Response) {
     try {
         const {nome, email, senha} = req.body
@@ -42,17 +66,19 @@ export async function CreateUser(req: Request, res: Response) {
         }
         const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-        repo.cadastro(nome, email, senha, foto)
+        userRepo.cadastro(nome, email, senha, foto)
         res.redirect("/login")
     } catch {
         return res.status(500).json({success: false, message: "POST userController CreateUser(req, res) | Falha ao criar o usuário"})
     }
 }
 
+
+// POST /api/login
 export async function LoginUser(req: Request, res: Response) {
     try {
         const {email, senha} = req.body
-        const user = await repo.login(email, senha)
+        const user = await userRepo.login(email, senha)
         if (!user || user === null) {
             req.session.flash = "Usuário ou senha incorretos"
             return res.redirect("/login")
