@@ -24,7 +24,7 @@ app.use(
     }
 }));
 
-app.use(helmet) // Middleware de segurança
+app.use(helmet()) // Middleware de segurança
 app.use(express.static("public")); // Utilizar arquivos estáticos
 app.set("view engine", "ejs"); // Renderizar páginas EJS
 app.set("views", "./src/views"); // Apontar automaticamente para a pasta views
