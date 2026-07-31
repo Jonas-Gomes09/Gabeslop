@@ -1,7 +1,7 @@
 # Gabeslop
 
-Esta API é feita somente para fins de estudo, e não é um produto real. há inclusive funções reais de compra nem venda
-O código, a logo e a empresa do website foram criados por nós (Jonas Gomes, Rafael Dias, Victor Gabriel e João Marvin). A empresa e produtos do website são totalmente fictícios.
+Esta API é feita somente para fins de estudo, e não é um produto real.
+O código, a logo e a empresa do website foram criados por nós (Jonas Gomes, Rafael Dias, Victor Gabriel e João Marvin). A empresa e produtos do website são fictícios, sendo apenas paródias de empresas reais.
 
 ## Dependências:
 
@@ -23,3 +23,7 @@ npm run dev
 ### Acessando o website
 
 Você pode acessar o site digitando "http://localhost:6767" ou "http://{IPv4 do dispositivo executando o servidor}:6767" no navegador enquanto o servidor está sendo executado (com o comando do passo 2 da seção "Executando o código").
+
+## Usando o website:
+
+1. Quando o site pede e-mail ou informações de cartão, etc., não é necessário que sejam reais. Cartão pode ser números aleatórios e o email pode ser escrito de qualquer forma (desde que contenha o caractére @). O site não verificará se estas informações realmente são verídicas já que ele é feito somente como uma demonstração, e não um produto real.
