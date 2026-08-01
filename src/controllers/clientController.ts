@@ -93,6 +93,19 @@ export async function StorePage(req: Request, res: Response) {
 }
 
 
+// Página do 403
+export async function ForbiddenPage(req: Request, res: Response) {
+    try {
+        req.session.flash = "Acesso proibido."
+        const flash = req.session.flash
+
+        return res.render("forbidden", {flash: flash})
+    } catch {
+        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o forbidden.ejs"})
+    }
+}
+
+
 // -------------------------------------------------------------------------------- //
 //                                       POST                                       //
 // -------------------------------------------------------------------------------- //
@@ -162,14 +175,17 @@ export async function LoginUser(req: Request, res: Response) {
 }
 
 
-// Página do 403
-export async function ForbiddenPage(req: Request, res: Response) {
+// Logoff
+export async function logoff(req: Request, res: Response) {
     try {
-        req.session.flash = "Acesso proibido."
-        const flash = req.session.flash
-
-        return res.render("forbidden", {flash: flash})
+        req.session.admin = undefined
+        req.session.email = undefined
+        req.session.userId = undefined
+        req.session.userName = undefined
+        req.session.flash = undefined
+        req.session.carrinho = []
+        res.redirect("/")
     } catch {
-        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
+        return res.status(500).json({success: false, message: "userController logoff | Falha ao carregar o sair do usuário"})
     }
 }

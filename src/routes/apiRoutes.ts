@@ -60,3 +60,6 @@ apiRoutes.post("/finalizar", (req: Request, res: Response) => {
         mensagem: "Compra finalizada."
     });
 });
+
+// SAIR DA CONTA
+apiRoutes.get("/logoff", clientController.logoff)
