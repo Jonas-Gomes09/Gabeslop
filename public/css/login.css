@@ -172,7 +172,7 @@ body {
     left: 0px;          /* Colada na esquerda */
     width: 59vw;        /* Ocupa 35% da largura da tela */
     height: 100vh;      /* Ocupa 100% da altura da tela */
-    z-index: 1;         /* Garante a camada onde ela vai ficar */
+    z-index: -1;         /* Garante a camada onde ela vai ficar */
   }
   
   .card-shopping img {

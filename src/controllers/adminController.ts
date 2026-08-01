@@ -1,14 +1,15 @@
 import {productRepository} from "../models/produtoRepository";
 import { Request, Response } from "express";
+import { consoleContent } from "../types/serverConsole";
 
-const repo = new productRepository();
+const productRepo = new productRepository();
 
 // GET /admin
 export async function AdminPage(req: Request, res: Response) {
     try {
         const flash = req.session.flash
         req.session.flash = "Olá, bem-vindo à central do administrador"
-        return res.render("admin", {flash: flash})
+        return res.render("admin", {flash: flash, console: consoleContent})
     } catch {
         return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
     }
@@ -22,7 +23,7 @@ export async function CreateProduct(req: Request, res: Response) {
         const categoria = req.body.categoria;
         const foto = req.file ? req.file.filename : null;
 
-        const newProduct = await repo.criar(titulo, estoque, categoria, foto);
+        const newProduct = await productRepo.criar(titulo, estoque, categoria, foto);
         if (newProduct) {
             res.status(201).json({
                 success: true,
@@ -48,7 +49,13 @@ export async function CreateProduct(req: Request, res: Response) {
 export async function UpdateEstoque(req: Request, res: Response) {
     try {
         const id = Number(req.params.id);
-        const estoque = Number(req.body.estoque); 
+        const estoque = Number(req.body.estoque);
+
+        const funcao = productRepo.atualizarEstoque(id, estoque)
+
+        if (funcao === null) {
+            req.session.flash = `Não foi encontrado nenhum produto com ID ${id}`
+        }
     } catch(e) {
             console.log("Falha ao atualizar estoque:", e)
             res.status(500).json({
