@@ -39,6 +39,7 @@ export class productRepository {
             consoleContent.push("Produtos salvos")
         } catch(e) {
             console.error("produtoRepository saveProducts:", e)
+            consoleContent.push(`produtoRepository saveProducts:, ${e}`)
         }
     }
 

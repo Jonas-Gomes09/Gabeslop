@@ -6,21 +6,28 @@
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-<main>
-    <h1 class="title">Painel do Administrador</h1>
 
-    <div class="menu-admin">
-        <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
-      <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
-        </a>
-        <button onclick="window.location.href='/admin/users'">USUÁRIOS</button>
-        <button onclick="window.location.href='/admin/products'">PRODUTOS</button>
-        <button onclick="window.location.href='/admin/products'">PRODUTOS</button>
+    <div class="sidebar">
+        <div class="logodiv">
+        <img class="logo" src="img/logoGabeSlop.png" alt="GabeSlop Logo">
+        <h1 class="title">PAINEL DO ADMINISTRADOR</h1>
+        </div>
+
+        <div class="buttons">
+            <button class="sideBarButton" onclick="window.location.href='/admin/users'">USUÁRIOS</button>
+            <button class="sideBarButton" onclick="window.location.href='/admin/products'">PRODUTOS</button>
+        </div>
     </div>
     <div class="console">
-
+        <h1 class="consoleTitle">Console</h1>
+        <% if (console.length == 0) { %>
+            <h3 class="consoleEmpty">Não há nada por aqui.</h3>
+        <% } else { %>
+            <% for(i = 0; i < console.length; i++) {%>
+                <p class="consoleItem"><%= console[i] %></p>
+            <% } %>
+        <% } %>
     </div>
-</main>
 
 </body>
 </html>

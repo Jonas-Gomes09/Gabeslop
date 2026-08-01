@@ -14,3 +14,6 @@ pageRoutes.get("/registro", clientController.RegisterPage);
 pageRoutes.get("/profile", clientAuth, clientController.ProfilePage);
 pageRoutes.get("/store", clientAuth, clientController.StorePage);
 pageRoutes.get("/carrinho", clientAuth, cartController.listarCarrinho);
+
+// pode ficar de easter egg talvez?
+pageRoutes.get("/forbidden", clientController.ForbiddenPage)

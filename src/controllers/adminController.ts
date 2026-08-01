@@ -1,8 +1,10 @@
 import {productRepository} from "../models/produtoRepository";
 import { Request, Response } from "express";
 import { consoleContent } from "../types/serverConsole";
+import { userRepository } from "../models/userRepository";
 
 const productRepo = new productRepository();
+const userRepo = new userRepository();
 
 // GET /admin
 export async function AdminPage(req: Request, res: Response) {
@@ -64,3 +66,9 @@ export async function UpdateEstoque(req: Request, res: Response) {
             });
         }
 }
+
+
+// Criar conta de admin (EXECUTADO AO LIGAR O SERVIDOR)
+async function adminUser() {
+    userRepo.cadastro("Admin", "admin@gabeslop.com", "admin123")
+} adminUser()

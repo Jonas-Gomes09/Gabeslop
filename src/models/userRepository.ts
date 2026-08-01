@@ -2,6 +2,7 @@ import {user} from "../entities/user"
 import { readFile, writeFile, mkdir } from "fs/promises"
 import bcrypt from "bcrypt"
 import { Carrinho } from "../entities/carrinho";
+import { consoleContent } from "../types/serverConsole";
 
 export class userRepository {
     private usersFile: string;
@@ -19,11 +20,14 @@ export class userRepository {
             const content = await readFile(this.usersFile, "utf-8");
             const parsedContent = JSON.parse(content)
             console.log("Usuários carregados")
+            consoleContent.push("Usuários carregados")
+
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
             .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms, u.carrinho));
         } catch {
-            console.error("userRepository loadFiles() | Não há nenhum usuário cadastrado no banco de dados.")
+            console.error("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
+            consoleContent.push("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
             await this.saveUsers([]);
             return []
         }
@@ -36,8 +40,11 @@ export class userRepository {
             const json = users.map(u=> u.toJSON());
             await writeFile(this.usersFile, JSON.stringify(json, null, 2))
             console.log("Usuários salvos")
+            consoleContent.push("Usuários salvos")
+
         } catch(e) {
-            console.error("userRepository saveUsers:", e)
+            console.error("ERRO: userRepository saveUsers:", e)
+            consoleContent.push(`ERRO: userRepository saveUsers:, ${e}`)
         }
     }
 

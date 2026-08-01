@@ -161,8 +161,13 @@ export async function LoginUser(req: Request, res: Response) {
 }
 
 
-
-// Criar conta de admin (EXECUTADO AO LIGAR O SERVIDOR)
-async function adminUser() {
-    userRepo.cadastro("Admin", "admin@gabeslop.com", "admin123")
-} adminUser()
+// Página do 403
+export async function ForbiddenPage(req: Request, res: Response) {
+    try {
+        const flash = req.session.flash
+        req.session.flash = "Acesso proibido."
+        return res.render("forbidden", {flash: flash})
+    } catch {
+        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
+    }
+}
