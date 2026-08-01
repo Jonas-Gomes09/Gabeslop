@@ -1,14 +1,14 @@
 import { Router } from "express";
 import * as clientController from "../controllers/clientController"
 import * as cartController from "../controllers/cartController"
-import { clientAuth } from "../middlewares/auth";
+import { clientAuth, jaLogado } from "../middlewares/auth";
 
 export const pageRoutes = Router();
 
 // ROTA PARA TODOS
 pageRoutes.get("/", clientController.StartPage);
-pageRoutes.get("/login", clientController.LoginPage);
-pageRoutes.get("/registro", clientController.RegisterPage);
+pageRoutes.get("/login", jaLogado, clientController.LoginPage);
+pageRoutes.get("/registro", jaLogado, clientController.RegisterPage);
 
 // ROTAS CLIENTE
 pageRoutes.get("/profile", clientAuth, clientController.ProfilePage);

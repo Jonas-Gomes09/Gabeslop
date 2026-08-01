@@ -19,3 +19,13 @@ export async function adminAuth(req: Request, res: Response, next: NextFunction)
 
     next();
 }
+
+export async function jaLogado(req: Request, res: Response, next: NextFunction) {
+    if (req.session.admin && req.session.userName) {
+        return res.redirect("/admin")
+    } else if (!req.session.admin && req.session.userName) {
+        return res.redirect("/carrinho")
+    }
+
+    next()
+}

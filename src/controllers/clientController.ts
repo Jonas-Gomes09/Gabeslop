@@ -17,8 +17,9 @@ const productRepo = new productRepository()
 export async function StartPage(req: Request, res: Response) {
     try {
         // Flash
-        const flash = req.session.flash
         req.session.flash = undefined
+        const flash = req.session.flash
+        
 
         // Carregar
         return res.render("telainicial", {flash: flash})
@@ -33,8 +34,8 @@ export async function ProfilePage(req: Request, res: Response) {
     try {
 
         // Flash
-        const flash = req.session.flash
         req.session.flash = undefined
+        const flash = req.session.flash
 
         // Carregar
         return res.render("administrador", {flash: flash})
@@ -50,7 +51,6 @@ export async function LoginPage(req: Request, res: Response) {
 
         // Flash
         const flash = req.session.flash
-        req.session.flash = undefined
 
         // Carregar
         return res.render("login", {flash: flash})
@@ -65,8 +65,8 @@ export async function RegisterPage(req: Request, res: Response) {
     try {
 
         // Flash
-        const flash = req.session.flash
         req.session.flash = undefined
+        const flash = req.session.flash
 
         // Carregar
         return res.render("registro", {flash: flash})
@@ -80,11 +80,12 @@ export async function RegisterPage(req: Request, res: Response) {
 export async function StorePage(req: Request, res: Response) {
     try {
         // Flash
-        const flash = req.session.flash
+        
         req.session.flash = undefined
         const q = typeof req.query.q === "string" ? req.query.q : "";
 
         const content = await productRepo.listAll(q)
+        const flash = req.session.flash
         return res.render("store", {itens: content, flash: flash})
     } catch {
         return res.status(500).json({success: false, message: "GET userController StorePage | Falha ao carregar o loja.ejs"})
@@ -99,7 +100,6 @@ export async function StorePage(req: Request, res: Response) {
 // POST /api/registro
 export async function CreateUser(req: Request, res: Response) {
     try {
-        const flash = req.session.flash
         req.session.flash = undefined
         const {nome, email, senha} = req.body
 
@@ -123,9 +123,10 @@ export async function CreateUser(req: Request, res: Response) {
         if (user === null) {
             req.session.flash = ("Já existe um usuário cadastrado com este e-mail!");
         }
-
+        
+        const flash = req.session.flash
         // Redirecionamento
-        res.redirect("/login")
+        res.render("login", {flash: flash})
     } catch {
         return res.status(500).json({success: false, message: "POST userController CreateUser | Falha ao criar o usuário"})
     }
@@ -164,8 +165,9 @@ export async function LoginUser(req: Request, res: Response) {
 // Página do 403
 export async function ForbiddenPage(req: Request, res: Response) {
     try {
-        const flash = req.session.flash
         req.session.flash = "Acesso proibido."
+        const flash = req.session.flash
+
         return res.render("forbidden", {flash: flash})
     } catch {
         return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
