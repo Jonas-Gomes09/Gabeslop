@@ -1,18 +1,45 @@
 import express, { Request, Response } from "express"
 import { userRepository } from "../models/userRepository"
 import { productRepository } from "../models/produtoRepository"
-// IMPORTAR SESSION
 
 const userRepo = new userRepository()
 const productRepo = new productRepository()
 
 
+
+
+
+// -------------------------------------------------------------------------------- //
+//                                       GET                                        //
+// -------------------------------------------------------------------------------- //
+
 // GET /
 export async function StartPage(req: Request, res: Response) {
     try {
-        return res.render("telainicial", {flash: null})
+        // Flash
+        const flash = req.session.flash
+        req.session.flash = undefined
+
+        // Carregar
+        return res.render("telainicial", {flash: flash})
     } catch {
-        return res.status(500).json({success: false, message: "userController StartPage(req, res) | Falha ao carregar o telainicial.ejs"})
+        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
+    }
+}
+
+
+// GET /profile
+export async function ProfilePage(req: Request, res: Response) {
+    try {
+
+        // Flash
+        const flash = req.session.flash
+        req.session.flash = undefined
+
+        // Carregar
+        return res.render("administrador", {flash: flash})
+    } catch {
+        return res.status(500).json({success: false, message: "userController ProfilePage | Falha ao carregar o administrador.ejs"})
     }
 }
 
@@ -20,9 +47,15 @@ export async function StartPage(req: Request, res: Response) {
 // GET /login
 export async function LoginPage(req: Request, res: Response) {
     try {
-        return res.render("login", {flash: null})
+
+        // Flash
+        const flash = req.session.flash
+        req.session.flash = undefined
+
+        // Carregar
+        return res.render("login", {flash: flash})
     } catch {
-        return res.status(500).json({success: false, message: "GET userController LoginPage(req, res) | Falha ao carregar o login.ejs"})
+        return res.status(500).json({success: false, message: "GET userController LoginPage | Falha ao carregar o login.ejs"})
     }
 }
 
@@ -30,9 +63,15 @@ export async function LoginPage(req: Request, res: Response) {
 // GET /registro
 export async function RegisterPage(req: Request, res: Response) {
     try {
-        return res.render("registro", {flash: null})
+
+        // Flash
+        const flash = req.session.flash
+        req.session.flash = undefined
+
+        // Carregar
+        return res.render("registro", {flash: flash})
     } catch {
-        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o registro.ejs"})
+        return res.status(500).json({success: false, message: "GET userController RegisterPage | Falha ao carregar o registro.ejs"})
     }
 }
 
@@ -40,36 +79,55 @@ export async function RegisterPage(req: Request, res: Response) {
 // GET /store
 export async function StorePage(req: Request, res: Response) {
     try {
+        // Flash
+        const flash = req.session.flash
+        req.session.flash = undefined
         const q = typeof req.query.q === "string" ? req.query.q : "";
 
         const content = await productRepo.listAll(q)
-        return res.render("store", {itens: content})
+        return res.render("store", {itens: content, flash: flash})
     } catch {
-        return res.status(500).json({success: false, message: "GET userController RegisterPage(req, res) | Falha ao carregar o loja.ejs"})
+        return res.status(500).json({success: false, message: "GET userController StorePage | Falha ao carregar o loja.ejs"})
     }
 }
 
 
+// -------------------------------------------------------------------------------- //
+//                                       POST                                       //
+// -------------------------------------------------------------------------------- //
+
 // POST /api/registro
 export async function CreateUser(req: Request, res: Response) {
     try {
+        const flash = req.session.flash
+        req.session.flash = undefined
         const {nome, email, senha} = req.body
 
+        // Verificação básica
         if (!nome || nome.trim() === "") {
             req.session.flash = "Insira um nome de usuário."
         }
         if (!email || email.includes("@")) {
-            req.session.flash = "Insira um email válido."
+            req.session.flash = "Insira um e-mail válido."
         }
         if (!senha || senha.length < 6) {
             req.session.flash = "Senha deve conter ao menos 6 caracteres.";
         }
+
+        // Imagem com multer
         const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-        userRepo.cadastro(nome, email, senha, foto)
+        // Cadastro no banco de dados
+        const user = userRepo.cadastro(nome, email, senha, foto)
+
+        if (user === null) {
+            req.session.flash = ("Já existe um usuário cadastrado com este e-mail!");
+        }
+
+        // Redirecionamento
         res.redirect("/login")
     } catch {
-        return res.status(500).json({success: false, message: "POST userController CreateUser(req, res) | Falha ao criar o usuário"})
+        return res.status(500).json({success: false, message: "POST userController CreateUser | Falha ao criar o usuário"})
     }
 }
 
@@ -77,6 +135,7 @@ export async function CreateUser(req: Request, res: Response) {
 // POST /api/login
 export async function LoginUser(req: Request, res: Response) {
     try {
+        req.session.flash = undefined
         const {email, senha} = req.body
         const user = await userRepo.login(email, senha)
         if (!user || user === null) {
@@ -91,12 +150,19 @@ export async function LoginUser(req: Request, res: Response) {
         req.session.carrinho = user.carrinho
 
         if (req.session.admin === true) {
-            res.redirect("/admin/startpage")
+            res.redirect("/admin")
         } else {
             res.redirect("/carrinho")
         }
         
     } catch {
-        return res.status(500).json({success: false, message: "POST userController LoginUser(req, res) | Falha ao criar o usuário"})
+        return res.status(500).json({success: false, message: "POST userController LoginUser | Falha ao criar o usuário"})
     }
 }
+
+
+
+// Criar conta de admin (EXECUTADO AO LIGAR O SERVIDOR)
+async function adminUser() {
+    userRepo.cadastro("Admin", "admin@gabeslop.com", "admin123")
+} adminUser()

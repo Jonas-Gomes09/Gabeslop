@@ -1,15 +1,22 @@
-// Importando
+// Importar módulos
 import express from "express";
 import session from "express-session";
 import helmet from "helmet";
 
+// Importar rotas
 import { pageRoutes } from "./routes/pageRoutes";
 import { apiRoutes } from "./routes/apiRoutes";
+import { adminRoutes } from "./routes/adminRoutes";
 
+// Importar middlewares
 import { logger } from "./middlewares/logger";
+
+
 
 // Facilitar a vida
 const app = express();
+
+
 
 // Cookie e sessão
 app.use(
@@ -24,17 +31,33 @@ app.use(
     }
 }));
 
-app.use(helmet()) // Middleware de segurança
-app.use(express.static("public")); // Utilizar arquivos estáticos
-app.set("view engine", "ejs"); // Renderizar páginas EJS
-app.set("views", "./src/views"); // Apontar automaticamente para a pasta views
 
-app.use(express.json()); // Permitir POST via JSON
-app.use(express.urlencoded({ extended: true })); // Permitir POST pelo navegador
+// Middleware de segurança
+app.use(helmet()) 
 
-app.use(logger); // Middleware para identificar os métodos e rotas executadas
+// Utilizar arquivos estáticos
+app.use(express.static("public")); 
 
-app.use(pageRoutes) // Rotas de páginas
-app.use(apiRoutes) // Rotas da API
+// Renderizar páginas EJS
+app.set("view engine", "ejs"); 
+
+// Apontar automaticamente para a pasta views
+app.set("views", "./src/views"); 
+
+// Permitir POST via JSON nn lembro direito
+app.use(express.json()); 
+
+// Permitir POST pelo navegador
+app.use(express.urlencoded({ extended: true })); 
+
+// Middleware para identificar os métodos e rotas executadas
+app.use(logger); 
+
+
+
+// Utilização das rotas
+app.use(pageRoutes)
+app.use(adminRoutes)
+app.use(apiRoutes)
 
 export default app;

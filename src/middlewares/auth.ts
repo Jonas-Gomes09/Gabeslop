@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export async function auth(req: Request, res: Response, next: NextFunction) {
+export async function clientAuth(req: Request, res: Response, next: NextFunction) {
     if (!req.session.userName) {
         return res.status(401).send("Faça login.");
     }
@@ -8,10 +8,10 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-export async function admin(req: Request, res: Response, next: NextFunction) {
-    if (req.session.admin = false) {
-        res.status(403).json({message: "Acesso proibido"});
-        return res.redirect("/")
+export async function adminAuth(req: Request, res: Response, next: NextFunction) {
+    if (!req.session.admin) {
+        return res.status(403).send("Acesso proibido");
     }
+
     next();
 }

@@ -1,7 +1,7 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import * as clientController from "../controllers/clientController"
 import * as cartController from "../controllers/cartController"
-import { admin, auth } from "../middlewares/auth";
+import { clientAuth } from "../middlewares/auth";
 
 export const pageRoutes = Router();
 
@@ -11,16 +11,6 @@ pageRoutes.get("/login", clientController.LoginPage);
 pageRoutes.get("/registro", clientController.RegisterPage);
 
 // ROTAS CLIENTE
-pageRoutes.get("/perfil", auth, (req: Request, res: Response) => {
-  res.render("perfil");
-});
-
-pageRoutes.get("/store", auth, clientController.StorePage);
-
-pageRoutes.get("/carrinho", auth, cartController.listarCarrinho);
-
-
-// ROTAS ADMIN
-pageRoutes.get("/admin", admin, (req: Request, res: Response) => {
-  res.render("administrador");
-});
+pageRoutes.get("/profile", clientAuth, clientController.ProfilePage);
+pageRoutes.get("/store", clientAuth, clientController.StorePage);
+pageRoutes.get("/carrinho", clientAuth, cartController.listarCarrinho);

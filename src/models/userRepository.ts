@@ -42,7 +42,7 @@ export class userRepository {
     }
 
     // Adicionar usuário (CADASTRO DO CLIENTE)
-    async cadastro(nome: string, email: string, senha: string, foto: string | null = null): Promise<user> {
+    async cadastro(nome: string, email: string, senha: string, foto: string | null = null): Promise<user | null> {
         const erros = user.validar({nome, email, senha})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
@@ -52,14 +52,15 @@ export class userRepository {
 
         const emailExiste = users.some(u => u.email.toLowerCase() === email.toLowerCase());
     if (emailExiste) {
-        throw new Error("Email já está cadastrado.");
+        return null;
     }
 
         const nextID = users.length + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
-        const permission = "client"
+        let permission = "client"
         const carrinho: Carrinho[] = []
         
+        if (email === "admin@gabeslop.com") {permission = "admin"}
 
         const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission, carrinho)
         users.push(newUser)

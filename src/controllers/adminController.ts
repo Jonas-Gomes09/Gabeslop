@@ -3,6 +3,16 @@ import { Request, Response } from "express";
 
 const repo = new productRepository();
 
+// GET /admin
+export async function AdminPage(req: Request, res: Response) {
+    try {
+        const flash = req.session.flash
+        req.session.flash = "Olá, bem-vindo à central do administrador"
+        return res.render("admin", {flash: flash})
+    } catch {
+        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o telainicial.ejs"})
+    }
+}
 
 // POST /api/store
 export async function CreateProduct(req: Request, res: Response) {
