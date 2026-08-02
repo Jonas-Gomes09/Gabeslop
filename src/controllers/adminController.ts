@@ -72,3 +72,22 @@ export async function UpdateEstoque(req: Request, res: Response) {
 async function adminUser() {
     userRepo.cadastro("Admin", "admin@gabeslop.com", "admin123")
 } adminUser()
+
+
+// Carregar usuários
+export async function loadUsers (req: Request, res: Response) {
+    const queryTerm = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+    const usuarios = await userRepo.listAll(queryTerm)
+    const dados = usuarios.map(u => u.toJSON())
+    res.json({sucesso: true, total: dados.length, dados: dados})
+}
+
+// Carregar usuários
+export async function loadProducts (req: Request, res: Response) {
+    const queryTerm = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+    const products = await productRepo.listAll(queryTerm)
+    const dados = products.map(u => u.toJSON())
+    res.json({sucesso: true, total: products.length, dados})
+}

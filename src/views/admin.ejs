@@ -14,20 +14,51 @@
         </div>
 
         <div class="buttons">
-            <button class="sideBarButton" onclick="window.location.href='/admin/users'">USUÁRIOS</button>
-            <button class="sideBarButton" onclick="window.location.href='/admin/products'">PRODUTOS</button>
+            <button class="sideBarButton" id="toggleConsole">CONSOLE</button>
+            <button class="sideBarButton" id="toggleUsers">USUÁRIOS</button>
+            <button class="sideBarButton" id="toggleProducts">PRODUTOS</button>
+            <button class="sideBarButton" id="logoff">SAIR</button>
         </div>
     </div>
-    <div class="console">
-        <h1 class="consoleTitle">Console</h1>
-        <% if (console.length == 0) { %>
-            <h3 class="consoleEmpty">Não há nada por aqui.</h3>
-        <% } else { %>
-            <% for(i = 0; i < console.length; i++) {%>
-                <p class="consoleItem"><%= console[i] %></p>
+    <div class="main">
+
+        <div class="nothinghere" id="nothinghere">
+            <h1 style="font-size: 5rem; color: rgba(255,255,255,.5);">Bem-vindo ao Painel de Administrador!</h1>
+            <p>Utilize os botões da barra lateral para navegar.</p>
+        </div>
+
+        <div class="console" id="console">        
+            <h1 class="consoleTitle">Console</h1>
+            <% if (console.length == 0) { %>
+                <h3 class="consoleEmpty">Ocorreu um erro ao carregar o console.</h3>
+            <% } else { %>
+                <% for(i = 0; i < console.length; i++) {%>
+                    <p class="consoleItem"><%= console[i] %></p>
+                <% } %>
             <% } %>
-        <% } %>
+        </div>
+
+        <div class="listdiv" id="users">
+            <p id="total" style="margin-bottom: 1rem;">Total: 0</p>
+            <div class="listarea" id="userlist">
+                <input type="text" class="searchbar" oninput="debounceUsers(event)" placeholder="Pesquise por usuários com e-mail">
+                <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando usuários...</h3>
+                <div id="ulist"></div>
+            </div>
+            
+        </div>
+
+        <div class="listdiv" id="products">
+            <p id="total" style="margin-bottom: 1rem;">Total: 0</p>
+            <div class="listarea" id="productlist">
+                <input type="text" class="searchbar" placeholder="Pesquise por nomes de produtos aqui">
+                <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando produtos...</h3>
+            </div>
+            
+        </div>
+
     </div>
 
+<script src="/js/admin.js"></script>
 </body>
 </html>

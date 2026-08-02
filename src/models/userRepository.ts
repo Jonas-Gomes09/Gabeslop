@@ -105,11 +105,11 @@ export class userRepository {
     }
 
     // Listar todos (PAINEL DE MODERADOR)
-    async listAll(searchTerm: string): Promise<user[]> {
+    async listAll(searchTerm?: string): Promise<user[]> {
         let users = await this.loadUsers()
         if (searchTerm && searchTerm.trim() !== "") {
             const lowercase = searchTerm.toLowerCase()
-            users = users.filter(u => u.nome.toLowerCase().includes(lowercase))
+            users = users.filter(u => u.email.toLowerCase().includes(lowercase))
         }
         return users
     }
