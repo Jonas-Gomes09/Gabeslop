@@ -120,7 +120,7 @@ export async function CreateUser(req: Request, res: Response) {
         if (!nome || nome.trim() === "") {
             req.session.flash = "Insira um nome de usuário."
         }
-        if (!email || email.includes("@")) {
+        if (!email || !email.includes("@")) {
             req.session.flash = "Insira um e-mail válido."
         }
         if (!senha || senha.length < 6) {
@@ -136,10 +136,8 @@ export async function CreateUser(req: Request, res: Response) {
         if (user === null) {
             req.session.flash = ("Já existe um usuário cadastrado com este e-mail!");
         }
-        
-        const flash = req.session.flash
         // Redirecionamento
-        res.render("login", {flash: flash})
+        res.redirect("/login")
     } catch {
         return res.status(500).json({success: false, message: "POST userController CreateUser | Falha ao criar o usuário"})
     }

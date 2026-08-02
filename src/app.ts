@@ -2,6 +2,7 @@
 import express from "express";
 import session from "express-session";
 import helmet from "helmet";
+import path from "path";
 
 // Importar rotas
 import { pageRoutes } from "./routes/pageRoutes";
@@ -37,6 +38,7 @@ app.use(helmet())
 
 // Utilizar arquivos estáticos
 app.use(express.static("public")); 
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Renderizar páginas EJS
 app.set("view engine", "ejs"); 

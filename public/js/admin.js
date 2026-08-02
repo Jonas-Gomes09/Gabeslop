@@ -67,7 +67,6 @@ async function showConsole() {
     nothingDiv.style.display = "none"
     usersDiv.style.display = "none"
     productsDiv.style.display = "none"
-    loadUsers()
 
 } toggleConsoleBtn.addEventListener('click', () => showConsole())
 

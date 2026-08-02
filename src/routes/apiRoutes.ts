@@ -17,27 +17,6 @@ apiRoutes.get("/store/:id", (req: Request, res: Response) => {
     });
 });
 
-// ADICIONAR GAME
-apiRoutes.post("/api/store", upload.single("foto"), (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
-
-// ATUALIZAR GAME
-apiRoutes.put("/api/store/:id", upload.single("foto"), (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
-
-// REMOVER GAME
-apiRoutes.delete("/games/:id", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
-
 // ADICIONAR GAME AO CARRINHO
 apiRoutes.post("/adicionar/:id", (req: Request, res: Response) => {
     res.json({
