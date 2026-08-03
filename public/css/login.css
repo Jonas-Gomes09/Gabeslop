@@ -134,8 +134,7 @@ body {
     box-shadow: 0 0 10px rgba(255, 89, 0, 0.4);
 }
 
-/* --- BOTÃO E LINKS --- */
-.button {
+.btn  {
     width: 100%;
     padding: 14px;
     border: none;
@@ -148,11 +147,10 @@ body {
     transition: 0.3s;
 }
 
-.button:hover {
+.btn :hover {
     background: rgba(255, 87, 34, 0.6);
     transform: translateY(-2px);
 }
-
 .link {
     text-align: center;
     margin-top: 20px;
