@@ -93,6 +93,60 @@ async function loadUsers(term) {
     }
 }
 
+// Carregar produtos
+async function loadProducts(term) {
+    const loading = document.getElementById("loading")
+    const list = document.getElementById("plist")
+
+    loading.style.display = "block"
+    try {
+        const url = term ? '/admin/products?q=' + encodeURIComponent(term) : '/admin/products'
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error("O servidor não retornou nenhuma resposta.")
+        }
+        const json = await response.json()
+        
+        productList(json.dados)
+        document.getElementById("total").textContent = `Total: ${json.total}`
+    } catch(e) {
+        list.innerHTML = `<p>Não foi possível carregar a lista.</p>`
+    } finally {
+        loading.style.display = "none"
+    }
+}
+
+// Exibir produtos
+function productList(products) {
+    const list = document.getElementById("plist")
+    if (products.length === 0) {
+        list.innerHTML = `<p>Nenhum usuário presente.</p>`
+        return
+    }
+    list.innerHTML = products.map(u =>
+        `<div class="plistitem">
+            <div class="foto">
+                <img style="max-height: 8rem; margin-top: .8rem" src=${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'} alt=${`Foto de perfil de: ` + u.nome}>
+            </div>
+            <div class="infos">
+                <h1>${u.titulo}</h1>
+                <div class="info">
+                <p>Preço: </p><span>${u.preco}</span>
+                </div>
+                <div class="info">
+                <p>Qtd. em Estoque: </p><span>${u.estoque}</span>
+                </div>
+                <div class="info">
+                <p>Categoria: </p><span>${u.categoria}</span>
+                </div>
+                <div class="info">
+                <p>Permissões: </p><span>${u.perms}</span>
+                </div>
+            </div>
+        </div>`
+        ).join('')
+}
+
 // Exibir usuários
 function userList(users) {
     const list = document.getElementById("ulist")
