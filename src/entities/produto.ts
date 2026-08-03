@@ -1,6 +1,7 @@
 export class Game {
     _id: number;
     _titulo: string;
+    _preco: number;
     _vendas: number;
     _estoque: number;
     _disponivel: boolean;
@@ -10,6 +11,7 @@ export class Game {
     constructor(
         id: number,
         titulo: string,
+        preco: number,
         vendas: number,
         estoque: number,
         disponivel: boolean,
@@ -18,6 +20,7 @@ export class Game {
     ) {
         this._id = id;
         this._titulo = titulo;
+        this._preco = preco;
         this._vendas = vendas;
         this._estoque = estoque;
         this._disponivel = disponivel;
@@ -27,6 +30,7 @@ export class Game {
 
     get id(): number {return this._id}
     get titulo(): string {return this._titulo}
+    get preco(): number {return this._preco}
     get vendas(): number {return this._vendas}
     get estoque(): number {return this._estoque}
     get disponivel(): boolean {return this._disponivel}
@@ -38,8 +42,12 @@ export class Game {
         this._titulo = valor.trim()
     }
 
+    set preco(valor: number) {
+        this._preco = valor
+    }
+
     set vendas(valor: number) {
-        this._vendas = valor
+        if (valor === undefined) {this._vendas = 0} else {this._vendas = valor}
     }
 
     set estoque(valor: number) {
@@ -56,6 +64,7 @@ export class Game {
 
     static validar(dados: {
         titulo?: string;
+        preco?: number;
         vendas?: number;
         categoria?: string;
     }): string[] {
@@ -66,7 +75,11 @@ export class Game {
             erros.push("Título obrigatório");
         }
 
-        if (dados.vendas === undefined || dados.vendas < 0) {
+        if (!dados.preco) {
+            erros.push("Por favor, forneça um preço para o produto.")
+        }
+
+        if (Number(dados.vendas) < 0) {
             erros.push("Número de vendas inválido");
         }
 
@@ -81,6 +94,7 @@ export class Game {
         return new Game(
             json.id,
             json.titulo,
+            json.preco,
             json.vendas,
             json.estoque,
             json.disponivel,
@@ -93,6 +107,7 @@ export class Game {
         return {
             id: this._id,
             titulo: this._titulo,
+            preco: this._preco,
             vendas: this._vendas,
             estoque: this._estoque,
             disponivel: this._disponivel,

@@ -44,8 +44,8 @@ export class productRepository {
     }
 
     // Adicionar produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
-    async criar(titulo: string, estoque: number, categoria: string, foto: string | null = null): Promise<Game | null> {
-        const erros = Game.validar({titulo, categoria})
+    async criar(titulo: string, preco: number, vendas: number, estoque: number, categoria: string, foto: string | null = null): Promise<Game | null> {
+        const erros = Game.validar({titulo, preco, categoria})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
         
@@ -61,7 +61,7 @@ export class productRepository {
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, 0, estoque, disponibilidade, categoria, foto)
+        const newUser = new Game(nextID, titulo, preco, vendas, estoque, disponibilidade, categoria, foto)
         games.push(newUser)
         await this.saveProducts(games)
         return newUser

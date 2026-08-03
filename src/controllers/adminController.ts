@@ -20,12 +20,10 @@ export async function AdminPage(req: Request, res: Response) {
 // POST /api/store
 export async function CreateProduct(req: Request, res: Response) {
     try {
-        const titulo = req.body.titulo;
-        const estoque = Number(req.body.estoque);
-        const categoria = req.body.categoria;
+        const {titulo, preco, estoque, categoria} = req.body
         const foto = req.file ? req.file.filename : null;
 
-        const newProduct = await productRepo.criar(titulo, estoque, categoria, foto);
+        const newProduct = await productRepo.criar(titulo, Number(preco), 0, Number(estoque), categoria, foto);
         if (newProduct) {
             res.status(201).json({
                 success: true,
