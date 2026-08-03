@@ -32,40 +32,35 @@
         </section>
     </main>
 
-<div class="carousel">
-    <h2>CONSOLES</h2>
-  <div class="carousel-track">
-    <div class="carousel-item"><img src="img/Ccdi2.png" alt="Pôster 1" class="anuncio"></div>
-    <div class="carousel-item"><img src="img/Cgbt.png" alt="Pôster 2" class="anuncio"></div>
-    <div class="carousel-item"><img src="img/Cgs.png" alt="Pôster 3" class="anuncio"></div>
+    <div class="carousel">
+      <h2>CONSOLES</h2>
+    <div class="carousel-track">
+      <div class="carousel-item"><img src="img/Ccdi2.png" alt="Pôster 1" class="anuncio"></div>
+      <div class="carousel-item"><img src="img/Cgbt.png" alt="Pôster 2" class="anuncio"></div>
+      <div class="carousel-item"><img src="img/Cgs.png" alt="Pôster 3" class="anuncio"></div>
+    </div>
+    <button id="prev" class="btn">Anterior</button>
+    <button id="next" class="btn">Próximo</button>
   </div>
-  <button id="prev" class="btn">Anterior</button>
-  <button id="next" class="btn">Próximo</button>
-</div>
-
-  <script>
-    const track = document.querySelector('.carousel-track');
-    const items = Array.from(track.children);
-    const nextButton = document.querySelector('#next');
-    const prevButton = document.querySelector('#prev');
-
-    let currentIndex = 0;
-
-    function updateCarousel() {
-      const amountToMove = -currentIndex * 100;
-      track.style.transform = `translateX(${amountToMove}%)`;
-    }
-
-    nextButton.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % items.length;
-      updateCarousel();
-    });
-
-    prevButton.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      updateCarousel();
-    });
-  </script>
+    <script>
+      const track = document.querySelector('.carousel-track');
+      const items = Array.from(track.children);
+      const nextButton = document.querySelector('#next');
+      const prevButton = document.querySelector('#prev');
+      let currentIndex = 0;
+      function updateCarousel() {
+        const amountToMove = -currentIndex * 100;
+        track.style.transform = `translateX(${amountToMove}%)`;
+      }
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+      });
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel();
+      });
+    </script>
 
         <section class="row">
             <h2 class="row-title">NOVOS LANÇAMENTOS</h2>
@@ -73,24 +68,30 @@
                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
                 <img src="img/REP.png" alt="Pôster 1" class="poster">
                 <img src="img/hm2.png" alt="Pôster 1" class="poster">
+                <img src="img/sAirp.png" alt="Pôster 1" class="poster">
+                <img src="img/MC2.png" alt="Pôster 1" class="poster">
                 </div> 
         </section>
 
         <section class="row">
             <h2 class="row-title">OFERTAS</h2>
             <div class="row-posters">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/shd.png" alt="Pôster 1" class="poster">
+              <img src="img/el3w.png" alt="Pôster 1" class="poster">
+              <img src="img/mePS6.8.png" alt="Pôster 1" class="poster">
+              <img src="img/linkq.png" alt="Pôster 1" class="poster">
+              <img src="img/a-m.png" alt="Pôster 1" class="poster">
                 </div> 
         </section>
 
         <section class="row">
             <h2 class="row-title">ITENS EXCLUSIVOS</h2>
             <div class="row-posters">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
-                 <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/lsh.png" alt="Pôster 1" class="poster">
+              <img src="img/lsh.png" alt="Pôster 1" class="poster">
                 </div> 
         </section>
 
