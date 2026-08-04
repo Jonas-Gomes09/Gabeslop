@@ -26,6 +26,7 @@ export async function CreateProduct(req: Request, res: Response) {
         const newProduct = await productRepo.criar(titulo, Number(preco), Number(estoque), categoria, foto);
         if (newProduct) {
             req.session.flash = "Produto adicionado!"
+            res.redirect("/admin")
         } else {
             res.status(400).json({
                 success: false,

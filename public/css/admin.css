@@ -97,7 +97,6 @@ body {
     height: 3rem;
     margin-bottom: 1rem;
     border-radius: .5rem;
-    border: none;
 
     outline: none;
     color: white;
@@ -106,6 +105,7 @@ body {
     transition: .3s ease;
     align-self: center;
     width: 90%;
+    border: 2px solid rgba(255,255,255,.2);
 }
 .sideBarButton:hover {
     background: red;
@@ -157,6 +157,7 @@ body {
     margin-bottom: 1rem;
 
     display: flex;
+    position: relative;
 }
 
 .plistitem {
@@ -168,6 +169,7 @@ body {
     margin-bottom: 1rem;
 
     display: flex;
+    position: relative;
 }
 
 .info {
@@ -179,4 +181,56 @@ body {
 
 .infos {
     margin-left: 1rem;
+}
+
+.prodbuttons {
+    width: 300px;
+    position:absolute;
+    right: -1rem;
+}
+
+.addpdiv {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+.addProduct {
+    padding: 1rem;
+    border: 2px solid rgb(44, 50, 56);
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 360px;
+    border-radius: 1rem;
+    margin: auto;
+}
+
+.addFile {
+    height: fit-content;
+    background: rgb(41, 0, 0);
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: .5rem;
+    color: white;
+    display: flex;
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.addFile:hover {
+    background: red;
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: .5rem;
+    color: rgb(41, 0, 0);
+    display: flex;
+    padding: .5rem;
+    cursor: pointer;
+    box-shadow: 0px 0px 20px 0px red;
+}
+
+.addFile::-webkit-file-upload-button {
+    display: none;
 }

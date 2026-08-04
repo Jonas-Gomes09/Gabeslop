@@ -15,9 +15,8 @@ const addProdBtn = document.getElementById("addProductPage") // Página de adici
 
 const submitProductBtn = document.getElementById("submitProduct") // Enviar produtio
 
-async function submitReload() {
-    loadProducts()
-    showProducts()
+function submitReload() {
+    window.location.reload()
 
 } submitProductBtn.addEventListener('click', () => submitReload())
 
@@ -135,7 +134,7 @@ function productList(products) {
     list.innerHTML = products.map(p =>
         `<div class="plistitem">
             <div class="foto">
-                <img style="max-height: 8rem; margin-top: .8rem" src="/uploads/${p.foto}" alt="${`Imagem de: ` + p.titulo}">
+                <img style="max-height: 8rem; max-width: 8rem; margin-top: .8rem; border-radius: .5rem" src="/uploads/${p.foto}" alt="${`Imagem de: ` + p.titulo}">
             </div>
             <div class="infos">
                 <h1>${p.titulo}</h1>
@@ -154,6 +153,11 @@ function productList(products) {
                 <div class="info">
                 <p>Categoria: </p><span>${p.categoria}</span>
                 </div>
+            </div>
+            <div class="prodbuttons">
+                <button class="sideBarButton">ATUALIZAR ESTOQUE</button>
+                <button class="sideBarButton">EXCLUIR PRODUTO</button>
+                <button class="sideBarButton">ATUALIZAR INFORMAÇÕES</button>
             </div>
         </div>`
         ).join('')
@@ -194,7 +198,7 @@ function userList(users) {
     list.innerHTML = users.map(u =>
         `<div class="ulistitem">
             <div class="foto">
-                <img style="max-height: 8rem; margin-top: .8rem" src="${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'}" alt="${`Foto de perfil de: ` + u.nome}">
+                <img style="max-height: 8rem; margin-top: .8rem; border-radius: .3rem" src="${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'}" alt="${`Foto de perfil de: ` + u.nome}">
             </div>
             <div class="infos">
                 <h1>${u.nome}</h1>
