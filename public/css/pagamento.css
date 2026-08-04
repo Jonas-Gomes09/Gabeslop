@@ -1,0 +1,129 @@
+@keyframes luzesColoridas { 
+    0% { background-color: #0a0a0a; } 
+    50% { background-color: #1a0f12; } 
+    100% { background-color: #0a0a0a; }
+} 
+
+body { 
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    animation: luzesColoridas 12s infinite ease-in-out; 
+    overflow-x: hidden;
+    justify-content: center; /* Centraliza na horizontal */
+} 
+h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.row {
+    background-color: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 56, 56, 0.08);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto; 
+}
+.row-cartoes {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.row-cartaoCredito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    flex-wrap: wrap; 
+}
+
+.poster {
+    width: 90px;
+    height: 60px;
+    object-fit: contain;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.poster:hover {
+    border-color: #ff0000;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.15);
+}
+
+.rodape-seguranca {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;    
+    padding: 20px 0;   
+    width: 100%;
+}
+
+.certificado {
+    max-width: 250px; 
+    height: auto;
+}
+
+.logo {
+    max-width: 200;
+    display: block;
+    margin: 0 auto 20px auto; 
+    width: 1200; 
+    height: auto;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 1200; 
+    height: auto;
+}
+
+.btn-finalizar {
+    background-color: #22c55e; 
+    color: #ffffff;       
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;          
+    width: 100%;        
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-finalizar:hover {
+    background-color: #16a34a;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.btn-finalizar:active {
+    transform: translateY(0);
+}
