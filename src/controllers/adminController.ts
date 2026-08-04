@@ -23,12 +23,9 @@ export async function CreateProduct(req: Request, res: Response) {
         const {titulo, preco, estoque, categoria} = req.body
         const foto = req.file ? req.file.filename : null;
 
-        const newProduct = await productRepo.criar(titulo, Number(preco), 0, Number(estoque), categoria, foto);
+        const newProduct = await productRepo.criar(titulo, Number(preco), Number(estoque), categoria, foto);
         if (newProduct) {
-            res.status(201).json({
-                success: true,
-                produto: newProduct
-            });
+            req.session.flash = "Produto adicionado!"
         } else {
             res.status(400).json({
                 success: false,
@@ -87,5 +84,5 @@ export async function loadProducts (req: Request, res: Response) {
 
     const products = await productRepo.listAll(queryTerm)
     const dados = products.map(u => u.toJSON())
-    res.json({sucesso: true, total: products.length, dados})
+    res.json({sucesso: true, total: products.length, dados: dados})
 }

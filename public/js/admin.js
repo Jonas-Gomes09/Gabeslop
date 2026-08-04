@@ -5,18 +5,30 @@ const nothingDiv = document.getElementById("nothinghere") // Tela de bem-vindo
 const consoleDiv = document.getElementById("console") // Tela do console
 const usersDiv = document.getElementById("users")
 const productsDiv = document.getElementById("products")
+const addProductDiv = document.getElementById("addProduct")
 
 const toggleConsoleBtn = document.getElementById("toggleConsole") // Botão de mostrar console
 const toggleUsersBtn = document.getElementById("toggleUsers") // Botão de mostrar console
 const toggleProductsBtn = document.getElementById("toggleProducts") // Botão de mostrar console
 const logoffBtn = document.getElementById("logoff") // Botão de sair
+const addProdBtn = document.getElementById("addProductPage") // Página de adicionar produto
+
+const submitProductBtn = document.getElementById("submitProduct") // Enviar produtio
+
+async function submitReload() {
+    loadProducts()
+    showProducts()
+
+} submitProductBtn.addEventListener('click', () => submitReload())
 
 async function showNothingDiv() {
     consoleDiv.style.display = "none"
     nothingDiv.style.display = "flex"
     usersDiv.style.display = "none"
     productsDiv.style.display = "none"
+    addProductDiv.style.display = "none"
     loadUsers()
+    loadProducts()
 }
 
 // Fazer o botão "SAIR" fazer logoff
@@ -37,6 +49,7 @@ async function showUsers() {
     nothingDiv.style.display = "none"
     consoleDiv.style.display = "none"
     productsDiv.style.display = "none"
+    addProductDiv.style.display = "none"
     
 } toggleUsersBtn.addEventListener('click', () => {showUsers()})
 
@@ -52,6 +65,7 @@ async function showProducts() {
     nothingDiv.style.display = "none"
     consoleDiv.style.display = "none"
     productsDiv.style.display = "flex"
+    addProductDiv.style.display = "none"
     
 } toggleProductsBtn.addEventListener('click', () => showProducts())
 
@@ -67,31 +81,26 @@ async function showConsole() {
     nothingDiv.style.display = "none"
     usersDiv.style.display = "none"
     productsDiv.style.display = "none"
+    addProductDiv.style.display = "none"
 
 } toggleConsoleBtn.addEventListener('click', () => showConsole())
 
-// Carregar usuários
-async function loadUsers(term) {
-    const loading = document.getElementById("loading")
-    const list = document.getElementById("ulist")
 
-    loading.style.display = "block"
-    try {
-        const url = term ? '/admin/users?q=' + encodeURIComponent(term) : '/admin/users'
-        const response = await fetch(url)
-        if (!response.ok) {
-            throw new Error("O servidor não retornou nenhuma resposta.")
-        }
-        const json = await response.json()
-        
-        userList(json.dados)
-        document.getElementById("total").textContent = `Total: ${json.total}`
-    } catch(e) {
-        list.innerHTML = `<p>Não foi possível carregar a lista.</p>`
-    } finally {
-        loading.style.display = "none"
-    }
-}
+// Página de adicionar produtos
+async function showAddProduct() {
+    toggleUsersBtn.disabled = false
+    toggleConsoleBtn.disabled = false
+    toggleProductsBtn.disabled = false
+
+    consoleDiv.style.display = "none"
+    nothingDiv.style.display = "none"
+    usersDiv.style.display = "none"
+    productsDiv.style.display = "none"
+    addProductDiv.style.display = "flex"
+} addProdBtn.addEventListener('click', () => showAddProduct())
+
+
+
 
 // Carregar produtos
 async function loadProducts(term) {
@@ -108,7 +117,7 @@ async function loadProducts(term) {
         const json = await response.json()
         
         productList(json.dados)
-        document.getElementById("total").textContent = `Total: ${json.total}`
+        document.getElementById("producttotal").textContent = `Total: ${json.total}`
     } catch(e) {
         list.innerHTML = `<p>Não foi possível carregar a lista.</p>`
     } finally {
@@ -120,32 +129,60 @@ async function loadProducts(term) {
 function productList(products) {
     const list = document.getElementById("plist")
     if (products.length === 0) {
-        list.innerHTML = `<p>Nenhum usuário presente.</p>`
+        list.innerHTML = `<p>Nenhum produto presente.</p>`
         return
     }
-    list.innerHTML = products.map(u =>
+    list.innerHTML = products.map(p =>
         `<div class="plistitem">
             <div class="foto">
-                <img style="max-height: 8rem; margin-top: .8rem" src=${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'} alt=${`Foto de perfil de: ` + u.nome}>
+                <img style="max-height: 8rem; margin-top: .8rem" src="/uploads/${p.foto}" alt="${`Imagem de: ` + p.titulo}">
             </div>
             <div class="infos">
-                <h1>${u.titulo}</h1>
+                <h1>${p.titulo}</h1>
                 <div class="info">
-                <p>Preço: </p><span>${u.preco}</span>
+                <p>Preço: </p><span>${p.preco}</span>
                 </div>
                 <div class="info">
-                <p>Qtd. em Estoque: </p><span>${u.estoque}</span>
+                <p>Vendas: </p><span>${p.vendas}</span>
                 </div>
                 <div class="info">
-                <p>Categoria: </p><span>${u.categoria}</span>
+                <p>Qtd. em Estoque: </p><span>${p.estoque}</span>
                 </div>
                 <div class="info">
-                <p>Permissões: </p><span>${u.perms}</span>
+                <p>Disponibilidade: </p><span>${p.disponivel}</span>
+                </div>
+                <div class="info">
+                <p>Categoria: </p><span>${p.categoria}</span>
                 </div>
             </div>
         </div>`
         ).join('')
 }
+
+
+// Carregar usuários
+async function loadUsers(term) {
+    const loading = document.getElementById("loading")
+    const list = document.getElementById("ulist")
+
+    loading.style.display = "block"
+    try {
+        const url = term ? '/admin/users?q=' + encodeURIComponent(term) : '/admin/users'
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error("O servidor não retornou nenhuma resposta.")
+        }
+        const json = await response.json()
+        
+        userList(json.dados)
+        document.getElementById("usertotal").textContent = `Total: ${json.total}`
+    } catch(e) {
+        list.innerHTML = `<p>Não foi possível carregar a lista.</p>`
+    } finally {
+        loading.style.display = "none"
+    }
+}
+
 
 // Exibir usuários
 function userList(users) {
@@ -157,7 +194,7 @@ function userList(users) {
     list.innerHTML = users.map(u =>
         `<div class="ulistitem">
             <div class="foto">
-                <img style="max-height: 8rem; margin-top: .8rem" src=${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'} alt=${`Foto de perfil de: ` + u.nome}>
+                <img style="max-height: 8rem; margin-top: .8rem" src="${u.foto ? u.foto : u.perms==="admin" ? 'img/adminpfp.png' : 'img/missingpfp.png'}" alt="${`Foto de perfil de: ` + u.nome}">
             </div>
             <div class="infos">
                 <h1>${u.nome}</h1>

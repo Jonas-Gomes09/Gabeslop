@@ -5,12 +5,10 @@ import { consoleContent } from "../types/serverConsole";
 export class productRepository {
     private gamesFile: string;
     private directory: string;
-    private saltRounds: number;
 
-    constructor(gamesFile: string = "data/products.json", directory: string = "data", saltRounds = 10) {
+    constructor(gamesFile: string = "data/products.json", directory: string = "data") {
         this.gamesFile = gamesFile
         this.directory = directory
-        this.saltRounds = saltRounds
     }
     // Carregar produtos (SERVIDOR)
     private async loadProducts(): Promise<Game[]> {
@@ -21,7 +19,7 @@ export class productRepository {
             consoleContent.push("Produtos carregados")
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
-            .map((g: any) => new Game(g.id, g.titulo, g.vendas, g.estoque, g.disponivel, g.categoria, g.foto));
+            .map((g: any) => new Game(g.id, g.titulo, g.preco, g.vendas, g.estoque, g.disponivel, g.categoria, g.foto));
         } catch {
             console.error("produtoRepository loadGames() | Não há nenhum produto presente.")
             await this.saveProducts([]);
@@ -44,7 +42,7 @@ export class productRepository {
     }
 
     // Adicionar produto (CRIAÇÃO VIA PAINEL DE ADMINISTRADOR)
-    async criar(titulo: string, preco: number, vendas: number, estoque: number, categoria: string, foto: string | null = null): Promise<Game | null> {
+    async criar(titulo: string, preco: number, estoque: number, categoria: string, foto: string | null = null): Promise<Game | null> {
         const erros = Game.validar({titulo, preco, categoria})
 
         if(erros.length > 0) throw new Error(erros.join(", "))
@@ -61,7 +59,7 @@ export class productRepository {
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, preco, vendas, estoque, disponibilidade, categoria, foto)
+        const newUser = new Game(nextID, titulo, preco, 0, estoque, disponibilidade, categoria, foto)
         games.push(newUser)
         await this.saveProducts(games)
         return newUser

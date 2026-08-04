@@ -20,7 +20,7 @@
             <button class="sideBarButton" id="logoff">SAIR</button>
         </div>
     </div>
-    <div class="main" style="overflow: hidden;">
+    <div class="main">
 
         <div class="nothinghere" id="nothinghere">
             <h1 style="font-size: 5rem; color: rgba(255,255,255,.5);">Bem-vindo ao Painel de Administrador!</h1>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="listdiv" id="users">
-            <p id="total" style="margin-bottom: 1rem;">Total: 0</p>
+            <p id="usertotal" style="margin-bottom: 1rem;">Total: 0</p>
             <div class="listarea" id="userlist">
                 <input type="text" class="searchbar" oninput="debounceUsers(event)" placeholder="Pesquise por usuários com e-mail">
                 <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando usuários...</h3>
@@ -49,9 +49,9 @@
         </div>
 
         <div class="listdiv" id="products">
-            <p id="total" style="margin-bottom: 1rem;">Total: 0</p>
+            <p id="producttotal" style="margin-bottom: 1rem;">Total: 0</p>
             <div class="listarea" id="productlist">
-                <button class="sideBarButton" id="toggleConsole">ADICIONAR</button>
+                <button class="sideBarButton" id="addProductPage">ADICIONAR</button>
                 <input type="text" class="searchbar" placeholder="Pesquise por nomes de produtos aqui">
                 <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando produtos...</h3>
                 
@@ -60,7 +60,7 @@
             
         </div>
 
-        <div class="addProduct">
+        <div class="addProduct" id="addProduct">
             <form method="POST" action="/admin/store" enctype="multipart/form-data">
                 <label>Nome do produto</label><input type="text" name="titulo" placeholder="Digite um nome para o produto" required>
                 <label>Preço em R$</label><input type="number" name="preco" required> 
@@ -71,7 +71,7 @@
                     <option value="Jogo">Jogo</option>
                 </select>
                 <label>Foto do produto</label><input type="file" name="foto" accept="image/*" required>
-                <button type="submit">Enviar</button>
+                <button type="submit" id="submitProduct">Enviar</button>
             </form>
         </div>
 

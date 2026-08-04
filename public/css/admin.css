@@ -48,12 +48,16 @@ body {
     margin: auto;
     width: calc(100vw - 250px - 6rem);
     padding: 1rem;
-    overflow: scroll;
     margin-top: 2rem;
-
+    overflow: scroll;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;
+}
+
+.main::-webkit-scrollbar {
+    background: transparent;
 }
 
 .nothinghere {
@@ -145,6 +149,17 @@ body {
 }
 
 .ulistitem {
+    background-color: rgb(20, 24, 29);
+    border-radius: 1rem;
+    border: 2px solid rgb(44, 50, 56);
+    padding: 1rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    display: flex;
+}
+
+.plistitem {
     background-color: rgb(20, 24, 29);
     border-radius: 1rem;
     border: 2px solid rgb(44, 50, 56);
