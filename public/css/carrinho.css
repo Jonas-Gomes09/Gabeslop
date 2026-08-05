@@ -162,3 +162,8 @@ body {
   button.btn-remover:hover {
     background-color: #dc2626;
   }
+
+  .user-avatar {
+    max-height: 5rem;
+    max-width: 5rem;
+  }

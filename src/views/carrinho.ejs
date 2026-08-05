@@ -6,6 +6,7 @@
     <title>Carrinho</title>
 
     <link rel="stylesheet" href="/css/carrinho.css">
+
 </head>
 
 <header class="navbar" id="nav">
@@ -21,33 +22,23 @@
 
       <% if (typeof nome !== 'undefined' && nome) { %>
         <li class="user-info">
-          <img id="avatar-header" src="img/avatar-padrao.png" alt="Foto do usuário" class="user-avatar">
-          
-          <span class="user"> <%= nome %></span>
-          <a href="/logoff" style="color: #E74C3C;">Sair</a>
+          <!-- Se tiver foto, usa a foto enviada; se não tiver, usa a padrão -->
+          <img 
+            id="avatar-header" 
+            
+            alt="Foto de perfil de: <%= nome %>" 
+            class="user-avatar"
+            src=<%= foto %>
+          >
+          <span class="user"><%= nome %></span>
+          <a href="/logoff" style="color: #E74C3C">Sair</a>
         </li>
       <% } %>
+
 
     </ul>
   </nav>
 </header>
-
-<script>
-  const fotoInput = document.getElementById('foto-input');
-  const avatarHeader = document.getElementById('avatar-header');
-
-  if (fotoInput && avatarHeader) {
-    fotoInput.addEventListener('change', function(event) {
-      const arquivo = event.target.files[0];
-
-      if (arquivo) {
-        const urlImagem = URL.createObjectURL(arquivo);
-        avatarHeader.src = urlImagem;
-      }
-    });
-  }
-</script>
-
 <div class="carrinho">
 
 <h1>🛒 Carrinho de Compras</h1>
@@ -190,7 +181,13 @@ Finalizar Compra
 
 </div>
 
-<script src="/js/cart.js"></script>
+<p id="loading">loading... tá carregando</p>
+<p id="producttotal">0</p>
+<div id="plist"> 
+  
+</div>
 
+<script src="/js/carrinho.js">
+    </script>
 </body>
 </html>
