@@ -40,6 +40,9 @@ function productList(products) {
     }
 
     list.innerHTML = products.map(p => {
+        // Trata o campo de ID independentemente se vem de MongoDB (_id) ou relacional (id)
+        const id = p._id || p.id;
+
         return `
             <div class="plistitem">
                 <div class="foto">
@@ -52,13 +55,58 @@ function productList(products) {
                     <div class="info"><p>Qtd. em Estoque: </p><span>${p.estoque}</span></div>
                     <div class="info"><p>Disponibilidade: </p><span>${p.disponivel}</span></div>
                     <div class="info"><p>Categoria: </p><span>${p.categoria}</span></div>
+
+                    <form action="/carrinho/adicionar/${id}" method="POST" style="margin-top: 0.8rem;">
+                        <input type="hidden" name="quantidade" value="1">
+                        <button type="submit" class="btn-adicionar">🛒 Adicionar ao Carrinho</button>
+                    </form>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-// Inicializa a busca ao carregar o arquivo
 document.addEventListener("DOMContentLoaded", () => {
     loadProducts();
+});
+
+// ==========================================
+// BACK-END (Express Route)
+// ==========================================
+
+router.post('/carrinho/adicionar/:id', async (req, res) => {
+    try {
+        const produtoId = req.params.id;
+        const quantidade = parseInt(req.body.quantidade) || 1;
+
+        const produto = await Produto.findById(produtoId); 
+
+        if (!produto) {
+            return res.status(404).send('Produto não encontrado');
+        }
+
+        if (!req.session.carrinho) {
+            req.session.carrinho = [];
+        }
+
+        // Garante a comparação correta convertendo os IDs para string
+        const itemExistente = req.session.carrinho.find(item => String(item.produtoId) === String(produtoId));
+
+        if (itemExistente) {
+            itemExistente.quantidade += quantidade;
+        } else {
+            req.session.carrinho.push({
+                produtoId: produto._id.toString(),
+                nome: produto.titulo,
+                preco: produto.preco,
+                imagem: `/uploads/${produto.foto}`,
+                quantidade: quantidade
+            });
+        }
+
+        res.redirect('/carrinho');
+    } catch (error) {
+        console.error("Erro ao adicionar ao carrinho:", error);
+        res.status(500).send("Erro interno do servidor");
+    }
 });

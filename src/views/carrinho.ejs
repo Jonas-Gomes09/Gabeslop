@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho</title>
+
     <link rel="stylesheet" href="/css/carrinho.css">
 </head>
 <body>
 
 <header class="navbar" id="nav">
   <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
-    <img src="/img/logoGabeSlop.png" alt="GabeSlop Logo">
+    <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
   </a>
   
   <nav>
@@ -23,9 +24,9 @@
         <li class="user-info">
           <img 
             id="avatar-header" 
-            src="<%= (typeof foto !== 'undefined' && foto) ? foto : '/img/missingpfp.png' %>" 
             alt="Foto de perfil de: <%= nome %>" 
             class="user-avatar"
+            src="<%= foto %>"
           >
           <span class="user"><%= nome %></span>
           <a href="/logoff" style="color: #E74C3C">Sair</a>
@@ -38,7 +39,7 @@
 <div class="carrinho">
     <h1>🛒 Carrinho de Compras</h1>
 
-    <% if (typeof itens === 'undefined' || itens.length === 0) { %>
+    <% if (itens.length === 0) { %>
         <div class="vazio">
             Seu carrinho está vazio.
         </div>
@@ -63,10 +64,15 @@
                             <% } %>
                         </td>
                         <td><%= item.nome %></td>
-                        <td>R$ <%= Number(item.preco).toFixed(2) %></td>
+                        <td>R$ <%= item.preco.toFixed(2) %></td>
                         <td>
                             <form action="/carrinho/atualizar/<%= item.produtoId %>" method="POST">
-                                <input type="number" name="quantidade" value="<%= item.quantidade %>" min="1">
+                                <input
+                                    type="number"
+                                    name="quantidade"
+                                    value="<%= item.quantidade %>"
+                                    min="1"
+                                >
                                 <button type="submit">Atualizar</button>
                             </form>
                         </td>
@@ -82,23 +88,23 @@
         </table>
 
         <div class="total">
-            <strong>Total: R$ <%= typeof total !== 'undefined' ? Number(total).toFixed(2) : '0.00' %></strong>
+            <strong>Total: R$ <%= total.toFixed(2) %></strong>
         </div>
 
         <div class="acoes">
             <a href="/" class="btn voltar">Continuar Comprando</a>
+
             <form action="/carrinho/limpar" method="POST">
-                <button class="btn limpar">Limpar Carrinho</button>
+                <button type="submit" class="btn limpar">Limpar Carrinho</button>
             </form>
+
             <button class="btn finalizar">Finalizar Compra</button>
         </div>
     <% } %>
 </div>
 
 <p id="loading" style="display: none;">loading... tá carregando</p>
-<p id="producttotal">Total: 0</p>
-
-<!-- Lista dinâmica de produtos acessada via JS -->
+<p id="producttotal">0</p>
 <div id="plist"></div>
 
 <script src="/js/carrinho.js"></script>
