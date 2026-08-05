@@ -160,6 +160,7 @@ export async function LoginUser(req: Request, res: Response) {
         req.session.userName = user.nome
         req.session.email = user.email
         req.session.carrinho = user.carrinho
+        req.session.photo = user.foto
 
         if (req.session.admin === true) {
             res.redirect("/admin")

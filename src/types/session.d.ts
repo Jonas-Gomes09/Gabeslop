@@ -8,6 +8,7 @@ declare module "express-session" {
     flash: string | undefined;
     email: string;
     carrinho: any;
+    photo: string | null;
   }
 }
 
