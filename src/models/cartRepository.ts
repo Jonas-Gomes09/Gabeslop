@@ -1,9 +1,9 @@
 import { Carrinho, ItemCarrinho } from "../entities/carrinho";
-
+import { Game } from "../entities/produto";
 
 export class CartRepository {
 
-    obterCarrinho(session: any): Carrinho {
+    carregarCarrinho(session: any): Carrinho {
         if (!session.carrinho || session.carrinho.length < 1) {
             session.carrinho = new Carrinho();
         }
@@ -12,25 +12,13 @@ export class CartRepository {
     }
 
     adicionarProduto(
-        session: any,
-        produto: {
-            id: number;
-            nome: string;
-            preco: number;
-            imagem?: string;
-        },
+        session: any, produto: Game,
         quantidade: number = 1
     ): Carrinho {
 
-        const carrinho = this.obterCarrinho(session);
+        const carrinho = this.carregarCarrinho(session);
 
-        const item: ItemCarrinho = {
-            produtoId: produto.id,
-            nome: produto.nome,
-            preco: produto.preco,
-            imagem: produto.imagem,
-            quantidade
-        };
+        const item: any = Game;
 
         carrinho.adicionarItem(item);
 
@@ -42,7 +30,7 @@ export class CartRepository {
         produtoId: number
     ): Carrinho {
 
-        const carrinho = this.obterCarrinho(session);
+        const carrinho = this.carregarCarrinho(session);
 
         carrinho.removerItem(produtoId);
 
@@ -55,7 +43,7 @@ export class CartRepository {
         quantidade: number
     ): Carrinho {
 
-        const carrinho = this.obterCarrinho(session);
+        const carrinho = this.carregarCarrinho(session);
 
         carrinho.atualizarQuantidade(
             produtoId,
@@ -67,7 +55,7 @@ export class CartRepository {
 
     limparCarrinho(session: any): Carrinho {
 
-        const carrinho = this.obterCarrinho(session);
+        const carrinho = this.carregarCarrinho(session);
 
         carrinho.limparCarrinho();
 
@@ -76,17 +64,17 @@ export class CartRepository {
 
     listarItens(session: any): ItemCarrinho[] {
 
-        return this.obterCarrinho(session).itens;
+        return this.carregarCarrinho(session).itens;
     }
 
     calcularTotal(session: any): number {
 
-        return this.obterCarrinho(session).calcularTotal();
+        return this.carregarCarrinho(session).calcularTotal();
     }
 
     quantidadeItens(session: any): number {
 
-        return this.obterCarrinho(session).quantidadeItens();
+        return this.carregarCarrinho(session).quantidadeItens();
     }
 
     salvarCarrinho(session: any) {

@@ -1,38 +1,39 @@
 export interface ItemCarrinho {
     produtoId: number;
-    nome: string;
     preco: number;
-    imagem?: string;
     quantidade: number;
 }
 
 export class Carrinho {
-    itens: ItemCarrinho[];
+    private _itens: ItemCarrinho[];
 
     constructor() {
-        this.itens = [];
+        this._itens = [];
+    }
+get itens(): ItemCarrinho[] {
+        return [...this._itens];
     }
 
     adicionarItem(item: ItemCarrinho): void {
-        const existente = this.itens.find(
+        const existe = this._itens.find(
             p => p.produtoId === item.produtoId
         );
 
-        if (existente) {
-            existente.quantidade += item.quantidade;
+        if (existe) {
+            existe.quantidade += item.quantidade;
         } else {
             this.itens.push(item);
         }
     }
 
     removerItem(produtoId: number): void {
-        this.itens = this.itens.filter(
+        this._itens = this._itens.filter(
             item => item.produtoId !== produtoId
         );
     }
 
     atualizarQuantidade(produtoId: number, quantidade: number): void {
-        const item = this.itens.find(
+        const item = this._itens.find(
             p => p.produtoId === produtoId
         );
 
@@ -46,18 +47,18 @@ export class Carrinho {
     }
 
     limparCarrinho(): void {
-        this.itens = [];
+        this._itens = [];
     }
 
     calcularTotal(): number {
-        return this.itens.reduce(
+        return this._itens.reduce(
             (total, item) => total + item.preco * item.quantidade,
             0
         );
     }
 
     quantidadeItens(): number {
-        return this.itens.reduce(
+        return this._itens.reduce(
             (total, item) => total + item.quantidade,
             0
         );
