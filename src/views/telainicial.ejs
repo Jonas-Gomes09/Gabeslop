@@ -32,36 +32,6 @@
         </section>
     </main>
 
-    <div class="carousel">
-      <h2>CONSOLES</h2>
-    <div class="carousel-track">
-      <div class="carousel-item"><img src="img/Ccdi2.png" alt="Pôster 1" class="anuncio"></div>
-      <div class="carousel-item"><img src="img/Cgbt.png" alt="Pôster 2" class="anuncio"></div>
-      <div class="carousel-item"><img src="img/Cgs.png" alt="Pôster 3" class="anuncio"></div>
-    </div>
-    <button id="prev" class="btn">Anterior</button>
-    <button id="next" class="btn">Próximo</button>
-  </div>
-    <script>
-      const track = document.querySelector('.carousel-track');
-      const items = Array.from(track.children);
-      const nextButton = document.querySelector('#next');
-      const prevButton = document.querySelector('#prev');
-      let currentIndex = 0;
-      function updateCarousel() {
-        const amountToMove = -currentIndex * 100;
-        track.style.transform = `translateX(${amountToMove}%)`;
-      }
-      nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % items.length;
-        updateCarousel();
-      });
-      prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
-        updateCarousel();
-      });
-    </script>
-
         <section class="row">
             <h2 class="row-title">NOVOS LANÇAMENTOS</h2>
             <div class="row-posters">
@@ -84,24 +54,25 @@
                 </div> 
         </section>
 
-        <section class="row">
-            <h2 class="row-title">ITENS EXCLUSIVOS</h2>
-            <div class="row-posters">
-              <img src="img/lsh.png" alt="Pôster 1" class="poster">
-              <img src="img/lsh.png" alt="Pôster 1" class="poster">
-              <img src="img/lsh.png" alt="Pôster 1" class="poster">
-              <img src="img/lsh.png" alt="Pôster 1" class="poster">
-              <img src="img/lsh.png" alt="Pôster 1" class="poster">
-                </div> 
-        </section>
-
-        <div class="card-shopping">
-            <img src="img/GSbg.png" alt="foto da loja" class="fotodalojamesmo">
-            <h2>Patio Gaia mercedes Guaramobim-CE, Rua Augusto mota em frente ao Hospital São Vincente</h2>
+<div class="card-shopping">
+    <img src="img/GSbg.png" alt="foto da loja" class="fotodalojamesmo">
+    <div class="card-conteudo">
+        <h2>Patio Gaia mercedes Guaramobim-CE, Rua Augusto mota em frente ao Hospital São Vincente</h2>
+        <h3>a Gabe Slop é a lendária e totalmente fictícia loja de games localizada no coração de Guaramobim, famosa no Sertão Central por ser o único lugar do planeta a vender consoles revolucionários e exclusivos que a indústria oficial nunca teve a audácia de lançar, como o lendário Xbox 720 e o incompreendido Wii U 2. Fundada para abrigar as maiores pérolas do mundo dos games alternativos, a loja virou o ponto de encontro definitivo da cidade: um refúgio com ar-condicionado trincando onde a moçada se reúne para testar os últimos lançamentos do multiverso gamer, jogar conversa fora e tentar entender onde o Gabe consegue esses aparelhos tão raros antes de todo mundo.</h3>
+    </div>
 </div>
 
         </div>
     </main>
+
+    <div>
+<section class="anuncio-container">
+    <img src="img/Adslop.png" alt="anuncio 1" class="anuncio-banner">
+    <img src="img/Adslop.png" alt="anuncio 1" class="anuncio-banner">
+</section>
+</div>
+
+
     <h3>Grupo GabeSlop 2027, todos os direitos reservados</h3>
 </body> 
 </html>
