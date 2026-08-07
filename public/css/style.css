@@ -35,13 +35,14 @@ body {
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
     background: rgba(10, 10, 10, 0.75);
-    backdrop-filter: blur(10px); /* Efeito de vidro fosco */
+    backdrop-filter: blur(10px);
     z-index: 1000;
     transition: background-color 0.3s ease, padding 0.3s ease;
 }
@@ -61,6 +62,7 @@ body {
     list-style: none;
     gap: 40px;
     align-items: center;
+    margin: 0 auto; /* Centraliza os links caso a logo fique isolada à esquerda */
 }
 
 .nav-links a {
@@ -94,6 +96,10 @@ body {
 
 .banner-content {
     max-width: 700px;
+    margin: 0 auto; /* Garante centralização do container */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o botão e os textos */
 }
 
 .banner-content h1 {
@@ -130,26 +136,9 @@ body {
     box-shadow: 0 6px 20px rgba(255, 87, 34, 0.6);
 }
 
-/* --- RESPONSIVIDADE BÁSICA (MOBILE) --- */
-@media (max-width: 768px) {
-    .nav-links {
-        gap: 15px;
-    }
-    
-    .nav-links a {
-        font-size: 0.9rem;
-    }
-
-    .banner-content h1 {
-        font-size: 2rem;
-    }
-
-    .banner-content p {
-        font-size: 1rem;
-    }
-}
-
+/* --- FILEIRAS E CARROSEL DE POSTERS --- */
 .rows-container {
+    width: 100%;
     margin-top: 0;
     padding-bottom: 50px;
     position: relative;
@@ -158,31 +147,23 @@ body {
 
 .row {
     width: 92%;
-    margin: 0 auto 40px;
+    margin: 0 auto 40px; /* Centrado horizontalmente na página */
 }
 
 .row-title {
     font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 15px;
+    text-align: center; /* Centraliza o título da fileira */
 }
 
 .row-posters {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px 0;
+    gap: 15px;
+    padding: 20px 10px;
     overflow-x: auto;
     overflow-y: hidden;
-
-    /* Esconde a barra de rolagem */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.row-posters::-webkit-scrollbar {
-    display: none;
 }
 
 .poster {
@@ -207,108 +188,63 @@ body {
     transform: scale(1.1);
 }
 
-/* --- RESPONSIVIDADE --- */
+/* --- RESPONSIVIDADE UNIFICADA --- */
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* Oculta os links no mobile para não quebrar o layout */
+        display: none; /* Oculta os links no mobile */
     }
+
+    .banner-content h1,
     .banner-title {
         font-size: 2rem;
     }
+
+    .banner-content p,
     .banner-description {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    .poster {
+        width: 220px;
+        height: 370px;
+    }
+
+    .poster-large {
+        height: 400px;
     }
 }
 
-.card-shopping {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 12px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+/* Remove margens padrão do corpo para garantir que o banner encoste nas bordas */
+body {
+    margin: 0;
+    padding: 0;
 }
 
-.carousel {
-    width: 90%;
-    max-width: 1200px;
-    margin: 40px auto;
-    position: relative;
-    overflow: hidden;
+.anuncio-container {
+    width: 100%;
+    background-image: url('img/Adslop.png');
+    background-repeat: repeat-x; /* Faz a imagem se repetir apenas na horizontal */
+    background-position: left center; /* Alinha o início do padrão */
+    background-size: auto 100%; /* Mantém a altura em 100% e ajusta a largura proporcionalmente */
 }
 
-.carousel h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.anuncio-container {
+  width: 100%; /* Ocupa a largura total da área onde estiver */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.carousel-track {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
+.anuncio-banner-repetido {
+  display: block;
+  width: 100%;
+  height: 120px; /* Ajuste a altura para aparecer a imagem por inteiro */
+  background-image: url('img/Adslop.png');
+  background-repeat: repeat-x; /* Repete a imagem APENAS na horizontal */
+  background-position: left center;
+  background-size: auto 100%; /* Ajusta a imagem para caber na altura do container */
 }
 
-.carousel-item {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Efeito opcional ao passar o mouse */
+.anuncio-banner-repetido:hover {
+  opacity: 0.9;
 }
-
-.carousel-item img {
-    width: 90%;
-    max-width: 2400px;
-    height: 550px;
-    display: block;
-    object-fit: contain;
-}
-
-.btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-.btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  
-
-  width: 45px;
-  height: 45px;
-  border-radius: 50%; 
-  
-  background-color: rgba(255, 255, 255, 0.85); 
-  color: #333; 
-  border: none;
-  
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  /* Interação */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10; 
-}
-
-.btn:hover {
-  background-color: #ffffff;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-/* Efeito ao clicar (Active) */
-.btn:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-#prev { left: 15px; }
-#next { right: 15px; }

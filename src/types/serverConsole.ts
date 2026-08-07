@@ -1,1 +1,1 @@
-export let consoleContent: any[] = []
+export const consoleContent: any[] = []

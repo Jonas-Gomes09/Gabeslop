@@ -1,7 +1,6 @@
 import {user} from "../entities/user"
 import { readFile, writeFile, mkdir } from "fs/promises"
 import bcrypt from "bcrypt"
-import { Carrinho } from "../entities/carrinho";
 import { consoleContent } from "../types/serverConsole";
 
 export class userRepository {
@@ -24,7 +23,7 @@ export class userRepository {
 
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
-            .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms, u.carrinho));
+            .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms));
         } catch {
             console.error("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
             consoleContent.push("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
@@ -65,11 +64,10 @@ export class userRepository {
         const nextID = users.length + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
         let permission = "client"
-        const carrinho: Carrinho[] = []
         
         if (email === "admin@gabeslop.com") {permission = "admin"}
 
-        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission, carrinho)
+        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission)
         users.push(newUser)
         await this.saveUsers(users)
         return newUser
