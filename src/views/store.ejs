@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+
+    <link rel="stylesheet" href="/css/carrinho.css">
+</head>
+<body>
+
+<header class="navbar" id="nav">
+  <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
+    <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
+  </a>
+  
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Início</a></li>
+      <li><a href="/naoexiste">Promoções</a></li>
+      <li><a href="/naoexiste">Lançamentos</a></li>
+
+      <% if (typeof nome !== 'undefined' && nome) { %>
+        <li class="user-info">
+          <img 
+            id="avatar-header" 
+            alt="Foto de perfil de: <%= nome %>" 
+            class="user-avatar"
+            src="<%= foto %>"
+          >
+          <span class="user"><%= nome %></span>
+          <a href="/logoff" style="color: #E74C3C">Sair</a>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
+
+<div class="carrinho">
+    <h1>🛒 Carrinho de Compras</h1>
+
+    <div id="loading-cart" style="display: none;">Carregando...</div>
+    <div id="carrinho-vazio" class="vazio" style="display: none;">
+        Seu carrinho está vazio.
+    </div>
+
+    <table id="tabela-carrinho" style="display: none;">
+        <thead>
+            <tr>
+                <th>Imagem</th>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th>Remover</th>
+            </tr>
+        </thead>
+        <tbody id="cart-list"></tbody>
+    </table>
+
+    <div id="cart-total" class="total"><strong>Total: R$ 0.00</strong></div>
+
+    <div class="acoes">
+        <button onclick="limparCarrinho()" class="btn limpar">Limpar Carrinho</button>
+        <button class="btn finalizar">Finalizar Compra</button>
+    </div>
+</div>
+
+<!-- LOJA EM SÍ -->
+<p id="loading" style="display: none;">loading... tá carregando</p>
+<p id="producttotal">0</p>
+<div id="plist"></div>
+
+<script src="/js/store.js"></script>
+</body>
+</html>

@@ -8,6 +8,7 @@ export const pageRoutes = Router();
 pageRoutes.get("/", clientController.StartPage);
 pageRoutes.get("/login", jaLogado, clientController.LoginPage);
 pageRoutes.get("/registro", jaLogado, clientController.RegisterPage);
+pageRoutes.get("/naoexiste", clientController.naoExiste)
 
 // ROTAS CLIENTE
 pageRoutes.get("/profile", clientAuth, clientController.ProfilePage);

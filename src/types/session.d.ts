@@ -1,5 +1,4 @@
 import "express-session";
-import { ItemCarrinho } from "../entities/carrinho";
 
 declare module "express-session" {
   interface SessionData {
@@ -8,7 +7,7 @@ declare module "express-session" {
     admin: boolean;
     flash: string | undefined;
     email: string;
-    carrinho: { itens: ItemCarrinho[] };
+    carrinho: [{productId: number, qtd: number}] | [];
     photo: string | null;
   }
 }

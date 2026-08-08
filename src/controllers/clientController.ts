@@ -86,7 +86,7 @@ export async function StorePage(req: Request, res: Response) {
 
         const content = await productRepo.listAll(q)
         const flash = req.session.flash
-        return res.render("store", {itens: content, flash: flash})
+        return res.render("store", {itens: content, flash: flash, nome: req.session.userName, foto: req.session.photo})
     } catch {
         return res.status(500).json({success: false, message: "GET userController StorePage | Falha ao carregar o loja.ejs"})
     }
@@ -101,10 +101,19 @@ export async function ForbiddenPage(req: Request, res: Response) {
 
         return res.render("forbidden", {flash: flash})
     } catch {
-        return res.status(500).json({success: false, message: "userController StartPage | Falha ao carregar o forbidden.ejs"})
+        return res.status(500).json({success: false, message: "userController ForbiddenPage | Falha ao carregar o forbidden.ejs"})
     }
 }
 
+
+// Página de não existe
+export async function naoExiste(req: Request, res: Response) {
+    try {
+        return res.render("naoExiste")
+    } catch {
+        return res.status(500).json({success: false, message: "userController naoExiste | Falha ao carregar o naoExiste.ejs"})
+    }
+}
 
 // -------------------------------------------------------------------------------- //
 //                                       POST                                       //
@@ -159,13 +168,12 @@ export async function LoginUser(req: Request, res: Response) {
         req.session.userId = user.id
         req.session.userName = user.nome
         req.session.email = user.email
-        req.session.carrinho = user.carrinho
         req.session.photo = user.foto
 
         if (req.session.admin === true) {
             res.redirect("/admin")
         } else {
-            res.redirect("/carrinho")
+            res.redirect("/store")
         }
         
     } catch {
@@ -182,7 +190,6 @@ export async function logoff(req: Request, res: Response) {
         req.session.userId = undefined
         req.session.userName = undefined
         req.session.flash = undefined
-        req.session.carrinho = []
         res.redirect("/")
     } catch {
         return res.status(500).json({success: false, message: "userController logoff | Falha ao carregar o sair do usuário"})

@@ -11,20 +11,6 @@ adminRoutes.put("/admin/store/:id", adminController.UpdateEstoque)
 adminRoutes.get("/admin/products", adminController.loadProducts)
 adminRoutes.get("/admin/users", adminController.loadUsers)
 
-// ADICIONAR GAME
-adminRoutes.post("/api/store", upload.single("foto"), (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
-
-// ATUALIZAR GAME
-adminRoutes.put("/api/store/:id", upload.single("foto"), (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
-
 // REMOVER GAME
 adminRoutes.delete("/games/:id", (req: Request, res: Response) => {
     res.json({
