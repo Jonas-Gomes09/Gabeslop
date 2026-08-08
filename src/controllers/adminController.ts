@@ -87,7 +87,7 @@ async function adminUser() {
 } adminUser()
 
 
-// Carregar usuários
+// Carregar produtos
 export async function loadUsers (req: Request, res: Response) {
     const queryTerm = typeof req.query.q === 'string' ? req.query.q.trim() : '';
 
@@ -102,5 +102,5 @@ export async function loadProducts (req: Request, res: Response) {
 
     const products = await productRepo.listAll(queryTerm)
     const dados = products.map(u => u.toJSON())
-    res.json({sucesso: true, total: products.length, dados: dados})
+    return res.json({sucesso: true, total: products.length, dados: dados})
 }

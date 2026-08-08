@@ -6,6 +6,7 @@ const productRepo = new productRepository()
 // POST /cart
 export async function adicionarAoCarrinho(req: Request, res: Response) {
     try {
+        req.session.flash = undefined
         if (req.session.carrinho === undefined) {
             req.session.carrinho = []
         }
@@ -21,9 +22,9 @@ export async function adicionarAoCarrinho(req: Request, res: Response) {
             existe.qtd += quantidade
         } else {
             req.session.carrinho.push({productId: pId, qtd: quantidade})
+            req.session.flash = `Produto adicionado ao carrinho com sucesso!`
         }
 
-        console.log(req.session.carrinho)
         return res.status(200).json({
             success: true,
             message: "Item adicionado ao carrinho com sucesso",
@@ -78,6 +79,7 @@ export async function atualizarQtd(req: Request, res: Response) {
 
     try {
         const carrinho = req.session.carrinho || [];
+        req.session.flash = undefined
 
         const busca = await carrinho.findIndex(i => i.productId === pId)
 
@@ -101,6 +103,7 @@ export async function deleteItem(req: Request, res: Response) {
         const productId = Number(req.body)
 
     try {
+        req.session.flash = undefined
         const carrinho = req.session.carrinho || [];
 
         const busca = await carrinho.findIndex(i => i.productId === productId)
@@ -111,6 +114,7 @@ export async function deleteItem(req: Request, res: Response) {
 
         carrinho.splice(busca, 1)
 
+            req.session.flash = `Item removido com sucesso!`
             return res.status(200).json({success: true, message: "Item excluído do carrinho"})
 
     } catch {
@@ -121,7 +125,11 @@ export async function deleteItem(req: Request, res: Response) {
 // POST /cart
 export async function empty(req: Request, res: Response) {
     try {
+        req.session.flash = undefined
         req.session.carrinho = []
+
+        req.session.flash = `Carrinho esvaziado com sucesso!`
+        return res.status(200).json({success: true, message: "Carrinho esvaziado com sucesso"})
     } catch {
         res.status(500).json({success: false, message: `cartController empty() | Não foi possível esvaziar o carrinho`})
     }

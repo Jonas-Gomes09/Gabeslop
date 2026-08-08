@@ -87,7 +87,7 @@ body {
   
 .carrinho {
     width: 100%;
-    max-width: 800px;
+    max-width: 80%;
     margin: 0;
     padding-top: 24px;
     padding-bottom: 24px;
@@ -191,10 +191,6 @@ body {
 
 
 /* Container da imagem */
-.foto {
-  align-items: center;
-  height: 4rem;
-}
 
 /* Informações do produto */
 .infos {
@@ -202,7 +198,8 @@ body {
   flex-direction: column;
   gap: 0.25rem;
   width: 100%;
-  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: center;
 }
 
 .infos h1 {
@@ -264,10 +261,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
   background-color: #ffffff;
   border-radius: 0.75rem;
-  padding: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid #e5e7eb;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -278,7 +273,10 @@ body {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  height: fit-content
+  height: fit-content;
+  background-color: rgb(238, 238, 238);
+  border-top: 3px dashed rgba(0, 0, 0, 0.06);
+  border-bottom: 3px dashed rgba(0, 0, 0, 0.06);
 }
 
 /* Efeito de destaque ao passar o mouse */
@@ -295,17 +293,19 @@ body {
   width: 55%;
   padding: .5rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .clist {
   display: grid;
-  flex-direction: column;
   width: 100%;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
-  background-color: rgb(243, 250, 255);
+  background-color: rgb(238, 238, 238);
   margin-bottom: 1rem;
   padding: 1rem;
+  border-top: 3px dashed rgba(0, 0, 0, 0.06);
+  border-bottom: 3px dashed rgba(0, 0, 0, 0.06);
 }
 
 .clistitem {
@@ -326,7 +326,7 @@ body {
   display: flex;
   color: black;
   justify-content: space-between;
-  width: 260px;
+  max-width: 100px;
 }
 
 .searchbar {
@@ -341,4 +341,10 @@ body {
   background-color: rgb(255, 255, 255);
   outline: 2px solid rgb(235, 211, 211);
   border: none
+}
+
+.cartnenhumproduto {
+  color: black;
+  width: 200%;
+  text-align: center;
 }

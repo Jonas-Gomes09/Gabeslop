@@ -36,8 +36,8 @@
     </ul>
   </nav>
 </header>
-
 <div class="carrinho">
+    <h3 style="color: black"><%= flash %></h3>
     <h1>Seu carrinho</h1>
 
     <div id="loading-cart" style="display: none;">Carregando...</div>
@@ -64,7 +64,7 @@
 <h1 style="font-size: 6rem; font-weight: 800; margin-top: 3rem; margin-bottom: 2rem;">LOJA</h1>
 <p id="loading" style="display: none;">Loading...</p>
 <p id="producttotal">0</p>
-<input type="text" class="searchbar" placeholder="Pesquise por nosso catálogo de jogos">
+<input type="text" class="searchbar" id="search-products" placeholder="Pesquise por nosso catálogo de jogos">
 <div class="plist" id="plist"></div>
 
 </div>

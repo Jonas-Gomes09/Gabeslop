@@ -1,4 +1,32 @@
 var valorTotal = 0
+let searchTimeout = null;
+
+const searchInput = document.getElementById("search-products")
+
+async function deleteCart() {
+    try {
+        const response = await fetch("/cart/wipe", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    } catch(e) {
+        console.error("Não foi possível esvaziar o carrinho:", e)
+    }
+} const esvaziar = document.getElementById("esvaziar").addEventListener('click', () => {deleteCart(), loadCart()})
+
+if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+        const term = e.target.value.trim();
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            loadProducts(term);
+        }, 100);
+    });
+}
 
 async function loadProducts(term) {
     const loading = document.getElementById("loading");
@@ -37,7 +65,7 @@ function productList(products) {
     if (!list) return;
 
     if (!products || products.length === 0) {
-        list.innerHTML = `<p>Nenhum produto presente.</p>`;
+        list.innerHTML = `<p>Nenhum produto encontrado</p>`;
         return;
     }
 
@@ -46,14 +74,12 @@ function productList(products) {
 
         return `
             <div class="plistitem">
-            <h1 style="color: black; font-size: 1.3rem">${p.titulo}</h1>
+            <h1 style="color: black; font-size: 1.3rem; margin: 1rem">${p.titulo}</h1>
             <div class="informacoesproduto">
-                <div class="foto">
-                    <img style="max-height: 8rem; max-width: 8rem; margin-top: .8rem; border-radius: .5rem; object-fit: cover" src="uploads/${p.foto}" alt="Imagem de: ${p.titulo}">
-                </div>
+            <img style="height: 8rem; margin: .8rem; border-radius: .5rem" src="uploads/${p.foto}" alt="Imagem de: ${p.titulo}">
                 <div class="infos">
                     
-                    <div class="info"><p>Preço: </p><span>R$ ${p.preco}</span></div>
+                    <div class="info"><p>Preço: </p><span>R$ ${p.preco},00</span></div>
                     <div class="info"><p>Vendas: </p><span>${p.vendas}</span></div>
                     <div class="info"><p>Qtd. em Estoque: </p><span>${p.estoque}</span></div>
                     <div class="info"><p>Categoria: </p><span>${p.categoria}</span></div>
@@ -64,7 +90,7 @@ function productList(products) {
             <div class="productbuttons">
                 <button type="button" class="btn-adicionar btn-add-cart" data-id="${id}">Adicionar ao carrinho</button>
                 <button type="button" class="btn-adicionar btn-view-product" data-id="${id}">Acessar página</button>
-            </buttons>
+            </div>
             </div>
             </div>
         `;
@@ -111,12 +137,12 @@ function cartList(products) {
     if (!list) return;
 
     if (!products || products.length === 0) {
-        list.innerHTML = `<p>Nenhum produto presente.</p>`;
+        list.innerHTML = `<p class="cartnenhumproduto">Nada aqui ainda. Adicione um item ao carrinho e ele aparecerá aqui!</p>`;
+        valorTotal = 0
         return;
     }
 
     list.innerHTML = products.map(p => {
-        // Trata o campo de ID independentemente se vem de MongoDB (_id) ou relacional (id)
         const id = p._id || p.id;
         valorTotal += p.produto.preco * p.qtd
         return `
@@ -125,13 +151,11 @@ function cartList(products) {
                     <img style="max-height: 4rem; max-width: 4rem; margin-top: .8rem; border-radius: .5rem; object-fit: cover" src="uploads/${p.produto.foto}" alt="Imagem de: ${p.produto.titulo}">
                 </div>
                 <div class="cinfos">
-                    <h1>${p.produto.titulo}</h1>
-                    <div class="cinfo"><p>Preço: </p><span>R$ ${p.produto.preco}</span></div>
+                    <h1 style="max-width: 100px">${p.produto.titulo}</h1>
+                    <div class="cinfo"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
                     <div class="cinfo"><p>Quantidade: </p><span>${p.qtd}</span></div>
 
-                    <form action="/carrinho/adicionar/${id}" method="POST" style="margin-top: 0.8rem;">
-                        <input type="hidden" name="quantidade" value="1">
-                        <button type="submit" class="btn-adicionar remover-do-carrinho">Remover do carrinho</button>
+                    <button style="margin-top: .8rem" class="btn-adicionar btn-remove-from-cart" data-id="${p.id}">Remover do carrinho</button>
                     </form>
                 </div>
             </div>
@@ -145,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCart();
 
     const productListContainer = document.getElementById("plist")
+    const cartListContainter = document.getElementById("clist")
 
     if (productListContainer) {
         productListContainer.addEventListener("click", async (event) => {
@@ -165,7 +190,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     }
+
+    if (cartListContainter) {
+        cartListContainter.addEventListener("click", async (event) => {
+            const target = event.target
+
+            const btnRemove = target.closest(".btn-remove-from-cart")
+            if (btnRemove) {
+                const id = Number(btnRemove.getAttribute("data-id"))
+                await removeFromCart(id)
+                return
+            }
+        })
+    }
 });
+
+async function removeFromCart(id) {
+    const url = `/cart/${id}`
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE'
+        })
+
+        if (response.ok) {
+
+        }
+    } catch {}
+}
 
 
 async function handleAddToCart(productId) {

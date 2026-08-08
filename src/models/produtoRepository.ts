@@ -78,12 +78,18 @@ export class productRepository {
         return true
     }
 
-    // Listar todos (PAINEL DE MODERADOR)
+    // Listar todos (SERVIDOR)
     async listAll(searchTerm?: string): Promise<Game[]> {
         let products = await this.loadProducts()
+
         if (searchTerm && searchTerm.trim()) {
             const lowercase = searchTerm.toLowerCase()
-            products = products.filter(p => p.titulo.toLowerCase().includes(lowercase))
+            products = products.filter(p => {
+                const titulo = p.titulo ? p.titulo.toLowerCase() : '';
+                const categoria = p.categoria ? p.categoria.toLowerCase() : '';
+
+                return titulo.includes(lowercase) || categoria.includes(lowercase)
+            })
         }
         return products
     }

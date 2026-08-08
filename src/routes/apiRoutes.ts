@@ -28,7 +28,7 @@ apiRoutes.put("/cart/:id", cartController.atualizarQtd)
 // REMOVER ITEM
 apiRoutes.delete("/cart/:id", cartController.deleteItem)
 // ESVAZIAR
-apiRoutes.post("/cart", cartController.empty)
+apiRoutes.post("/cart/wipe", cartController.empty)
 
 
 
