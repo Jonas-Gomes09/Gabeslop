@@ -64,6 +64,23 @@ export async function UpdateEstoque(req: Request, res: Response) {
 }
 
 
+// DELETE /api/store/:id
+export async function deleteProduct(req: Request, res: Response) {
+    try {
+        const id = Number(req.params.id);
+
+        productRepo.removerProduto(id)
+        res.status(200).json({success: true})
+    } catch(e) {
+            console.log("Falha ao atualizar estoque:", e)
+            res.status(500).json({
+                success: false,
+                mensagem: "adminController UpdateEstoque() | Erro interno do servidor."
+            });
+        }
+}
+
+
 // Criar conta de admin (EXECUTADO AO LIGAR O SERVIDOR)
 async function adminUser() {
     userRepo.cadastro("Admin", "admin@gabeslop.com", "admin123")

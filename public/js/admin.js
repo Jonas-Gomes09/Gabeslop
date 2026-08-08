@@ -156,8 +156,7 @@ function productList(products) {
             </div>
             <div class="prodbuttons">
                 <button class="sideBarButton">ATUALIZAR ESTOQUE</button>
-                <button class="sideBarButton">EXCLUIR PRODUTO</button>
-                <button class="sideBarButton">ATUALIZAR INFORMAÇÕES</button>
+                <button class="sideBarButton excluir-produto" id="excluirProduto" data-id="${p.id}">EXCLUIR PRODUTO</button>
             </div>
         </div>`
         ).join('')
@@ -224,4 +223,38 @@ clearTimeout(searchTimer)
 searchTimer = setTimeout(() => loadUsers(event.target.value.trim()), 300)
 }
 
-showNothingDiv()
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    showNothingDiv()
+
+    const productListContainer = document.getElementById("plist")
+    if (productListContainer) {
+        productListContainer.addEventListener("click", async (event) => {
+            const target = event.target
+
+            const btnAdd = target.closest(".excluir-produto")
+            if (btnAdd) {
+                const id = Number(btnAdd.getAttribute("data-id"))
+                await removeProduct(id)
+                return
+            }
+        })
+    }
+});
+
+async function removeProduct(id) {
+    const url = `/api/store/${id}`
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    if (response.ok) {
+        console.log("Produto deletado com sucesso")
+    } else {
+        console.error("Não foi possível deletar o produto", response.statusText)
+    }
+}

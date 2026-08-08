@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho</title>
 
-    <link rel="stylesheet" href="/css/carrinho.css">
+    <link rel="stylesheet" href="/css/store.css">
 </head>
 <body>
 
@@ -21,15 +21,16 @@
       <li><a href="/naoexiste">Lançamentos</a></li>
 
       <% if (typeof nome !== 'undefined' && nome) { %>
-        <li class="user-info">
+        <div class="user-info">
+
+          <a href="/logoff" style="color: #E74C3C; margin-left: .5rem;">Sair</a>
+          <span class="user" style="margin-left: 1rem; font-weight: 700;"><%= nome %></span>
           <img 
             id="avatar-header" 
             alt="Foto de perfil de: <%= nome %>" 
             class="user-avatar"
             src="<%= foto %>"
           >
-          <span class="user"><%= nome %></span>
-          <a href="/logoff" style="color: #E74C3C">Sair</a>
         </li>
       <% } %>
     </ul>
@@ -37,39 +38,36 @@
 </header>
 
 <div class="carrinho">
-    <h1>🛒 Carrinho de Compras</h1>
+    <h1>Seu carrinho</h1>
 
     <div id="loading-cart" style="display: none;">Carregando...</div>
     <div id="carrinho-vazio" class="vazio" style="display: none;">
         Seu carrinho está vazio.
     </div>
 
-    <table id="tabela-carrinho" style="display: none;">
-        <thead>
-            <tr>
-                <th>Imagem</th>
-                <th>Produto</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Subtotal</th>
-                <th>Remover</th>
-            </tr>
-        </thead>
-        <tbody id="cart-list"></tbody>
-    </table>
-
-    <div id="cart-total" class="total"><strong>Total: R$ 0.00</strong></div>
+    <p id="loadingcart" style="display: none;">loading...</p>
+    <div class="clist" id="clist"></div>
+    <p style="color: black;" id="totalItensCarrinho">Total de itens: 0</p>
+    <div class="total"><strong id="cart-total" style="color: black;">Valor total: R$ 0.00</strong></div>
 
     <div class="acoes">
-        <button onclick="limparCarrinho()" class="btn limpar">Limpar Carrinho</button>
-        <button class="btn finalizar">Finalizar Compra</button>
+        <button id="esvaziar" class="btn limpar">Esvaziar Carrinho</button>
+        <button id="finalizar" class="btn finalizar">Finalizar Compra</button>
     </div>
 </div>
 
 <!-- LOJA EM SÍ -->
-<p id="loading" style="display: none;">loading... tá carregando</p>
+
+<div class="store">
+
+
+<h1 style="font-size: 6rem; font-weight: 800; margin-top: 3rem; margin-bottom: 2rem;">LOJA</h1>
+<p id="loading" style="display: none;">Loading...</p>
 <p id="producttotal">0</p>
-<div id="plist"></div>
+<input type="text" class="searchbar" placeholder="Pesquise por nosso catálogo de jogos">
+<div class="plist" id="plist"></div>
+
+</div>
 
 <script src="/js/store.js"></script>
 </body>

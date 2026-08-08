@@ -10,10 +10,4 @@ adminRoutes.post("/admin/store", upload.single("foto"), adminController.CreatePr
 adminRoutes.put("/admin/store/:id", adminController.UpdateEstoque)
 adminRoutes.get("/admin/products", adminController.loadProducts)
 adminRoutes.get("/admin/users", adminController.loadUsers)
-
-// REMOVER GAME
-adminRoutes.delete("/games/:id", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true
-    });
-});
+adminRoutes.delete("/api/store/:id", adminController.deleteProduct);

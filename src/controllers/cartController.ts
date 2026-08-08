@@ -6,21 +6,24 @@ const productRepo = new productRepository()
 // POST /cart
 export async function adicionarAoCarrinho(req: Request, res: Response) {
     try {
-        const carrinho = req.session.carrinho || [];
-        
+        if (req.session.carrinho === undefined) {
+            req.session.carrinho = []
+        }
+
         const {productId, qtd} = req.body
         const pId = Number(productId)
         const quantidade = Number(qtd)
 
 
-        const existe = carrinho.find(i => i.productId === pId)
+        const existe = req.session.carrinho?.find(i => i.productId === pId)
 
         if (existe) {
             existe.qtd += quantidade
         } else {
-            carrinho.push({productId: pId, qtd: quantidade})
+            req.session.carrinho.push({productId: pId, qtd: quantidade})
         }
 
+        console.log(req.session.carrinho)
         return res.status(200).json({
             success: true,
             message: "Item adicionado ao carrinho com sucesso",

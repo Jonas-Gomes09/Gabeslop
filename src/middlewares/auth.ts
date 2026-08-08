@@ -24,7 +24,7 @@ export async function jaLogado(req: Request, res: Response, next: NextFunction) 
     if (req.session.admin && req.session.userName) {
         return res.redirect("/admin")
     } else if (!req.session.admin && req.session.userName) {
-        return res.redirect("/carrinho")
+        return res.redirect("/store")
     }
 
     next()

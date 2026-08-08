@@ -34,7 +34,15 @@ app.use(
 
 
 // Middleware de segurança
-app.use(helmet()) 
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcElem: ["'self'", "'unsafe-inline'"],
+    }
+  }
+})) 
 
 // Utilizar arquivos estáticos
 app.use(express.static("public")); 

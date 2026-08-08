@@ -40,7 +40,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
+    padding: 15px 30px;
     background: rgba(10, 10, 10, 0.75);
     backdrop-filter: blur(10px); /* Efeito de vidro fosco */
     z-index: 1000;
@@ -89,12 +89,16 @@ body {
     width: 100%;
     max-width: 800px;
     margin: 0;
-    padding: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-top: 5%;
+    margin-top: 12rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .carrinho h1 {
@@ -165,36 +169,31 @@ body {
   }
 
   .user-avatar {
-    max-height: 5rem;
-    max-width: 5rem;
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+    border-radius: .3rem;
   }
 
-  /* Container principal do card */
-.plistitem {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  background-color: #ffffff;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid #e5e7eb;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-bottom: 1rem;
-}
+  .user-info {
+    padding: .5rem;
+    background-color: #111111;
+    border: 2px solid rgba(255,255,255,.1);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-/* Efeito de destaque ao passar o mouse */
-.plistitem:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
+
+
+  /* Container principal do card */
+
 
 /* Container da imagem */
 .foto {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  height: 4rem;
 }
 
 /* Informações do produto */
@@ -203,6 +202,7 @@ body {
   flex-direction: column;
   gap: 0.25rem;
   width: 100%;
+  margin-left: 1rem;
 }
 
 .infos h1 {
@@ -231,8 +231,114 @@ body {
 }
 
 /* Destaque específico para o Preço */
-.info:nth-child(2) span {
+.info:nth-child(1) span {
   color: #16a34a; /* Cor verde para o valor */
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.5rem;
+}
+
+.acoes {
+  margin-top: 1rem;
+}
+
+.store {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  border-top: 2px solid rgba(255,255,255,.3);
+  width: 100vw;
+  height: fit-content;
+  background: linear-gradient(to bottom, rgba(255,255,255,.1) 0%, rgba(255,255,255,0) 30%);
+}
+
+.plist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100vw;
+  padding: 1.5rem;
+}
+
+.plistitem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: scroll;
+}
+
+.informacoesproduto {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: fit-content
+}
+
+/* Efeito de destaque ao passar o mouse */
+.plistitem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.productbuttons {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  height: fit-content;
+  width: 55%;
+  padding: .5rem;
+  margin-top: 1rem;
+}
+
+.clist {
+  display: grid;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: rgb(243, 250, 255);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.clistitem {
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  display: flex;
+  border-radius: .7rem;
+  background-color: #fff;
+}
+
+.cfoto {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.cinfo {
+  display: flex;
+  color: black;
+  justify-content: space-between;
+  width: 260px;
+}
+
+.searchbar {
+  width: 70%;
+  height: 2.5rem;
+  margin-top: 1rem;
+  border-radius: .5rem;
+  padding-left: .7rem;
+  border: none;
+}
+.searchbar:focus {
+  background-color: rgb(255, 255, 255);
+  outline: 2px solid rgb(235, 211, 211);
+  border: none
 }
