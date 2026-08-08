@@ -1,4 +1,5 @@
 var valorTotal = 0
+var valorProd = 0
 let searchTimeout = null;
 
 const searchInput = document.getElementById("search-products")
@@ -143,8 +144,8 @@ function cartList(products) {
     }
 
     list.innerHTML = products.map(p => {
-        const id = p._id || p.id;
-        valorTotal += p.produto.preco * p.qtd
+        valorProd = p.qtd * p.produto.preco
+        valorTotal += valorProd
         return `
             <div class="clistitem">
                 <div class="cfoto">
@@ -155,7 +156,7 @@ function cartList(products) {
                     <div class="cinfo"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
                     <div class="cinfo"><p>Quantidade: </p><span>${p.qtd}</span></div>
 
-                    <button style="margin-top: .8rem" class="btn-adicionar btn-remove-from-cart" data-id="${p.id}">Remover do carrinho</button>
+                    <button style="margin-top: .8rem" class="btn-adicionar btn-remove-from-cart" data-id="${p.produto.id}">Remover do carrinho</button>
                     </form>
                 </div>
             </div>
@@ -213,9 +214,14 @@ async function removeFromCart(id) {
         })
 
         if (response.ok) {
-
+            await loadCart()
+            console.log("Item removido com sucesso")
+        } else {
+            console.error("Erro ao tentar remover item do carrinho:", response.statusText)
         }
-    } catch {}
+    } catch(e) {
+        console.error(`Erro ao tentar executar rota delete ${url}:`, e)
+    }
 }
 
 
@@ -231,6 +237,7 @@ async function handleAddToCart(productId) {
                 qtd: 1
             })
         })
+        valorTotal = 0
 
         if (response.ok) {
             if (typeof loadCart === "function") {
