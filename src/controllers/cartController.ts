@@ -1,59 +1,60 @@
 import { Request, Response } from "express";
-import { CartRepository } from "../models/cartRepository";
-import { user } from "../entities/user";
+import { cartService } from "../services/cartService";
 
-const repo = new CartRepository()
+export class cartController {
+    constructor(private cartService: cartService) {}
 
-export async function sessionCarrinho(req: Request, res: Response) {
-    try {
-        req.session.carrinho = await repo.obterCarrinho(req.session)
-        return req.session.carrinho
-    } catch {
-        res.status(500).json({success: false, message: "GET cartController sessionCarrinho | Falha ao obter o carrinho"})
+    // GET /cart
+    async getCart(req: Request, res: Response) {
+        try {
+            const queryTerm = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+            const carrinho = await this.cartService.getCart(req.session)
+            const dados = carrinho.filter(queryTerm)
+
+            res.json({success: true, data: dados, total: dados.length})
+        } catch {
+            res.status(500).json({success: false, message: "Erro ao tentar carregar o carrinho"})
+        }
+    }
+
+    // POST /cart
+    async addItem(req: Request, res: Response) {
+        try {
+            const produtoId = Number(req.body.produtoId)
+            const quantidade = Number(req.body.quantidade)
+
+            this.cartService.addItem(req.session, produtoId, quantidade)
+        } catch {
+            res.status(500).json({success: false, message: "Erro ao tentar adicionar produto ao carrinho"})
+        }
+    }
+
+    // DELETE /cart/:id
+    async removeItem(req: Request, res: Response) {
+        try {
+            const produtoId = Number(req.body.produtoId)
+
+            this.cartService.removeItem(req.session, produtoId)
+        } catch {
+            res.status(500).json({success: false, message: "Erro ao tentar remover item do carrinho"})
+        }
+    }
+
+    // PUT /cart/:id
+    async updateQtd(req: Request, res: Response) {
+        const produtoId = Number(req.body.produtoId)
+        const quantidade = Number(req.body.quantidade)
+
+        try {
+            this.cartService.updateQtd(req.session, produtoId, quantidade)
+        } catch {
+            res.status(500).json({success: false, message: `Erro ao tentar atualizar quantidade do item ${produtoId}`})
+        }
+    }
+
+    // POST /cart
+    async limparTudo(req:Request, res:Response) {
+        this.cartService.esvaziar(req.session)
     }
 }
-
-export async function listarCarrinho(req: Request, res: Response) {
-    try {
-        const carrinho = repo.listarItens(req.session.carrinho)
-        const username = req.session.userName
-        const photo = req.session.photo
-        res.render("carrinho", {itens: carrinho, nome: username, foto: photo})
-    } catch {
-        res.status(500).json({success: false, message: "GET cartController listarCarrinho(req, res) | Falha ao carregar o carrinho.ejs"})
-    }
-};
-
-export async function adicionarAoCarrinho(req: Request, res: Response) {
-    const item = req.body;
-
-    res.status(201).json({
-        mensagem: "Item adicionado ao carrinho",
-        item
-    });
-};
-
-export const removerDoCarrinho = (req: Request, res: Response): void => {
-    const { id } = req.params;
-
-    res.status(200).json({
-        mensagem: `Item ${id} removido do carrinho`
-    });
-};
-
-export const atualizarQuantidade = (req: Request, res: Response): void => {
-    const { id } = req.params;
-    const { quantidade } = req.body;
-
-    res.status(200).json({
-        mensagem: `Quantidade do item ${id} atualizada`,
-        quantidade
-    });
-};
-
-export const limparCarrinho = (req: Request, res: Response): void => {
-    req.session.carrinho = []
-    res.status(200).json({
-        mensagem: "Carrinho esvaziado"
-    });
-};

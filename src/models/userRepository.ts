@@ -23,7 +23,7 @@ export class userRepository {
 
             return parsedContent
             .filter((item: any) => item !== null && item !== undefined)
-            .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms));
+            .map((u: any) => new user(u.id, u.nome, u.email, u.senha, u.dataCriacao, u.totalCompras, u.foto, u.perms, u.cart));
         } catch {
             console.error("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
             consoleContent.push("ERRO: userRepository loadFiles | Não há nenhum usuário cadastrado no banco de dados.")
@@ -64,10 +64,11 @@ export class userRepository {
         const nextID = users.length + 1;
         const senhaEncriptada = await bcrypt.hash(senha, this.saltRounds)
         let permission = "client"
+        const cart: number[] = []
         
         if (email === "admin@gabeslop.com") {permission = "admin"}
 
-        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission)
+        const newUser = new user(nextID, nome, email, senhaEncriptada, dataCriacao, 0, foto, permission, cart)
         users.push(newUser)
         await this.saveUsers(users)
         return newUser
