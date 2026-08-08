@@ -14,12 +14,7 @@ apiRoutes.post("/api/registro", upload.single("foto"), clientController.CreateUs
 // SAIR DA CONTA
 apiRoutes.get("/logoff", clientController.logoff)
 
-// BUSCAR GAME POR ID
-apiRoutes.get("/store/:id", (req: Request, res: Response) => {
-    res.json({
-        id: req.params.id
-    });
-});
+
 
 // FINALIZAR COMPRA
 apiRoutes.post("/finalizar", (req: Request, res: Response) => {

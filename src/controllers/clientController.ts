@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express"
+import { Request, Response } from "express"
 import { userRepository } from "../models/userRepository"
 import { productRepository } from "../models/produtoRepository"
 
