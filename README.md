@@ -72,3 +72,16 @@ Senha:
 ```
 admin123
 ```
+
+## Prints do website
+Painel de administrador
+![Painel de administrador](/public/img/readme/print1.png)
+
+Página do usuário
+![Painel de administrador](/public/img/readme/print2.png)
+
+Página da loja
+![Painel de administrador](/public/img/readme/print3.png)
+
+Página de finalizar compra
+![Painel de administrador](/public/img/readme/print4.png)
