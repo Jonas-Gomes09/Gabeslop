@@ -59,10 +59,10 @@ export class productRepository {
 
         const nextID = games.length + 1;
 
-        const newUser = new Game(nextID, titulo, preco, 0, estoque, disponibilidade, categoria, foto)
-        games.push(newUser)
+        const newProduct = new Game(nextID, titulo, preco, 0, estoque, disponibilidade, categoria, foto)
+        games.push(newProduct)
         await this.saveProducts(games)
-        return newUser
+        return newProduct
     }
 
     // Remover produto (VIA PAINEL DE MODERADOR)

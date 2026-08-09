@@ -210,8 +210,18 @@ export async function deleteUser(req: Request, res: Response) {
         req.session.userId = undefined
         req.session.userName = undefined
         req.session.flash = undefined
-        res.status(200).json({success: true, message: "Usuário removido com sucesso"})
+        res.status(200).redirect("/")
     } catch {
         return res.status(500).json({success: false, message: "userController deleteUser | Falha ao excluir usuário"})
+    }
+}
+
+export async function productInfo(req: Request, res: Response) {
+    const id = Number(req.params.id)
+    try {
+        const produto = await productRepo.produtoInfo(id)
+        res.status(200).render("produto", {produto, nome: req.session.userName, foto: req.session.photo})
+    } catch {
+        return res.status(500).json({success: false, message: "userController productInfo | Falha ao carregar produtos"})
     }
 }

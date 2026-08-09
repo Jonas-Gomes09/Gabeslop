@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto</title>
+    <link href="/css/produto.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar" id="nav">
+  <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
+    <img src="/img/logoGabeSlop.png" alt="GabeSlop Logo">
+  </a>
+  
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Início</a></li>
+      <li><a href="/store">Loja</a></li>
+      <li><a href="/naoexiste">Promoções</a></li>
+      <li><a href="/naoexiste">Lançamentos</a></li>
+
+      <% if (typeof nome !== 'undefined' && nome) { %>
+        <div class="user-info">
+
+          <a href="/logoff" style="color: #E74C3C; margin-left: .5rem;">Sair</a>
+          <a href="/profile" class="user" style="margin-left: 1rem; font-weight: 700;"><%= nome %></a>
+          <img 
+            id="avatar-header" 
+            alt="Foto de perfil de: <%= nome %>" 
+            class="user-avatar"
+            src="<%= foto %>"
+          >
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
+
+<div class="carrinho">
+    <div class="clist" id="clist">
+        <div class="image-div">
+            <img style="max-width: 100%; max-height: 100%;" src="/uploads/<%= produto.foto %>" alt="Foto do produto">
+        </div>
+        <div class="infos">
+            <h1 style="font-size: 3rem;"><%= produto.titulo %></h1>
+            <div class="info">
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Total de vendas:</strong><span style="font-size: 1.5rem;"><%= produto.vendas %></span>
+            </div>
+            <div class="info">
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Estoque:</strong><span style="font-size: 1.5rem;"><%= produto.estoque %></span>
+            </div>
+            <div class="info">
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Disponível:</strong><span style="font-size: 1.5rem;"><% if (produto.disponivel) { %> sim <% } else { %> não <% } %></span>
+            </div>
+            <div class="info">
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Disponível:</strong><span style="font-size: 1.5rem;"><% if (produto.disponivel) { %> sim <% } else { %> não <% } %></span>
+            </div>
+        </div>
+    </div>
+    <div class="acoes">
+        <button id="addcart" class="btn adicionar" data-id="<%= produto.id %>">Adicionar ao carrinho</button>
+    </div>
+</div>
+
+<script src="/js/produto.js"></script>
+</body>
+</html>

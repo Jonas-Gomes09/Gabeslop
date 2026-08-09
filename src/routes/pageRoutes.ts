@@ -20,8 +20,4 @@ pageRoutes.get("/comprar", clientAuth, cartController.paginaFinalizarCompra)
 pageRoutes.get("/forbidden", clientController.ForbiddenPage)
 
 // BUSCAR GAME POR ID
-pageRoutes.get("/store/:id", (req: Request, res: Response) => {
-    res.json({
-        id: req.params.id
-    });
-});
+pageRoutes.get("/store/:id", clientController.productInfo);

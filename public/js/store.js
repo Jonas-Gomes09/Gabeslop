@@ -75,10 +75,13 @@ function productList(products) {
 
     list.innerHTML = products.map(p => {
         const id = p._id || p.id;
+        const disponivel = p.disponivel ? "" : "(INDISPONÍVEL)";
+        const adicionarCarrinho = disponivel === "" ? "" : "disabled";
+        const styleRed = disponivel === "" ? "color: black;" : "color: #ef4444;"
 
         return `
             <div class="plistitem">
-            <h1 style="color: black; font-size: 1.3rem; margin: 1rem">${p.titulo}</h1>
+            <h1 style="${styleRed} font-size: 1.3rem; margin: 1rem">${p.titulo} ${disponivel}</h1>
             <div class="informacoesproduto">
             <img style="height: 8rem; margin: .8rem; border-radius: .5rem" src="uploads/${p.foto}" alt="Imagem de: ${p.titulo}">
                 <div class="infos">
@@ -92,7 +95,7 @@ function productList(products) {
                 </div>        
             </div>
             <div class="productbuttons">
-                <button type="button" class="btn-adicionar btn-add-cart" data-id="${id}">Adicionar ao carrinho</button>
+                <button type="button" ${adicionarCarrinho} class="btn-adicionar btn-add-cart" data-id="${id}">Adicionar ao carrinho</button>
                 <button type="button" class="btn-adicionar btn-view-product" data-id="${id}">Acessar página</button>
             </div>
             </div>
@@ -155,7 +158,7 @@ function cartList(products) {
                     <img class="cfoto" src="uploads/${p.produto.foto}" alt="Imagem de: ${p.produto.titulo}">
                 </div>
                 <div class="cinfos">
-                    <h1 style="max-width: 100px">${p.produto.titulo}</h1>
+                    <h1 style="max-width: 300px">${p.produto.titulo}</h1>
                     <div class="cinfo" style="margin-top: -1rem"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
                     <div class="cinfo">
 
@@ -166,7 +169,7 @@ function cartList(products) {
                     <div class="qtddiv">
                         <p>Quantidade: </p><span style="font-weight:700">${p.qtd}</span>
                         <button class="btn-adicionar btn-minus-cart" data-qtd="${p.qtd}" data-id="${p.produto.id}">-</button>
-                        <button style="margin-right: -.5rem" class="btn-adicionar btn-plus-cart" data-qtd="${p.qtd}" data-id="${p.produto.id}">+</button>
+                        <button style="margin-right: -.5rem" class="btn-adicionar btn-plus-cart" data-estoque="${p.produto.estoque}" data-qtd="${p.qtd}" data-id="${p.produto.id}">+</button>
                     </div>
                 </div>
                 </div>
@@ -196,8 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const btnView = target.closest(".btn-view-product")
             if (btnView) {
-                const id = Number(btnAdd.getAttribute("data-id"))
-                window.location.href(`/store/${id}`)
+                const id = Number(btnView.getAttribute("data-id"))
+                window.location.href = `/store/${id}`
                 return
             }
         })
@@ -218,6 +221,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (btnPlus) {
                 const id = Number(btnPlus.getAttribute("data-id"))
                 let qtd = Number(btnPlus.getAttribute("data-qtd"))
+                const estoque = Number(btnPlus.getAttribute("data-estoque"))
+
+                if (qtd >= estoque) {
+                    alert(`Há apenas ${estoque} unidades disponíveis na loja!`)
+                    return
+                }
                 qtd += 1
                 await updateQtdCart(id, qtd)
                 return

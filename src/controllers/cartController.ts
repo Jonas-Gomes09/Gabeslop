@@ -78,6 +78,7 @@ export async function atualizarQtd(req: Request, res: Response) {
 
         const prodId = Number(req.params.id)
         const quantidade = Number(req.body.qtd)
+        const produto = await productRepo.produtoInfo(prodId)
 
     try {
         const carrinho = req.session.carrinho || [];
@@ -85,13 +86,17 @@ export async function atualizarQtd(req: Request, res: Response) {
 
         const busca = carrinho.findIndex(c => c.productId === prodId)
 
-        if (busca === -1) {
+        if (busca === -1 || produto === undefined) {
             return res.status(404).json({success: false, message: "Produto não encontrado"})
         }
 
         if (!quantidade || quantidade <= 0) {
             carrinho.splice(busca, 1)
             return res.status(200).json({success: true, message: "Quantidade zerada, produto removido"})
+        }
+
+        if (quantidade > produto.estoque) {
+            carrinho[busca].qtd = produto.estoque
         }
 
         carrinho[busca].qtd = quantidade

@@ -168,6 +168,11 @@ body {
     background-color: #dc2626;
   }
 
+  button:disabled {
+    background-color: #4f68ac;
+    cursor: default;
+  }
+
   .user-avatar {
     height: 3rem;
     width: 3rem;
