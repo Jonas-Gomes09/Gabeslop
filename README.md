@@ -38,3 +38,7 @@ Senha:
 ```
 admin123
 ```
+
+## Rotas do website
+
+![Tabela de rotas](/public/img/readme/TabelaRotasGabeslop.png)
