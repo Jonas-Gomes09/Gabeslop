@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import * as clientController from "../controllers/clientController"
 import { clientAuth, jaLogado } from "../middlewares/auth";
+import * as cartController from "../controllers/cartController"
 
 export const pageRoutes = Router();
 
@@ -16,6 +17,9 @@ pageRoutes.get("/store", clientAuth, clientController.StorePage);
 
 // pode ficar de easter egg talvez?
 pageRoutes.get("/forbidden", clientController.ForbiddenPage)
+
+// página de comprar
+pageRoutes.get("/comprar", cartController.paginaFinalizarCompra)
 
 // BUSCAR GAME POR ID
 pageRoutes.get("/store/:id", (req: Request, res: Response) => {

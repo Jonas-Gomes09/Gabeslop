@@ -29,13 +29,5 @@ apiRoutes.put("/cart/:id", cartController.atualizarQtd)
 apiRoutes.delete("/cart/:id", cartController.deleteItem)
 // ESVAZIAR
 apiRoutes.post("/cart/wipe", cartController.empty)
-
-
-
 // FINALIZAR COMPRA
-apiRoutes.post("/finalizar", (req: Request, res: Response) => {
-    res.json({
-        sucesso: true,
-        mensagem: "Compra finalizada."
-    });
-});
+apiRoutes.post("/cart/comprar", cartController.finalizarCompra);

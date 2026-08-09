@@ -11,19 +11,35 @@
     <img src="img/LogoGabeSlop.png" alt="logo-gabeslop" class="logo">
 </header>
 <body>
-    <h1>ESCOLHA SUA FORMA DE PAGAMENTO</h1>
     <section class="row">
-        <h2 class="row-cartoes">Selecione o seu Cartão</h2>
+        <h2 class="row-cartoes">Selecione sua forma de pagamento</h2>
+        <div class="row-cartao">
+            <img src="img/Banco_Bradesco_logo.png" alt="Pôster 1" class="poster">
+        </div>
         <div class="row-cartaoCredito">
-          <img src="img/Banco_Bradesco_logo.png" alt="Pôster 1" class="poster">
+          
           <img src="img/Pix.logo.png" alt="Pôster 1" class="poster">
           <img src="img/Mastercard-logo.png" alt="Pôster 1" class="poster">
             </div> 
-            <button class="btn-finalizar">FINALIZAR COMPRA</button>
+            <button id="comprar" class="btn-finalizar">FINALIZAR COMPRA</button>
+                <div class="carrinho">
+                    <h1>Seu carrinho</h1>
+
+                    <div id="loading-cart" style="display: none;">Carregando...</div>
+                    <div id="carrinho-vazio" class="vazio" style="display: none;">
+                        Seu carrinho está vazio.
+                    </div>
+
+                    <p id="loadingcart" style="display: none;">loading...</p>
+                    <div class="clist" id="clist"></div>
+                    <p style="color: black;" id="totalItensCarrinho">Total de itens: 0</p>
+                    <div class="total"><strong id="cart-total" style="color: black;">Valor total: R$ 0.00</strong></div>
+                </div>
     </section>
 
     <section class="rodape-seguranca">
         <img src="img/certificado de seguranca.png" alt="certificado de segurança" class="certificado">
     </section>
+    <script src="js/pagamento.js"></script>
 </body>
 </html>

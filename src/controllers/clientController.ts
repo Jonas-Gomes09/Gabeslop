@@ -83,10 +83,9 @@ export async function StorePage(req: Request, res: Response) {
         
         req.session.flash = undefined
         const q = typeof req.query.q === "string" ? req.query.q : "";
-
-        const content = await productRepo.listAll(q)
         const flash = req.session.flash
-        return res.render("store", {itens: content, flash: flash, nome: req.session.userName, foto: req.session.photo})
+        
+        return res.render("store", {flash: flash, nome: req.session.userName, foto: req.session.photo})
     } catch {
         return res.status(500).json({success: false, message: "GET userController StorePage | Falha ao carregar o loja.ejs"})
     }

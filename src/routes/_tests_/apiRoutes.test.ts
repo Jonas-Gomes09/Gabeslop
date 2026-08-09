@@ -1,8 +1,17 @@
 import request from "supertest";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import app from "../../app";
 
+
 describe("Testes das API Routes", () => {
+
+  let cookies: string[]
+
+  beforeAll(async () => {
+    const res = await request(app).post("/cart").send({id: 1, qtd: 1})
+    cookies = res.get("Set-Cookie") || []
+  })
+
 
   it("deve acessar a rota do carrinho", async () => {
     const resposta = await request(app).get("/cart");
@@ -13,8 +22,10 @@ describe("Testes das API Routes", () => {
   it("deve adicionar um jogo ao carrinho", async () => {
     const resposta = await request(app)
       .post("/cart")
+      .set("Cookie", cookies)
       .send({
-        id: 123
+        id: 1,
+        qtd: 1
       });
 
     expect(resposta.status).toBe(200);
@@ -22,9 +33,9 @@ describe("Testes das API Routes", () => {
 
 it("deve atualizar a quantidade de um item", async () => {
   const resposta = await request(app)
-    .put("/cart/123")
+    .put("/cart/1")
+    .set("Cookie", cookies)
     .send({
-      productId: 123,
       qtd: 2
     });
 
@@ -33,7 +44,7 @@ it("deve atualizar a quantidade de um item", async () => {
 
   it("deve remover um jogo do carrinho", async () => {
     const resposta = await request(app)
-      .delete("/cart/123");
+      .delete("/cart/1");
 
     expect(resposta.status).toBe(200);
   });

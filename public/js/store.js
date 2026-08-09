@@ -3,6 +3,9 @@ var valorProd = 0
 let searchTimeout = null;
 
 const searchInput = document.getElementById("search-products")
+const btnFinalizar = document.getElementById("finalizar").addEventListener('click', () => {
+    window.location.href = "comprar"
+})
 
 async function deleteCart() {
     try {
@@ -149,15 +152,23 @@ function cartList(products) {
         return `
             <div class="clistitem">
                 <div class="cfoto">
-                    <img style="max-height: 4rem; max-width: 4rem; margin-top: .8rem; border-radius: .5rem; object-fit: cover" src="uploads/${p.produto.foto}" alt="Imagem de: ${p.produto.titulo}">
+                    <img class="cfoto" src="uploads/${p.produto.foto}" alt="Imagem de: ${p.produto.titulo}">
                 </div>
                 <div class="cinfos">
                     <h1 style="max-width: 100px">${p.produto.titulo}</h1>
-                    <div class="cinfo"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
-                    <div class="cinfo"><p>Quantidade: </p><span>${p.qtd}</span></div>
+                    <div class="cinfo" style="margin-top: -1rem"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
+                    <div class="cinfo">
 
-                    <button style="margin-top: .8rem" class="btn-adicionar btn-remove-from-cart" data-id="${p.produto.id}">Remover do carrinho</button>
-                    </form>
+                    
+                </div>
+                <div class ="cbuttons">
+                    <button class="btn-adicionar btn-remove-from-cart" data-id="${p.produto.id}">Remover do carrinho</button>
+                    <div class="qtddiv">
+                        <p>Quantidade: </p><span style="font-weight:700">${p.qtd}</span>
+                        <button class="btn-adicionar btn-minus-cart" data-qtd="${p.qtd}" data-id="${p.produto.id}">-</button>
+                        <button style="margin-right: -.5rem" class="btn-adicionar btn-plus-cart" data-qtd="${p.qtd}" data-id="${p.produto.id}">+</button>
+                    </div>
+                </div>
                 </div>
             </div>
         `;
@@ -202,9 +213,53 @@ document.addEventListener("DOMContentLoaded", () => {
                 await removeFromCart(id)
                 return
             }
+
+            const btnPlus = target.closest(".btn-plus-cart")
+            if (btnPlus) {
+                const id = Number(btnPlus.getAttribute("data-id"))
+                let qtd = Number(btnPlus.getAttribute("data-qtd"))
+                qtd += 1
+                await updateQtdCart(id, qtd)
+                return
+            }
+
+            const btnMinus = target.closest(".btn-minus-cart")
+            if (btnMinus) {
+                const id = Number(btnMinus.getAttribute("data-id"))
+                let qtd = Number(btnMinus.getAttribute("data-qtd"))
+                qtd -= 1
+                await updateQtdCart(id, qtd)
+                return                
+            }
         })
     }
 });
+
+
+async function updateQtdCart(id, qtd) {
+    const url = `/cart/${id}`
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                qtd: qtd
+            })
+        })
+        valorTotal = 0
+
+        if (response.ok) {
+            await loadCart()
+            console.log("Qtd do item alterada com sucesso")
+        } else {
+            console.error("Erro ao tentar remover item do carrinho:", response.statusText)
+        }
+    } catch(e) {
+        console.error(`Erro ao tentar executar rota put ${url}:`, e)
+    }
+}
 
 async function removeFromCart(id) {
     const url = `/cart/${id}`
@@ -212,6 +267,7 @@ async function removeFromCart(id) {
         const response = await fetch(url, {
             method: 'DELETE'
         })
+        valorTotal = 0
 
         if (response.ok) {
             await loadCart()

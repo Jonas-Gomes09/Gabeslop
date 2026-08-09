@@ -109,7 +109,7 @@ export class productRepository {
     }
 
     // Compra de produto (CLIENTE, APÓS COMPRA)
-    async compra(id: number): Promise<Game | null> {
+    async compra(id: number, qtd: number): Promise<Game | null> {
         const products = await this.loadProducts()
         const filter = products.find(p => p.id === id)
         if (!filter) {
@@ -118,8 +118,8 @@ export class productRepository {
         if (filter.estoque <= 0) {
             return null
         }
-        filter.estoque -= 1
-        filter.vendas += 1
+        filter.estoque -= qtd
+        filter.vendas += qtd
         
         if (filter.estoque <= 0) {
             filter.disponivel = false
