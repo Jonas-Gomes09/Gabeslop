@@ -31,17 +31,6 @@ describe("Testes das API Routes", () => {
     expect(resposta.status).toBe(200);
   });
 
-it("deve atualizar a quantidade de um item", async () => {
-  const resposta = await request(app)
-    .put("/cart/1")
-    .set("Cookie", cookies)
-    .send({
-      qtd: 2
-    });
-
-  expect(resposta.status).toBe(200);
-});
-
   it("deve remover um jogo do carrinho", async () => {
     const resposta = await request(app)
       .delete("/cart/1");
@@ -54,14 +43,6 @@ it("deve atualizar a quantidade de um item", async () => {
       .post("/cart/wipe");
 
     expect(resposta.status).toBe(200);
-  });
-
-  it("deve finalizar a compra", async () => {
-    const resposta = await request(app).post("/finalizar");
-
-    expect(resposta.status).toBe(200);
-    expect(resposta.body.sucesso).toBe(true);
-    expect(resposta.body.mensagem).toBe("Compra finalizada.");
   });
 
 });

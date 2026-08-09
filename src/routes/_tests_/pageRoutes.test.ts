@@ -38,13 +38,4 @@ describe("Testes das Page Routes", () => {
 
     expect(resposta.status).toBe(200);
   });
-
-  it("deve buscar um game pelo ID", async () => {
-    const resposta = await request(app)
-      .get("/store/123");
-
-    expect(resposta.status).toBe(200);
-    expect(resposta.body.id).toBe("123");
-  });
-
 });

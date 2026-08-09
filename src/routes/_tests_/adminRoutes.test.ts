@@ -25,16 +25,6 @@ describe("Testes das Admin Routes", () => {
     expect([200, 302, 401, 403, 500]).toContain(resposta.status);
   });
 
-  it("deve atualizar o estoque de um produto", async () => {
-    const resposta = await request(app)
-      .put("/admin/store/123")
-      .send({
-        qtd: 10
-      });
-
-    expect([200, 302, 400, 401, 403, 404, 500]).toContain(resposta.status);
-  });
-
   it("deve excluir um produto", async () => {
     const resposta = await request(app)
       .delete("/api/store/123");

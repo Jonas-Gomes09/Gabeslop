@@ -19,7 +19,7 @@ export class comentarioRepository {
             .filter((item: any) => item !== null && item !== undefined)
             .map((g: any) => new Comment(g.id, g.idUser, g.titulo, g.comentario));
         } catch {
-            console.error("produtoRepository loadComments() | Não há nenhum produto presente.")
+            console.error("comentarioRepository loadComments() | Não há nenhum comentário presente.")
             await this.saveComments([]);
             return []
         }
@@ -33,8 +33,8 @@ export class comentarioRepository {
             console.log("Comentários salvos")
             consoleContent.push("Comentários salvos")
         } catch(e) {
-            console.error("produtoRepository saveComments:", e)
-            consoleContent.push(`produtoRepository saveComments:, ${e}`)
+            console.error("comentarioRepository saveComments:", e)
+            consoleContent.push(`comentarioRepository saveComments:, ${e}`)
         }
     }
 
