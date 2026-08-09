@@ -55,13 +55,12 @@ export class comentarioRepository {
 
     async removerComentario(id: number, uId: number): Promise<Boolean> {
         const comments = await this.loadComments()
-        const isUser = comments.findIndex(p => p.idUser === uId)
         const commentIndex = comments.findIndex(p => p.id === id)
         if (commentIndex === -1) {
             return false
         }
 
-        if (isUser === -1) {
+        if (comments[commentIndex].idUser !== uId) {
             return false
         }
 

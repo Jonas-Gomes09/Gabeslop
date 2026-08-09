@@ -14,8 +14,9 @@ const commentRepo = new comentarioRepository()
 export async function listComments(req: Request, res: Response) {
     try {
         const comments = await commentRepo.listAll()
+        const users = await userRepo.listAll()
 
-        res.status(200).json({success: true, dados: comments, total: comments.length})
+        res.status(200).json({success: true, dados: comments, total: comments.length, user: users})
     } catch {
         res.status(500).json({success: false, message: "Não foi possível carregar os comentários"})
     }
@@ -39,16 +40,15 @@ export async function comentar(req: Request, res: Response) {
 
 export async function excluirComentario(req: Request, res: Response) {
     const uId = Number(req.session.userId)
-    const name = Number(req.session.userName)
+    const name = req.session.userName
     const id = Number(req.params.id)
-    const {titulo, comentario} = req.body
     try {
         const comment = await commentRepo.removerComentario(id, uId)
 
         if (comment === true) {
-            res.status(200).json({success: true, message: "Comentário criado com sucesso!"})
+            res.status(200).json({success: true, message: "Comentário excluído com sucesso!"})
         } else {
-            res.status(400).json({success: true, message: "Você não pode deletar esse comentário!"})
+            res.status(403).json({success: true, message: "Você não pode deletar esse comentário!"})
         }
     } catch {
         res.status(500).json({success: false, message: `Não foi possível excluir o comentário ${id} de ${name}`})

@@ -53,13 +53,25 @@
                 <strong style="margin-right: 1rem; font-size: 1.5rem;">Disponível:</strong><span style="font-size: 1.5rem;"><% if (produto.disponivel) { %> sim <% } else { %> não <% } %></span>
             </div>
             <div class="info">
-                <strong style="margin-right: 1rem; font-size: 1.5rem;">Disponível:</strong><span style="font-size: 1.5rem;"><% if (produto.disponivel) { %> sim <% } else { %> não <% } %></span>
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Categoria:</strong><span style="font-size: 1.5rem;"><%= produto.categoria.toLowerCase() %></span>
             </div>
         </div>
     </div>
     <div class="acoes">
         <button id="addcart" class="btn adicionar" data-id="<%= produto.id %>">Adicionar ao carrinho</button>
     </div>
+
+    <form class="create-comment" id="commentForm">
+      <div class="input-area">
+        <label style="color: black;">Título do comentário:</label>
+        <input class="input-title" type="text" id="titulo" required>
+        <label style="color: black;">Conteúdo do comentário:</label>
+        <textarea class="input-comment" id="comentario" rows="10" required></textarea>
+      </div>
+      <button type="submit" class="submit">Enviar</button>
+    </form>
+
+    <div id="commentsContainer" class="commentsContainer"></div>
 </div>
 
 <script src="/js/produto.js"></script>
