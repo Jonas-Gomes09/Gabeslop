@@ -130,7 +130,7 @@ export class productRepository {
 
 
     // Atualizar estoque (PAINEL DE MODERADOR)
-    async atualizarEstoque(id: number, estoque: number): Promise<Game["estoque"] | null> {
+    async atualizarEstoque(id: number, estoque: number): Promise<Game | null> {
         const products = await this.loadProducts()
         const filter = products.find(p => p.id === id)
         
@@ -139,7 +139,8 @@ export class productRepository {
         }
 
         filter.estoque = estoque
+        filter.disponivel = estoque > 0
         await this.saveProducts(products)
-        return filter.estoque
+        return filter
     }
 }

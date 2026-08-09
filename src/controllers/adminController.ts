@@ -49,7 +49,7 @@ export async function UpdateEstoque(req: Request, res: Response) {
         const id = Number(req.params.id);
         const estoque = Number(req.body.estoque);
 
-        const funcao = productRepo.atualizarEstoque(id, estoque)
+        const funcao = await productRepo.atualizarEstoque(id, estoque)
 
         if (funcao === null) {
             req.session.flash = `Não foi encontrado nenhum produto com ID ${id}`

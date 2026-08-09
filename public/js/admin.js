@@ -1,5 +1,3 @@
-let searchTimer = undefined
-
 // Pegar objetos do site
 const nothingDiv = document.getElementById("nothinghere") // Tela de bem-vindo
 const consoleDiv = document.getElementById("console") // Tela do console
@@ -50,6 +48,9 @@ async function showUsers() {
     productsDiv.style.display = "none"
     addProductDiv.style.display = "none"
     
+    loadUsers()
+    loadProducts()
+
 } toggleUsersBtn.addEventListener('click', () => {showUsers()})
 
 
@@ -66,6 +67,9 @@ async function showProducts() {
     productsDiv.style.display = "flex"
     addProductDiv.style.display = "none"
     
+    loadUsers()
+    loadProducts()
+
 } toggleProductsBtn.addEventListener('click', () => showProducts())
 
 
@@ -81,6 +85,9 @@ async function showConsole() {
     usersDiv.style.display = "none"
     productsDiv.style.display = "none"
     addProductDiv.style.display = "none"
+
+    loadUsers()
+    loadProducts()
 
 } toggleConsoleBtn.addEventListener('click', () => showConsole())
 
@@ -139,7 +146,7 @@ function productList(products) {
             <div class="infos">
                 <h1>${p.titulo}</h1>
                 <div class="info">
-                <p>Preço: </p><span>${p.preco}</span>
+                <p>Preço: </p><span>R$ ${p.preco},00</span>
                 </div>
                 <div class="info">
                 <p>Vendas: </p><span>${p.vendas}</span>
@@ -155,13 +162,59 @@ function productList(products) {
                 </div>
             </div>
             <div class="prodbuttons">
-                <button class="sideBarButton">ATUALIZAR ESTOQUE</button>
-                <button class="sideBarButton excluir-produto" id="excluirProduto" data-id="${p.id}">EXCLUIR PRODUTO</button>
+            <form class="form-atualizar-estoque" data-id="${p.id}">
+                    <input class="searchbar" type="number" min="0" name="estoque" value="${p.estoque}" style="width: 4rem;" required />
+                    <button type="submit" class="sideBarButton">ATUALIZAR ESTOQUE</button>
+            </form>
+                <button style="margin-right: 1rem;" class="sideBarButton excluir-produto" id="excluirProduto" data-id="${p.id}">EXCLUIR PRODUTO</button>
             </div>
         </div>`
         ).join('')
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    loadProducts();
+    loadUsers();
+
+    const productListContainer = document.getElementById("plist");
+
+    if (productListContainer) {
+        productListContainer.addEventListener("submit", async (event) => {
+            if (event.target.classList.contains("form-atualizar-estoque")) {
+                event.preventDefault();
+
+                const form = event.target;
+                const id = form.getAttribute("data-id");
+                const novoEstoque = Number(form.estoque.value);
+
+                await atualizarEstoque(id, novoEstoque);
+            }
+        });
+    }
+});
+
+async function atualizarEstoque(id, estoque) {
+    try {
+        const response = await fetch(`/admin/store/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({estoque})
+        });
+
+        if (response.ok) {
+            console.log("Estoque atualizado com sucesso");
+            
+        } else {
+            alert("Erro ao atualizar estoque.");
+        }
+    } catch (error) {
+        console.error("Erro na requisição de atualização de estoque:", error);
+    } finally {
+        window.location.reload
+    }
+}
 
 // Carregar usuários
 async function loadUsers(term) {
@@ -216,11 +269,6 @@ function userList(users) {
             </div>
         </div>`
         ).join('')
-}
-
-function debounceUsers(event) {
-clearTimeout(searchTimer)
-searchTimer = setTimeout(() => loadUsers(event.target.value.trim()), 300)
 }
 
 

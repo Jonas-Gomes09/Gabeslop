@@ -186,7 +186,8 @@ body {
 .prodbuttons {
     width: 300px;
     position:absolute;
-    right: -1rem;
+    right: 1rem;
+    gap: 1rem;
 }
 
 .addpdiv {
@@ -234,3 +235,13 @@ body {
 .addFile::-webkit-file-upload-button {
     display: none;
 }
+
+.form-atualizar-estoque {
+ display: flex;
+ height: 3rem;
+ gap: 1rem;
+ margin-bottom: 1rem;
+ align-items: center;
+ justify-content: center;
+}
+
