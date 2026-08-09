@@ -33,3 +33,14 @@ apiRoutes.delete("/cart/:id", cartController.deleteItem)
 apiRoutes.post("/cart/wipe", cartController.empty)
 // FINALIZAR COMPRA
 apiRoutes.post("/cart/comprar", cartController.finalizarCompra);
+
+
+
+// COMENTÁRIOS
+
+// LISTAR TUDO
+apiRoutes.get("/comments", clientController.listComments)
+// LISTAR TUDO
+apiRoutes.post("/comments", clientController.comentar)
+// LISTAR TUDO
+apiRoutes.delete("/comments/:id", clientController.excluirComentario)

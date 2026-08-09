@@ -1,13 +1,59 @@
 import { Request, Response } from "express"
 import { userRepository } from "../models/userRepository"
 import { productRepository } from "../models/produtoRepository"
+import { comentarioRepository } from "../models/comentarioRepository"
 
 const userRepo = new userRepository()
 const productRepo = new productRepository()
+const commentRepo = new comentarioRepository()
 
+// -------------------------------------------------------------------------------- //
+//                                ROTAS COMENTARIOS                                 //
+// -------------------------------------------------------------------------------- //
 
+export async function listComments(req: Request, res: Response) {
+    try {
+        const comments = await commentRepo.listAll()
 
+        res.status(200).json({success: true, dados: comments, total: comments.length})
+    } catch {
+        res.status(500).json({success: false, message: "Não foi possível carregar os comentários"})
+    }
+}
 
+export async function comentar(req: Request, res: Response) {
+    const uId = Number(req.session.userId)
+    const {titulo, comentario} = req.body
+    try {
+        const comments = await commentRepo.criar(titulo, uId, comentario)
+
+        if (comments) {
+            res.status(200).json({success: true, message: "Comentário criado com sucesso!"})
+        } else {
+            res.status(400).json({success: true, message: "Comentário inválido"})
+        }
+    } catch {
+        res.status(500).json({success: false, message: "Não foi possível criar um comentário"})
+    }
+}
+
+export async function excluirComentario(req: Request, res: Response) {
+    const uId = Number(req.session.userId)
+    const name = Number(req.session.userName)
+    const id = Number(req.params.id)
+    const {titulo, comentario} = req.body
+    try {
+        const comment = await commentRepo.removerComentario(id, uId)
+
+        if (comment === true) {
+            res.status(200).json({success: true, message: "Comentário criado com sucesso!"})
+        } else {
+            res.status(400).json({success: true, message: "Você não pode deletar esse comentário!"})
+        }
+    } catch {
+        res.status(500).json({success: false, message: `Não foi possível excluir o comentário ${id} de ${name}`})
+    }
+}
 
 // -------------------------------------------------------------------------------- //
 //                                       GET                                        //
