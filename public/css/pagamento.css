@@ -248,4 +248,51 @@ body {
     display: flex;
     width: 100%;
     border: 2px solid rgba(255,255,255,.2);
+    padding: .5rem;
+    background-color: #1e293b;
+    border-radius: .8rem;
+    margin-bottom: .5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-cartao {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+}
+
+.infocartao {
+    color: white;
+    margin-left: 1rem;
+}
+
+.cartao-checkbox  {
+    appearance: none;
+    -webkit-appearance: none;
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: 10px;
+    transition: ease .1s;
+}
+.cartao-checkbox:hover  {
+    box-shadow: 0px 0px 10px 0px rgba(255,255,255,.3);
+    border: 2px solid rgba(255,255,255,.6);
+}
+.cartao-checkbox:active  {
+    box-shadow: 0px 0px 5px 0px #2563eb;
+    border: 2px solid rgba(255,255,255,1);
+    scale: 80%;
+}
+.cartao-checkbox:checked {
+    background-color: #fff;
+    outline: 2px solid rgba(255,255,255,.5);
+    border: 2px solid black;
+}
+.cartao-checkbox:checked:hover {
+    scale: 110%;
 }

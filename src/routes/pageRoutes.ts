@@ -14,12 +14,10 @@ pageRoutes.get("/naoexiste", clientController.naoExiste)
 // ROTAS CLIENTE
 pageRoutes.get("/profile", clientAuth, clientController.ProfilePage);
 pageRoutes.get("/store", clientAuth, clientController.StorePage);
+pageRoutes.get("/comprar", clientAuth, cartController.paginaFinalizarCompra)
 
-// pode ficar de easter egg talvez?
+// pode ficar de easter egg talvez? VAI FICAR
 pageRoutes.get("/forbidden", clientController.ForbiddenPage)
-
-// página de comprar
-pageRoutes.get("/comprar", cartController.paginaFinalizarCompra)
 
 // BUSCAR GAME POR ID
 pageRoutes.get("/store/:id", (req: Request, res: Response) => {

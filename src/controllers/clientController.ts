@@ -31,16 +31,19 @@ export async function StartPage(req: Request, res: Response) {
 
 // GET /profile
 export async function ProfilePage(req: Request, res: Response) {
+    const id = Number(req.session.userId)
+
     try {
+        const user = await userRepo.userInfo(id)
 
         // Flash
         req.session.flash = undefined
         const flash = req.session.flash
 
         // Carregar
-        return res.render("administrador", {flash: flash})
+        return res.render("profile", {session: req.session, userInfo: user})
     } catch {
-        return res.status(500).json({success: false, message: "userController ProfilePage | Falha ao carregar o administrador.ejs"})
+        return res.status(500).json({success: false, message: "userController ProfilePage | Falha ao carregar o profile.ejs"})
     }
 }
 
@@ -191,6 +194,24 @@ export async function logoff(req: Request, res: Response) {
         req.session.flash = undefined
         res.redirect("/")
     } catch {
-        return res.status(500).json({success: false, message: "userController logoff | Falha ao carregar o sair do usuário"})
+        return res.status(500).json({success: false, message: "userController logoff | Falha ao sair do usuário"})
+    }
+}
+
+
+// Deletar usuário
+export async function deleteUser(req: Request, res: Response) {
+    const id = Number(req.params.id)
+    try {
+
+        await userRepo.removeUser(id)
+        req.session.admin = undefined
+        req.session.email = undefined
+        req.session.userId = undefined
+        req.session.userName = undefined
+        req.session.flash = undefined
+        res.status(200).json({success: true, message: "Usuário removido com sucesso"})
+    } catch {
+        return res.status(500).json({success: false, message: "userController deleteUser | Falha ao excluir usuário"})
     }
 }

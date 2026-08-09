@@ -1,6 +1,8 @@
 let valorTotal = 0
 let valorProd = 0
 
+const buttonComprar = document.getElementById("comprar")
+
 async function loadCart(term) {
     const loading = document.getElementById("loading");
     const list = document.getElementById("clist");
@@ -69,3 +71,27 @@ function cartList(products) {
 document.addEventListener("DOMContentLoaded", async () => {
     await loadCart()
 })
+
+buttonComprar.addEventListener('click', async () => await comprar())
+
+async function comprar() {
+    try {
+        const response = await fetch('/cart/comprar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        })
+
+        if (response.ok) {
+            console.log("Produto comprado com sucesso!")
+            const wipe = await fetch('/cart/wipe', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+            })
+            window.location.href = '/profile'
+        } else {
+            console.error("Não foi possível finalizar a compra:", response.statusText)
+        }
+    } catch(e) {
+        console.error("Falha ao tentar executar rota POST /cart/comprar:", e)
+    }
+}

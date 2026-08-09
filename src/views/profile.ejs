@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu perfil</title>
+    <link href="css/profile.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar" id="nav">
+  <a href="/" class="nav-logo" aria-label="Página Inicial GabeSlop">
+    <img src="img/logoGabeSlop.png" alt="GabeSlop Logo">
+  </a>
+  
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Início</a></li>
+      <li><a href="/store">Loja</a></li>
+      <li><a href="/naoexiste">Promoções</a></li>
+      <li><a href="/naoexiste">Lançamentos</a></li>
+
+      <% if (typeof session.userName !== 'undefined' && session.userName) { %>
+        <div class="user-info">
+
+          <a href="/logoff" style="color: #E74C3C; margin-left: .5rem;">Sair</a>
+          <a href="/profile" class="user" style="margin-left: 1rem; font-weight: 700;"><%= session.userName %></a>
+          <img 
+            id="avatar-header" 
+            alt="Foto de perfil de: <%= session.userName %>" 
+            class="user-avatar"
+            src="<%= session.photo %>"
+          >
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
+    <div class="main">
+        <div class="general-info-div">
+            <div class="profile-user-avatar-div">
+                <img id="avatar-header" alt="Foto de perfil de: <%= session.userName %>" class="profile-user-avatar" src="<%= session.photo %>">
+            </div>
+                
+        </div>
+          <div class="profile-user-info-div">
+            <div class="info"><h1 class="profile-user-name"><%= session.userName %></h1></div>
+            
+            <div class="info"><strong>E-mail: </strong><span><%= session.email %></span></div>
+            <div class="info"><strong>Total de pedidos: </strong><span><%= userInfo.totalCompras %></span></div>
+            <div class="info"><strong>Data de criação da conta: </strong><span><%= userInfo.dataCriacao %></span></div>
+          </div>
+          <div class="user-options">
+            <button type="button" id="excluir-conta" data-id="<%= session.userId %>">Excluir conta</button>
+          </div>
+
+    </div>
+    <script src="js/profile.js"></script>
+</body>
+</html>

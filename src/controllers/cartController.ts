@@ -142,7 +142,7 @@ export async function empty(req: Request, res: Response) {
     }
 }
 
-// GET /finalizar
+// GET /comprar
 export async function paginaFinalizarCompra(req: Request, res: Response) {
     try {
         const carrinho = req.session.carrinho || [];
@@ -158,11 +158,11 @@ export async function paginaFinalizarCompra(req: Request, res: Response) {
     }
 }
 
-// POST /finalizar
+// POST /cart/comprar
 export async function finalizarCompra(req: Request, res: Response) {
     try {
         req.session.flash = undefined
-        
+
         const sessionId = Number(req.session.userId)
         const carrinho = req.session.carrinho || [];
 

@@ -1,5 +1,5 @@
 import {user} from "../entities/user"
-import { readFile, writeFile, mkdir } from "fs/promises"
+import { readFile, writeFile, mkdir, rm } from "fs/promises"
 import bcrypt from "bcrypt"
 import { consoleContent } from "../types/serverConsole";
 
@@ -98,7 +98,8 @@ export class userRepository {
             return false
         }
 
-        users.splice(id, 1)
+        users.splice(userIndex, 1)
+        await this.saveUsers(users)
         return true
     }
 
