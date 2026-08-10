@@ -42,7 +42,7 @@
             <img style="max-width: 100%; max-height: 100%;" src="/uploads/<%= produto.foto %>" alt="Foto do produto">
         </div>
         <div class="infos">
-            <h1 style="font-size: 3rem;"><%= produto.titulo %></h1>
+            <h1 <% if (produto.disponivel) { %> style="font-size: 3rem;" <% } else { %> style="font-size: 3rem; color: red" <% } %>> <% if (produto.disponivel) { %><%= produto.titulo %><% } else { %><%= produto.titulo %> (INDISPONÍVEL)<% } %></h1>
             <div class="info">
                 <strong style="margin-right: 1rem; font-size: 1.5rem;">Total de vendas:</strong><span style="font-size: 1.5rem;"><%= produto.vendas %></span>
             </div>
@@ -58,7 +58,10 @@
         </div>
     </div>
     <div class="acoes">
-        <button id="addcart" class="btn adicionar" data-id="<%= produto.id %>">Adicionar ao carrinho</button>
+        <button id="addcart" 
+        class="btn adicionar" 
+        data-id="<%= produto.id %>"
+        <% if (!produto.disponivel) { %> disabled <% } %>>Adicionar ao carrinho</button>
     </div>
 
     <form class="create-comment" id="commentForm">
