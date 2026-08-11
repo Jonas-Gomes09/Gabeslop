@@ -110,7 +110,7 @@ async function showAddProduct() {
 
 // Carregar produtos
 async function loadProducts(term) {
-    const loading = document.getElementById("loading")
+    const loading = document.getElementById("loadingprod")
     const list = document.getElementById("plist")
 
     loading.style.display = "block"
@@ -163,10 +163,10 @@ function productList(products) {
             </div>
             <div class="prodbuttons">
             <form class="form-atualizar-estoque" data-id="${p.id}">
-                    <input class="searchbar" type="number" min="0" name="estoque" value="${p.estoque}" style="width: 4rem;" required />
-                    <button type="submit" class="sideBarButton">ATUALIZAR ESTOQUE</button>
+                    <input class="add-estoque" type="number" min="0" name="estoque" value="${p.estoque}" required />
+                    <button type="submit" class="prod-btn">ATUALIZAR ESTOQUE</button>
             </form>
-                <button style="margin-right: 1rem;" class="sideBarButton excluir-produto" id="excluirProduto" data-id="${p.id}">EXCLUIR PRODUTO</button>
+                <button style="margin-right: 1rem;" class="prod-btn excluir-produto" id="excluirProduto" data-id="${p.id}">EXCLUIR PRODUTO</button>
             </div>
         </div>`
         ).join('')

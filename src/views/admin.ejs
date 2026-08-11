@@ -27,8 +27,10 @@
             <p>Utilize os botões da barra lateral para navegar.</p>
         </div>
 
-        <div class="console" id="console">        
-            <h1 class="consoleTitle">Console</h1>
+        <div class="console" id="console">     
+            <div class="main-header">
+                <h1 class="consoleTitle">Console</h1>
+            </div>   
             <% if (console.length == 0) { %>
                 <h3 class="consoleEmpty">Ocorreu um erro ao carregar o console.</h3>
             <% } else { %>
@@ -39,21 +41,27 @@
         </div>
 
         <div class="listdiv" id="users">
-            <p id="usertotal" style="margin-bottom: 1rem; margin-left: auto; margin-right: auto;">Total: 0</p>
+            <div class="main-header">
+                <h1 class="consoleTitle">Usuários</h1>
+                <p id="usertotal" class="total">Total: 0</p>
+            </div>
             <div class="listarea" id="userlist">
                 <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando usuários...</h3>
-                <div id="ulist"></div>
+                <div class="ulist" id="ulist"></div>
             </div>
             
         </div>
 
         <div class="listdiv" id="products">
-            <p id="producttotal" style="margin-bottom: 1rem; margin-left: auto; margin-right: auto;">Total: 0</p>
+            <div class="main-header">
+                <h1 class="consoleTitle">Produtos</h1>
+                <button class="add-product-activator" id="addProductPage">ADICIONAR PRODUTO</button>
+                <p id="producttotal" class="total">Total: 0</p>
+            </div>
             <div class="listarea" id="productlist">
-                <button class="sideBarButton" id="addProductPage" style="width: 200px">ADICIONAR PRODUTO</button>
-                <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loading">Carregando produtos...</h3>
+                <h3 style="color: rgba(255,255,255,.5); align-self: center;" id="loadingprod">Carregando produtos...</h3>
                 
-                <div id="plist"></div>
+                <div class="plist" id="plist"></div>
             </div>
             
         </div>

@@ -47,13 +47,13 @@ body {
     height: calc(96vh - 4rem);
     margin: auto;
     width: calc(100vw - 250px - 6rem);
-    padding: 1rem;
     margin-top: 2rem;
     overflow: scroll;
     overflow-x: hidden;
 
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .main::-webkit-scrollbar {
@@ -100,22 +100,22 @@ body {
 
     outline: none;
     color: white;
-    background: rgb(41, 0, 0);
+    background: rgb(0, 36, 77);
     cursor: pointer;
     transition: .3s ease;
     align-self: center;
     width: 90%;
-    border: 2px solid rgba(255,255,255,.2);
+    border: none;
+    transition: .3s ease;
 }
 .sideBarButton:hover {
-    background: red;
+    background: rgb(1, 119, 253);
     color: #111111;
-    box-shadow: 0px 0px 20px 0px red;
+    box-shadow: 0px 0px 20px 0px rgb(1, 119, 253);;
 }
 .sideBarButton:disabled {
-    background: red;
-    color: #111111;
-    border-color: red;   
+    background: rgb(1, 119, 253);
+    color: #111111;   
     cursor:default;
 }
 .sideBarButton:disabled:hover {
@@ -123,9 +123,9 @@ body {
 }
 
 .consoleTitle {
-    align-self: center;
-    margin-bottom: 2rem;
     user-select: none;
+    font-family: 'Jetbrains Mono';
+    font-size: 3rem;
 }
 
 .consoleItem {
@@ -157,7 +157,6 @@ body {
     margin-bottom: 1rem;
 
     display: flex;
-    position: relative;
 }
 
 .plistitem {
@@ -169,7 +168,6 @@ body {
     margin-bottom: 1rem;
 
     display: flex;
-    position: relative;
 }
 
 .info {
@@ -181,13 +179,6 @@ body {
 
 .infos {
     margin-left: 1rem;
-}
-
-.prodbuttons {
-    width: 300px;
-    position:absolute;
-    right: 1rem;
-    gap: 1rem;
 }
 
 .addpdiv {
@@ -236,12 +227,92 @@ body {
     display: none;
 }
 
-.form-atualizar-estoque {
- display: flex;
- height: 3rem;
- gap: 1rem;
- margin-bottom: 1rem;
- align-items: center;
- justify-content: center;
+.add-product-activator {
+    height: 3rem;
+    border-radius: .5rem;
+
+    outline: none;
+    color: white;
+    background: rgb(1, 119, 253);
+    cursor: pointer;
+    transition: .3s ease;
+    width: 24rem;
+    border: none;
+    transition: .3s ease;
 }
 
+.add-product-activator:hover {
+    background: rgb(0, 38, 255);
+    scale: 1.02;
+}
+
+.prodbuttons {
+    width: fit-content;
+    position:absolute;
+    right: 2rem;
+    gap: 1rem;
+    border: 2px dashed rgba(255,255,255,.1);
+    padding: 1rem;
+    border-radius: .6rem;
+}
+
+.form-atualizar-estoque {
+    display: flex;
+    gap: 1rem;
+    width: fit-content;
+    justify-content: space-between;
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+
+.add-estoque {
+    height: 3rem;
+    margin-bottom: 1rem;
+    border-radius: .3rem;
+    width: 9rem;
+    background: none;
+    border: 2px solid rgb(44, 50, 56);
+    transition: .3s ease;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+}
+
+.prod-btn {
+    height: 3rem;
+    border-radius: .5rem;
+    width: 100%;
+    min-width: 10rem;
+
+    outline: none;
+    color: white;
+    background: rgb(1, 119, 253);
+    cursor: pointer;
+    transition: .3s ease;
+    align-self: center;
+    border: none;
+    transition: .3s ease;
+}
+
+.main-header {
+    position: sticky;
+    top: 0rem;
+    width: 100%;
+    min-height: 6rem;
+    background: rgb(0,0,0,.6);
+    backdrop-filter: blur(20px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid rgba(255,255,255,.2);
+    gap: 1rem;
+}
+
+.plist, .ulist {
+    padding: 1rem;
+}
+
+.total {
+    font-size: 1.2rem;
+}
