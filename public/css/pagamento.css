@@ -26,9 +26,12 @@ body {
     padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(255, 56, 56, 0.08);
-    width: 90%;
+    width: 50%;
     text-align: center;
     margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .row-cartoes {
     font-size: 1.2rem;
@@ -154,12 +157,13 @@ body {
   display: grid;
   width: 100%;
   gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   background-color: rgb(238, 238, 238);
   margin-bottom: 1rem;
   padding: 1rem;
   border-top: 3px dashed rgba(0, 0, 0, 0.06);
   border-bottom: 3px dashed rgba(0, 0, 0, 0.06);
+  overflow: scroll;
 }
 
 .clistitem {
@@ -254,6 +258,12 @@ body {
     margin-bottom: .5rem;
     justify-content: space-between;
     align-items: center;
+    transition: .5s ease;
+}
+
+.row-cartao:hover {
+  transform: scale(1.01);
+  box-shadow: 0px 4px 10px 0px rgba(255,255,255,.1);
 }
 
 .info-cartao {
@@ -295,4 +305,8 @@ body {
 }
 .cartao-checkbox:checked:hover {
     scale: 110%;
+}
+
+.pagamento {
+  width: 100%;
 }

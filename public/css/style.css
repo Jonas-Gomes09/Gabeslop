@@ -264,6 +264,11 @@ body {
     flex-direction: column;
     margin-bottom: 2rem;
     margin-top: 3rem;
+    transition: background 5s ease;
+}
+
+.card-conteudo:hover {
+    background: linear-gradient(to bottom, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 90%);
 }
 
 .texto-footer {
