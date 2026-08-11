@@ -70,12 +70,56 @@
             <h1 style="font-size: 6rem">Adicionar produto</h1>
             <form class="addProduct" method="POST" action="/admin/store" enctype="multipart/form-data">
                 <label>Nome do produto</label><input class="searchbar" type="text" name="titulo" placeholder="Digite um nome para o produto" required>
-                <label>Preço em R$</label><input class="searchbar" type="number" name="preco" placeholder="Digite um valor inteiro" required> 
-                <label>Estoque</label><input class="searchbar" type="number" name="estoque" placeholder="Digite um valor maior que 0" required> 
+                <label>Preço em R$</label><input class="searchbar" type="number" onblur="formatarMoeda(this)" step="0.01" name="preco" placeholder="Digite um valor maior que 0" required> 
+                <label>Estoque</label><input class="searchbar" type="number" name="estoque" placeholder="Digite um valor" required> 
                 <label>Categoria</label>
-                <select name="categoria" style="margin-bottom: 1rem;" required>
-                    <option value="Hardware">Hardware</option>
-                    <option value="Jogo">Jogo</option>
+                <select name="categoria" class="categoria" style="margin-bottom: 1rem;" required>
+                    <optgroup label ="Hardware">
+                        <option value="Console">Console</option>
+                        <option value="Acessório">Acessório</option>
+                        <option value="Periférico">Periférico</option>
+                        <option value="Colecionável">Colecionável</option>
+                    </optgroup>
+                    <optgroup label="Ação e Tiro">
+                        <option value="Jogo FPS">Jogo FPS (Tiro em Primeira Pessoa)</option>
+                        <option value="Jogo TPS">Jogo TPS (Tiro em Terceira Pessoa)</option>
+                        <option value="Jogo de ação">Jogo de Ação</option>
+                        <option value="Hack and Slash">Hack and Slash</option>
+                        <option value="Battle Royale">Battle Royale</option>
+                    </optgroup>
+
+                    <optgroup label="Aventura e RPG">
+                        <option value="Jogo de aventura">Jogo de Aventura</option>
+                        <option value="Action RPG">Action RPG</option>
+                        <option value="RPG de Turno">RPG de Turno</option>
+                        <option value="MMORPG">MMORPG</option>
+                        <option value="JRPG">JRPG</option>
+                    </optgroup>
+
+                    <optgroup label="Estratégia e Arena">
+                        <option value="MOBA">MOBA</option>
+                        <option value="Estratégia em Tempo Real (RTS)">Estratégia em Tempo Real (RTS)</option>
+                        <option value="Estratégia por Turnos (TBS)">Estratégia por Turnos (TBS)</option>
+                        <option value="Tower Defense">Tower Defense</option>
+                        <option value="Card Game / Construção de Deck">Card Game / Construção de Deck</option>
+                    </optgroup>
+
+                    <optgroup label="Simulação e Esportes">
+                        <option value="Simulador">Simulador (Vida, Veículos, Voo)</option>
+                        <option value="Jogo de esporte">Jogo de Esporte</option>
+                        <option value="Jogo de corrida">Jogo de Corrida</option>
+                        <option value="Gerenciamento / Tycoon">Gerenciamento / Tycoon</option>
+                    </optgroup>
+
+                    <optgroup label="Casual e Outros">
+                        <option value="Plataforma">Plataforma (2D / 3D)</option>
+                        <option value="Puzzle / Enigma">Puzzle / Enigma</option>
+                        <option value="Luta">Jogo de Luta</option>
+                        <option value="Terror / Survival Horror">Terror / Survival Horror</option>
+                        <option value="Metroidvania">Metroidvania</option>
+                        <option value="Roguelike / Roguelite">Roguelike / Roguelite</option>
+                        <option value="Visual Novel / Sandbox">Visual Novel / Sandbox</option>
+                    </optgroup>
                 </select>
                 <label>Foto do produto</label><input class="addFile" style="margin-bottom: 1rem;" type="file" name="foto" accept="image/*" required>
                 <button type="submit" class="sideBarButton" id="submitProduct">Enviar</button>
@@ -83,7 +127,6 @@
         </div>
 
     </div>
-
 <script src="/js/admin.js"></script>
 </body>
 </html>

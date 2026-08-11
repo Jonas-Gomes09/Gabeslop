@@ -1,4 +1,10 @@
 // Pegar objetos do site
+  function formatarMoeda(input) {
+    if (input.value) {
+      input.value = parseFloat(input.value).toFixed(2);
+    }
+  }
+
 const nothingDiv = document.getElementById("nothinghere") // Tela de bem-vindo
 const consoleDiv = document.getElementById("console") // Tela do console
 const usersDiv = document.getElementById("users")
@@ -146,7 +152,7 @@ function productList(products) {
             <div class="infos">
                 <h1>${p.titulo}</h1>
                 <div class="info">
-                <p>Preço: </p><span>R$ ${p.preco},00</span>
+                <p>Preço: </p><span>R$ ${p.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
                 <div class="info">
                 <p>Vendas: </p><span>${p.vendas}</span>

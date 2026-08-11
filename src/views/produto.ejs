@@ -44,6 +44,9 @@
         <div class="infos">
             <h1 <% if (produto.disponivel) { %> style="font-size: 3rem;" <% } else { %> style="font-size: 3rem; color: red" <% } %>> <% if (produto.disponivel) { %><%= produto.titulo %><% } else { %><%= produto.titulo %> (INDISPONÍVEL)<% } %></h1>
             <div class="info">
+                <strong style="margin-right: 1rem; font-size: 1.5rem;">Preço:</strong><span style="font-size: 1.8rem; font-weight: bolder; color: rgb(70,160,70)"><%= produto.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
+            </div>
+            <div class="info">
                 <strong style="margin-right: 1rem; font-size: 1.5rem;">Total de vendas:</strong><span style="font-size: 1.5rem;"><%= produto.vendas %></span>
             </div>
             <div class="info">

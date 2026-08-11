@@ -86,7 +86,7 @@ function productList(products) {
             <img style="height: 8rem; margin: .8rem; border-radius: .5rem" src="uploads/${p.foto}" alt="Imagem de: ${p.titulo}">
                 <div class="infos">
                     
-                    <div class="info"><p>Preço: </p><span>R$ ${p.preco},00</span></div>
+                    <div class="info"><p>Preço: </p><span>R$ ${p.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                     <div class="info"><p>Vendas: </p><span>${p.vendas}</span></div>
                     <div class="info"><p>Qtd. em Estoque: </p><span>${p.estoque}</span></div>
                     <div class="info"><p>Categoria: </p><span>${p.categoria}</span></div>
@@ -127,7 +127,7 @@ async function loadCart(term) {
         const totalPreco = document.getElementById("cart-total")
         if (totalElem) {
             totalElem.textContent = `Total de itens: ${json.totalItens}`;
-            totalPreco.textContent = `Valor total: R$${valorTotal}`
+            totalPreco.textContent = `Valor total: R$${valorTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
         }
     } catch (e) {
         console.error("Erro ao carregar produtos:", e);
@@ -159,7 +159,7 @@ function cartList(products) {
                 </div>
                 <div class="cinfos">
                     <h1 style="max-width: 300px">${p.produto.titulo}</h1>
-                    <div class="cinfo" style="margin-top: -1rem"><p>Preço: </p><span>R$ ${p.produto.preco},00</span></div>
+                    <div class="cinfo" style="margin-top: -1rem"><p>Preço: </p><span>R$ ${p.produto.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                     <div class="cinfo">
 
                     
